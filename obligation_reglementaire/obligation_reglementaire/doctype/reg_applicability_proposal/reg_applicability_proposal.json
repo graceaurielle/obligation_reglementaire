@@ -1,0 +1,261 @@
+{
+ "actions": [],
+ "autoname": "APP-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Proposition d'applicabilité issue du moteur — jamais une décision juridique (Ch5).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "organisation",
+  "profil",
+  "modele",
+  "intitule_modele",
+  "cb_1",
+  "etat_propose",
+  "score_confiance",
+  "statut",
+  "sb_1",
+  "criteres_satisfaits",
+  "criteres_non_satisfaits",
+  "sb_2",
+  "decision",
+  "justification",
+  "cb_2",
+  "decideur",
+  "date_decision",
+  "obligation"
+ ],
+ "fields": [
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "profil",
+   "fieldtype": "Link",
+   "label": "Profil réglementaire",
+   "options": "Reg Profile"
+  },
+  {
+   "fieldname": "modele",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Obligation modèle",
+   "options": "Reg Template Obligation",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "modele.intitule",
+   "fetch_if_empty": 0,
+   "fieldname": "intitule_modele",
+   "fieldtype": "Data",
+   "label": "Intitulé",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "etat_propose",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "État proposé",
+   "options": "Applicable\nPotentiellement applicable\nNon applicable"
+  },
+  {
+   "fieldname": "score_confiance",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Indice de confiance",
+   "options": "\nÉlevé\nMoyen\nFaible"
+  },
+  {
+   "default": "Proposée",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Proposée\nEn analyse\nValidée\nRejetée\nGénérée"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Analyse du moteur"
+  },
+  {
+   "fieldname": "criteres_satisfaits",
+   "fieldtype": "Small Text",
+   "label": "Critères satisfaits",
+   "read_only": 1
+  },
+  {
+   "fieldname": "criteres_non_satisfaits",
+   "fieldtype": "Small Text",
+   "label": "Critères non satisfaits / inconnus",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Décision humaine"
+  },
+  {
+   "fieldname": "decision",
+   "fieldtype": "Select",
+   "label": "Décision",
+   "options": "\nApplicable\nNon applicable\nÀ analyser\nApplicable sous condition"
+  },
+  {
+   "fieldname": "justification",
+   "fieldtype": "Small Text",
+   "label": "Justification",
+   "mandatory_depends_on": "eval:doc.decision=='Non applicable'"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "decideur",
+   "fieldtype": "Link",
+   "label": "Décideur",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_decision",
+   "fieldtype": "Datetime",
+   "label": "Date de décision",
+   "read_only": 1
+  },
+  {
+   "fieldname": "obligation",
+   "fieldtype": "Link",
+   "label": "Obligation générée",
+   "options": "Reg Obligation",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Applicability Proposal",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "modele",
+ "track_changes": 1
+}

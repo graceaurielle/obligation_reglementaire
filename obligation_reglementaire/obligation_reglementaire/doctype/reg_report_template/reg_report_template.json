@@ -1,0 +1,273 @@
+{
+ "actions": [],
+ "autoname": "field:code",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Modèle de reporting versionné (Ch10.4).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "code",
+  "intitule",
+  "categorie",
+  "destinataire",
+  "autorite_destinataire",
+  "cb_1",
+  "statut",
+  "version",
+  "modele_precedent",
+  "responsable",
+  "date_entree_vigueur",
+  "date_fin",
+  "sb_1",
+  "frequence",
+  "generation_automatique",
+  "circuit_validation",
+  "cb_2",
+  "format_sortie",
+  "confidentialite",
+  "filtres_autorises",
+  "description",
+  "tab_2",
+  "sections"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Modèle"
+  },
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "intitule",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Intitulé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "categorie",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Catégorie",
+   "options": "Opérationnel\nManagérial\nDirection Générale\nConformité\nAudit et contrôle\nRéglementaire",
+   "reqd": 1
+  },
+  {
+   "fieldname": "destinataire",
+   "fieldtype": "Data",
+   "label": "Destinataire"
+  },
+  {
+   "depends_on": "eval:doc.categorie=='Réglementaire'",
+   "fieldname": "autorite_destinataire",
+   "fieldtype": "Link",
+   "label": "Autorité destinataire",
+   "options": "Reg Authority"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Brouillon",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Brouillon\nEn validation\nValidé\nActif\nRemplacé\nArchivé"
+  },
+  {
+   "default": "1",
+   "fieldname": "version",
+   "fieldtype": "Int",
+   "label": "Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "modele_precedent",
+   "fieldtype": "Link",
+   "label": "Version précédente",
+   "options": "Reg Report Template",
+   "read_only": 1
+  },
+  {
+   "fieldname": "responsable",
+   "fieldtype": "Link",
+   "label": "Responsable du modèle",
+   "options": "User"
+  },
+  {
+   "fieldname": "date_entree_vigueur",
+   "fieldtype": "Date",
+   "label": "Date d'entrée en vigueur"
+  },
+  {
+   "fieldname": "date_fin",
+   "fieldtype": "Date",
+   "label": "Date de fin"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Paramètres"
+  },
+  {
+   "fieldname": "frequence",
+   "fieldtype": "Select",
+   "label": "Fréquence",
+   "options": "\nJournalier\nHebdomadaire\nMensuel\nTrimestriel\nSemestriel\nAnnuel\nPersonnalisée"
+  },
+  {
+   "fieldname": "generation_automatique",
+   "fieldtype": "Check",
+   "label": "Génération automatique planifiée"
+  },
+  {
+   "default": "1",
+   "fieldname": "circuit_validation",
+   "fieldtype": "Check",
+   "label": "Circuit de validation requis"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "format_sortie",
+   "fieldtype": "Select",
+   "label": "Format de sortie",
+   "options": "PDF\nExcel\nCSV\nPDF + Excel"
+  },
+  {
+   "default": "Confidentiel",
+   "fieldname": "confidentialite",
+   "fieldtype": "Select",
+   "label": "Confidentialité",
+   "options": "\nPublic interne\nInterne\nConfidentiel\nStrictement confidentiel\nSensible"
+  },
+  {
+   "fieldname": "filtres_autorises",
+   "fieldtype": "Small Text",
+   "label": "Filtres autorisés"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Contenu"
+  },
+  {
+   "fieldname": "sections",
+   "fieldtype": "Table",
+   "label": "Sections",
+   "options": "Reg Report Template Section",
+   "reqd": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Report Template",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "intitule",
+ "track_changes": 1
+}

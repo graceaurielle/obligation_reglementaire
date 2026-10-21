@@ -1,0 +1,307 @@
+{
+ "actions": [],
+ "autoname": "PRV-.YYYY.-.######",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Preuve de réalisation d'une action — versionnée, contrôlée (Ch8.15–8.17).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "action",
+  "plan",
+  "organisation",
+  "type_preuve",
+  "libelle",
+  "cb_1",
+  "statut",
+  "numero_version",
+  "remplace",
+  "obligatoire",
+  "sb_1",
+  "fichier",
+  "empreinte",
+  "taille_octets",
+  "cb_2",
+  "deposant",
+  "date_depot",
+  "commentaire",
+  "sb_2",
+  "controleur",
+  "date_controle",
+  "cb_3",
+  "motif_rejet",
+  "commentaire_controle"
+ ],
+ "fields": [
+  {
+   "fieldname": "action",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Action",
+   "options": "Reg Corrective Action",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "action.plan",
+   "fetch_if_empty": 0,
+   "fieldname": "plan",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Plan d'action",
+   "options": "Reg Action Plan",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "action.organisation",
+   "fetch_if_empty": 0,
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "read_only": 1
+  },
+  {
+   "fieldname": "type_preuve",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type de preuve",
+   "options": "\nProcédure\nInstruction\nRapport\nCompte rendu\nCapture applicative\nFichier de configuration\nRapport de test\nProcès-verbal\nAttestation\nRegistre\nExtrait de système\nPreuve de formation\nPreuve de déploiement\nCorrespondance officielle\nDécision\nValidation\nAutre",
+   "reqd": 1
+  },
+  {
+   "fieldname": "libelle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Libellé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "À contrôler",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "À contrôler\nAcceptée\nRejetée\nComplément demandé\nRemplacée",
+   "read_only": 1
+  },
+  {
+   "fieldname": "numero_version",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remplace",
+   "fieldtype": "Link",
+   "label": "Remplace la preuve",
+   "options": "Reg Action Proof"
+  },
+  {
+   "default": "1",
+   "fieldname": "obligatoire",
+   "fieldtype": "Check",
+   "label": "Preuve obligatoire"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Fichier"
+  },
+  {
+   "fieldname": "fichier",
+   "fieldtype": "Attach",
+   "label": "Fichier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "empreinte",
+   "fieldtype": "Data",
+   "label": "Empreinte SHA-256",
+   "read_only": 1
+  },
+  {
+   "fieldname": "taille_octets",
+   "fieldtype": "Int",
+   "label": "Taille (octets)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "deposant",
+   "fieldtype": "Link",
+   "label": "Déposant",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_depot",
+   "fieldtype": "Datetime",
+   "label": "Date de dépôt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commentaire",
+   "fieldtype": "Small Text",
+   "label": "Commentaire"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Contrôle"
+  },
+  {
+   "fieldname": "controleur",
+   "fieldtype": "Link",
+   "label": "Contrôleur",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_controle",
+   "fieldtype": "Datetime",
+   "label": "Date de contrôle",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "motif_rejet",
+   "fieldtype": "Link",
+   "label": "Motif de rejet",
+   "options": "Reg Rejection Reason",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commentaire_controle",
+   "fieldtype": "Small Text",
+   "label": "Commentaire du contrôleur",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Action Proof",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "libelle",
+ "track_changes": 1
+}

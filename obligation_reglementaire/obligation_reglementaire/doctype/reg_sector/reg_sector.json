@@ -1,0 +1,167 @@
+{
+ "actions": [],
+ "autoname": "field:code",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Secteur d'activité (BANK, TELCO, INS, RETAIL…).",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "code",
+  "nom",
+  "territoire",
+  "cb_1",
+  "statut",
+  "date_activation",
+  "description"
+ ],
+ "fields": [
+  {
+   "bold": 1,
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "nom",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nom",
+   "reqd": 1
+  },
+  {
+   "fieldname": "territoire",
+   "fieldtype": "Link",
+   "label": "Territoire",
+   "options": "Country"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Actif",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Statut",
+   "options": "Actif\nInactif\nEn préparation"
+  },
+  {
+   "fieldname": "date_activation",
+   "fieldtype": "Date",
+   "label": "Date d'activation"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Sector",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "nom",
+ "track_changes": 1
+}

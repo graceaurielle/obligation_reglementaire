@@ -26,7 +26,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/obligation_reglementaire/css/obligation_reglementaire.css"
-# app_include_js = "/assets/obligation_reglementaire/js/obligation_reglementaire.js"
+app_include_js = "/assets/obligation_reglementaire/js/obligation_reglementaire.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/obligation_reglementaire/css/obligation_reglementaire.css"
@@ -249,4 +249,40 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
+
+# ----------------------------------------------------------------------------- installation / migration
+after_install = "obligation_reglementaire.install.after_install"
+after_migrate = "obligation_reglementaire.install.after_migrate"
+
+# Les rôles métiers sont livrés par code (install.py) afin de rester idempotents et indépendants des fixtures.
+
+# ----------------------------------------------------------------------------- événements transverses
+# Organisation par défaut, organisation suspendue, journal d'audit, interdiction de suppression physique.
+doc_events = {
+	"*": {
+		"validate": "obligation_reglementaire.events.validate",
+		"on_update": "obligation_reglementaire.events.on_update",
+		"on_trash": "obligation_reglementaire.events.on_trash",
+		"before_save": "obligation_reglementaire.events.before_save_log",
+	},
+}
+
+# ----------------------------------------------------------------------------- portail web cross-app
+update_website_context = "obligation_reglementaire.website.inject_obligation_nav"
+before_request = ["obligation_reglementaire.website.install_landing_page_patch"]
+
+# ----------------------------------------------------------------------------- planificateur
+scheduler_events = {
+	"daily": [
+		"obligation_reglementaire.tasks.daily",
+	],
+	"hourly": [
+		"obligation_reglementaire.tasks.hourly",
+	],
+	"cron": {
+		# Résumé quotidien envoyé en début de journée ouvrée
+		"0 7 * * *": ["obligation_reglementaire.tasks.daily_digest"],
+	},
+}
+
 

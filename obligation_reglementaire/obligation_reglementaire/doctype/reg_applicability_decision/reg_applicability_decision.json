@@ -1,0 +1,253 @@
+{
+ "actions": [],
+ "autoname": "DAP-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Décision d'applicabilité historisée (Ch3, Ch5).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "obligation",
+  "organisation",
+  "decision",
+  "statut",
+  "cb_1",
+  "date_decision",
+  "decideur",
+  "validateur",
+  "date_validation",
+  "date_debut",
+  "date_fin",
+  "sb_1",
+  "perimetre",
+  "criteres_examines",
+  "justification",
+  "document",
+  "proposition"
+ ],
+ "fields": [
+  {
+   "fieldname": "obligation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Obligation",
+   "options": "Reg Obligation"
+  },
+  {
+   "fetch_from": "obligation.organisation",
+   "fetch_if_empty": 0,
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "read_only": 1
+  },
+  {
+   "fieldname": "decision",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Décision",
+   "options": "Applicable\nApplicable sous condition\nNon applicable\nÀ analyser",
+   "reqd": 1
+  },
+  {
+   "default": "Proposée",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Proposée\nValidée\nRejetée\nRemplacée"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date_decision",
+   "fieldtype": "Date",
+   "label": "Date de décision",
+   "reqd": 1
+  },
+  {
+   "fieldname": "decideur",
+   "fieldtype": "Link",
+   "label": "Décideur",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "validateur",
+   "fieldtype": "Link",
+   "label": "Validateur",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_debut",
+   "fieldtype": "Date",
+   "label": "Applicable du"
+  },
+  {
+   "fieldname": "date_fin",
+   "fieldtype": "Date",
+   "label": "Applicable au"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Analyse"
+  },
+  {
+   "fieldname": "perimetre",
+   "fieldtype": "Small Text",
+   "label": "Périmètre concerné"
+  },
+  {
+   "fieldname": "criteres_examines",
+   "fieldtype": "Small Text",
+   "label": "Critères examinés"
+  },
+  {
+   "fieldname": "justification",
+   "fieldtype": "Small Text",
+   "label": "Justification",
+   "mandatory_depends_on": "eval:doc.decision!='Applicable'"
+  },
+  {
+   "fieldname": "document",
+   "fieldtype": "Attach",
+   "label": "Document justificatif"
+  },
+  {
+   "fieldname": "proposition",
+   "fieldtype": "Link",
+   "label": "Proposition du moteur",
+   "options": "Reg Applicability Proposal",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Applicability Decision",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "obligation",
+ "track_changes": 1
+}

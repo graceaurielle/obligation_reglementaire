@@ -1,0 +1,268 @@
+{
+ "actions": [],
+ "autoname": "field:code",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Organisation cliente (tenant) — Ch3.4, Ch13.25.",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "code",
+  "nom_legal",
+  "nom_affichage",
+  "forme_juridique",
+  "cb_1",
+  "statut",
+  "secteur",
+  "pays",
+  "fuseau_horaire",
+  "langue",
+  "devise",
+  "sb_1",
+  "date_activation",
+  "cb_2",
+  "date_desactivation",
+  "motif_suspension",
+  "sb_2",
+  "adresse",
+  "site_web",
+  "cb_3",
+  "email",
+  "telephone",
+  "logo"
+ ],
+ "fields": [
+  {
+   "bold": 1,
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "nom_legal",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Raison sociale / nom légal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "nom_affichage",
+   "fieldtype": "Data",
+   "label": "Nom d'affichage",
+   "reqd": 1
+  },
+  {
+   "fieldname": "forme_juridique",
+   "fieldtype": "Data",
+   "label": "Forme juridique"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Active",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Active\nSuspendue\nInactive"
+  },
+  {
+   "fieldname": "secteur",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Secteur principal",
+   "options": "Reg Sector"
+  },
+  {
+   "default": "Cote d'Ivoire",
+   "fieldname": "pays",
+   "fieldtype": "Link",
+   "label": "Pays",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "default": "Africa/Abidjan",
+   "fieldname": "fuseau_horaire",
+   "fieldtype": "Data",
+   "label": "Fuseau horaire"
+  },
+  {
+   "default": "fr",
+   "fieldname": "langue",
+   "fieldtype": "Data",
+   "label": "Langue"
+  },
+  {
+   "fieldname": "devise",
+   "fieldtype": "Link",
+   "label": "Devise",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Dates"
+  },
+  {
+   "fieldname": "date_activation",
+   "fieldtype": "Date",
+   "label": "Date d'activation"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_desactivation",
+   "fieldtype": "Date",
+   "label": "Date de désactivation"
+  },
+  {
+   "depends_on": "eval:doc.statut!='Active'",
+   "fieldname": "motif_suspension",
+   "fieldtype": "Small Text",
+   "label": "Motif de suspension / désactivation"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Coordonnées"
+  },
+  {
+   "fieldname": "adresse",
+   "fieldtype": "Small Text",
+   "label": "Adresse"
+  },
+  {
+   "fieldname": "site_web",
+   "fieldtype": "Data",
+   "label": "Site web"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "E-mail"
+  },
+  {
+   "fieldname": "telephone",
+   "fieldtype": "Data",
+   "label": "Téléphone"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Organization",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "nom_legal",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "nom_affichage",
+ "track_changes": 1
+}

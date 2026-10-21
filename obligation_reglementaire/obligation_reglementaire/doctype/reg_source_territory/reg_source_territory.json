@@ -1,0 +1,39 @@
+{
+ "actions": [],
+ "creation": "2026-10-13 09:00:00.000000",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "pays",
+  "region"
+ ],
+ "fields": [
+  {
+   "fieldname": "pays",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Pays",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "region",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Région / zone"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Source Territory",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_order": "DESC",
+ "states": []
+}

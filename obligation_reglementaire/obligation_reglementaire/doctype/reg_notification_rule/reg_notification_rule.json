@@ -1,0 +1,335 @@
+{
+ "actions": [],
+ "autoname": "field:code",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Règle de notification : événement, condition, destinataires, canaux, délai, relance, escalade (Ch11.9).",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "code",
+  "libelle",
+  "evenement",
+  "mode",
+  "cb_1",
+  "statut",
+  "version",
+  "organisation",
+  "valide_du",
+  "valide_au",
+  "sb_1",
+  "criticite_min",
+  "condition",
+  "cb_2",
+  "jours_relatifs",
+  "frequence_relance_jours",
+  "max_relances",
+  "sb_2",
+  "priorite",
+  "priorite_selon_criticite",
+  "canal_application",
+  "canal_email",
+  "cb_3",
+  "modele",
+  "accuse_requis",
+  "obligatoire",
+  "groupable",
+  "escalade",
+  "destinataires",
+  "tab_2",
+  "resultat_simulation"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Règle"
+  },
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "libelle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Libellé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "evenement",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Événement déclencheur",
+   "options": "obligation_creee\nobligation_affectee\nobligation_statut\nobligation_applicable\nobligation_non_applicable\necheance_creee\necheance_approche\necheance_depassee\necheance_suspendue\necheance_reactivee\necheance_reportee\nreport_refuse\necheance_cloturee\necheance_soumise\necheance_rejetee\njustificatif_attendu\njustificatif_manquant\njustificatif_depose\njustificatif_soumis_controle\njustificatif_valide\njustificatif_rejete\njustificatif_a_completer\njustificatif_expiration_proche\njustificatif_expire\njustificatif_remplace\nnc_creee\nnc_cloturee\npa_cree\naction_assignee\naction_approche\naction_retard\naction_bloquee\naction_soumise\naction_validee\naction_rejetee\npreuve_rejetee\nprolongation_demandee\nprolongation_acceptee\nprolongation_refusee\npa_cloture_demandee\npa_cloture\npa_reouvert\nefficacite_a_controler\ncriticite_modifiee\nresponsable_modifie\nsource_nouvelle_version\nsource_entree_vigueur\nimpact_a_analyser\nrapport_a_controler\nrapport_a_valider\nrapport_rejete\nrapport_diffuse\nrapport_echec\nlicence_expiration_proche\nmise_a_jour_catalogue\nresume_quotidien\nobligation_a_revoir\nmodele_mis_a_jour\nanalyse_impact_creee\ndocument_a_supprimer",
+   "reqd": 1
+  },
+  {
+   "description": "Temporel : évalué chaque jour par rapport à une date (échéance, fin d'action, expiration).",
+   "fieldname": "mode",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Mode",
+   "options": "Immédiat\nTemporel"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Brouillon",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Brouillon\nActive\nInactive"
+  },
+  {
+   "default": "1",
+   "fieldname": "version",
+   "fieldtype": "Int",
+   "label": "Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "label": "Organisation (vide = toutes)",
+   "options": "Reg Organization"
+  },
+  {
+   "fieldname": "valide_du",
+   "fieldtype": "Date",
+   "label": "Valide du"
+  },
+  {
+   "fieldname": "valide_au",
+   "fieldtype": "Date",
+   "label": "Valide au"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Condition"
+  },
+  {
+   "fieldname": "criticite_min",
+   "fieldtype": "Link",
+   "label": "Criticité minimale",
+   "options": "Reg Criticality Level"
+  },
+  {
+   "description": "Ex. : doc.statut != 'Clôturée'. Variables : doc, jours.",
+   "fieldname": "condition",
+   "fieldtype": "Code",
+   "label": "Condition (expression Python)",
+   "options": "PythonExpression"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "-7 = J-7 ; 0 = jour J ; 3 = J+3.",
+   "fieldname": "jours_relatifs",
+   "fieldtype": "Int",
+   "label": "Jours relatifs (mode temporel)"
+  },
+  {
+   "description": "0 = pas de relance.",
+   "fieldname": "frequence_relance_jours",
+   "fieldtype": "Int",
+   "label": "Relance tous les (jours)"
+  },
+  {
+   "default": "3",
+   "fieldname": "max_relances",
+   "fieldtype": "Int",
+   "label": "Nombre maximum de relances"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Diffusion"
+  },
+  {
+   "fieldname": "priorite",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Priorité",
+   "options": "Normale\nInformation\nFaible\nÉlevée\nCritique"
+  },
+  {
+   "default": "1",
+   "fieldname": "priorite_selon_criticite",
+   "fieldtype": "Check",
+   "label": "Priorité déduite de la criticité de l'objet"
+  },
+  {
+   "default": "1",
+   "fieldname": "canal_application",
+   "fieldtype": "Check",
+   "label": "Notification interne"
+  },
+  {
+   "default": "1",
+   "fieldname": "canal_email",
+   "fieldtype": "Check",
+   "label": "E-mail"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "modele",
+   "fieldtype": "Link",
+   "label": "Modèle de message",
+   "options": "Reg Notification Template",
+   "reqd": 1
+  },
+  {
+   "fieldname": "accuse_requis",
+   "fieldtype": "Check",
+   "label": "Accusé de réception requis"
+  },
+  {
+   "fieldname": "obligatoire",
+   "fieldtype": "Check",
+   "label": "Alerte obligatoire (non désactivable)"
+  },
+  {
+   "fieldname": "groupable",
+   "fieldtype": "Check",
+   "label": "Peut être groupée dans un résumé"
+  },
+  {
+   "fieldname": "escalade",
+   "fieldtype": "Link",
+   "label": "Règle d'escalade",
+   "options": "Reg Escalation Rule"
+  },
+  {
+   "fieldname": "destinataires",
+   "fieldtype": "Table",
+   "label": "Destinataires",
+   "options": "Reg Notification Recipient",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Simulation"
+  },
+  {
+   "fieldname": "resultat_simulation",
+   "fieldtype": "HTML",
+   "label": "Résultat de la simulation"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Notification Rule",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "libelle",
+ "track_changes": 1
+}

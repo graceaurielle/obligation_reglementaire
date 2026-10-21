@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "creation": "2026-10-13 09:00:00.000000",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "obligation_liee",
+  "type_dependance",
+  "commentaire"
+ ],
+ "fields": [
+  {
+   "fieldname": "obligation_liee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Obligation liée",
+   "options": "Reg Obligation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type_dependance",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "Prérequis\nConséquence\nComplémentaire\nRemplace\nRemplacée par"
+  },
+  {
+   "fieldname": "commentaire",
+   "fieldtype": "Small Text",
+   "label": "Commentaire"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Obligation Dependency",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,140 @@
+{# Template partagé pour les pages liste du portail OR.
+   Variables attendues :
+   - title, active_page, role_label, nav_items, user_initials, user_full_name (via base_context)
+   - page_title : titre H2 affiché dans l'en-tête
+   - page_icon : SVG inline pour le titre
+   - columns : [{"label": "...", "key": "...", "link_prefix": "/app/...", "href_key": "...", "badge": true, "date": true, "percent": true}]
+     (valeurs utilisateur déjà résolues en nom complet côté Python via resoudre_noms())
+     href_key (prioritaire sur link_prefix) : nom d'un champ de la ligne contenant l'URL cible
+     complète, utile quand la cible dépend d'un champ calculé par ligne (ex. doctype variable)
+   - rows : liste de dicts
+   - empty_message : texte si vide
+   - filters (optionnel) : [{"label": "...", "key": "...", "options": [...]}]
+   - stats (optionnel) : [{"label": "...", "value": ..., "color": "..."}]
+#}
+{% extends "templates/web.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block page_content %}
+{% include "due_diligence/www/v_base_style.html" %}
+{% include "due_diligence/www/v_table_style.html" %}
+<style>
+.or-content { padding: 24px 28px 40px; max-width: 1440px; }
+.or-card { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 24px; }
+.or-card-title { font-size: 15px; font-weight: 700; color: var(--vdb-navy); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.or-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.or-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--vdb-muted); padding: 8px 10px; border-bottom: 1px solid var(--vdb-border); position: sticky; top: 0; background: var(--vdb-card); z-index: 1; }
+.or-table td { padding: 10px; border-bottom: 1px solid #eef1f8; color: var(--vdb-text); }
+.or-table tr:last-child td { border-bottom: none; }
+.or-table a { color: var(--vdb-accent); font-weight: 600; text-decoration: none; }
+.or-table a:hover { text-decoration: underline; }
+.or-table-scroll { overflow-x: auto; max-height: calc(100vh - 260px); overflow-y: auto; }
+.or-empty { padding: 30px; text-align: center; color: var(--vdb-muted); font-size: 13px; }
+.or-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.or-badge-red { background: #fee2e2; color: #b91c1c; }
+.or-badge-orange { background: #ffedd5; color: #c2410c; }
+.or-badge-green { background: #e7f6ec; color: #15803d; }
+.or-badge-blue { background: #dbeafe; color: #1e40af; }
+.or-badge-gray { background: #f1f5f9; color: #475569; }
+.or-badge-purple { background: #ede9fe; color: #6d28d9; }
+.or-badge-yellow { background: #fef9c3; color: #854d0e; }
+
+.or-stats { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.or-stat { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 10px;
+  background: var(--vdb-card); border: 1px solid var(--vdb-border); font-size: 13px; font-weight: 600; }
+.or-stat-dot { width: 10px; height: 10px; border-radius: 50%; }
+.or-stat-value { font-size: 20px; font-weight: 700; color: var(--vdb-navy); }
+
+.or-filters { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.or-filters select, .or-filters input { padding: 7px 12px; border: 1px solid var(--vdb-border); border-radius: 8px;
+  font-size: 13px; background: var(--vdb-card); color: var(--vdb-text); }
+
+@media (max-width: 768px) { .or-table { min-width: 720px; } .or-content { padding: 16px; } }
+</style>
+
+<div class="vdb-layout">
+  {% include "due_diligence/www/v_sidebar.html" %}
+  <div class="vdb-main">
+    <header class="vdb-header">
+      <button class="vdb-hamburger" id="or-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <h2>{{ page_title }}</h2>
+      <div class="vdb-header-right">
+        <div class="vdb-user-chip">
+          <div class="vdb-user-avatar">{{ user_initials }}</div>
+          <span>{{ user_full_name }}</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="or-content">
+      {% if stats %}
+      <div class="or-stats">
+        {% for s in stats %}
+        <div class="or-stat">
+          <div class="or-stat-dot" style="background: {{ s.color }};"></div>
+          {{ s.label }}
+          <span class="or-stat-value">{{ s.value }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="or-card">
+        {% if rows %}
+        <div class="or-table-scroll">
+          <table class="or-table" id="or-main-table">
+            <thead>
+              <tr>
+                {% for col in columns %}
+                <th>{{ col.label }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in rows %}
+              <tr>
+                {% for col in columns %}
+                <td>
+                  {% set val = row[col.key] %}
+                  {% if col.get("href_key") and row[col.href_key] and val %}
+                    <a href="{{ row[col.href_key] }}">{{ val }}</a>
+                  {% elif col.get("link_prefix") and val %}
+                    <a href="{{ col.link_prefix }}{{ val }}">{{ val }}</a>
+                  {% elif col.get("badge") and val %}
+                    {% set badge_cls = "or-badge-red" if val in ("En retard", "Non conforme", "Critique", "Élevée", "Rejetée", "Rejeté", "Bloqué", "Bloquée", "Annulée", "Annulé") else "or-badge-orange" if val in ("À traiter", "En cours", "Soumise pour validation", "Soumise à contrôle", "En attente", "Demandée", "Moyenne") else "or-badge-green" if val in ("Réalisée", "Validée", "Validé", "Clôturée", "Clôturé", "Active", "Acceptée", "Approuvée") else "or-badge-purple" if val in ("Ouverte", "En analyse", "En traitement", "Vérification d'efficacité") else "or-badge-blue" if val in ("À venir", "Attendu", "Déposé", "En cours de contrôle") else "or-badge-gray" %}
+                    <span class="or-badge {{ badge_cls }}">{{ val }}</span>
+                  {% elif col.get("date") and val %}
+                    {{ frappe.utils.formatdate(val, "dd/MM/yyyy") }}
+                  {% elif col.get("percent") and val is not none %}
+                    {{ val }}%
+                  {% else %}
+                    {{ val or "—" }}
+                  {% endif %}
+                </td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="or-empty">{{ empty_message or "Aucun enregistrement." }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var btn = document.getElementById('or-hamburger');
+  if (btn) btn.addEventListener('click', function() {
+    document.getElementById('vdb-sidebar').classList.toggle('open');
+  });
+})();
+</script>
+{% endblock %}

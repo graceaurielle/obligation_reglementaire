@@ -1,0 +1,294 @@
+{
+ "actions": [],
+ "autoname": "field:libelle",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Types de justificatifs et règles associées (Ch7).",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "libelle",
+  "code",
+  "categorie",
+  "actif",
+  "cb_1",
+  "checklist",
+  "retention_regle",
+  "description",
+  "sb_1",
+  "obligatoire_defaut",
+  "doit_etre_valide",
+  "necessite_date_emission",
+  "necessite_date_expiration",
+  "necessite_reference_externe",
+  "cb_2",
+  "necessite_signature",
+  "necessite_periode",
+  "utilisable_principal",
+  "utilisable_complementaire",
+  "sb_2",
+  "formats_autorises",
+  "taille_max_mo",
+  "cb_3",
+  "duree_validite_jours",
+  "alertes_expiration",
+  "tab_2",
+  "metadonnees"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Général"
+  },
+  {
+   "fieldname": "libelle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Libellé",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "label": "Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "categorie",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Catégorie",
+   "options": "\nDéclaration\nRapport\nProcès-verbal\nAttestation\nCertificat\nRegistre\nPreuve de transmission\nPreuve de paiement\nDocument de gouvernance\nProcédure\nPreuve de contrôle\nPreuve de formation\nCorrespondance\nAutre"
+  },
+  {
+   "default": "1",
+   "fieldname": "actif",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Actif"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "checklist",
+   "fieldtype": "Link",
+   "label": "Check-list de contrôle",
+   "options": "Reg Checklist"
+  },
+  {
+   "fieldname": "retention_regle",
+   "fieldtype": "Link",
+   "label": "Règle de conservation",
+   "options": "Reg Retention Rule"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Règles"
+  },
+  {
+   "default": "1",
+   "fieldname": "obligatoire_defaut",
+   "fieldtype": "Check",
+   "label": "Obligatoire par défaut"
+  },
+  {
+   "default": "1",
+   "fieldname": "doit_etre_valide",
+   "fieldtype": "Check",
+   "label": "Doit être validé"
+  },
+  {
+   "fieldname": "necessite_date_emission",
+   "fieldtype": "Check",
+   "label": "Nécessite une date d'émission"
+  },
+  {
+   "fieldname": "necessite_date_expiration",
+   "fieldtype": "Check",
+   "label": "Nécessite une date d'expiration"
+  },
+  {
+   "fieldname": "necessite_reference_externe",
+   "fieldtype": "Check",
+   "label": "Nécessite une référence externe"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "necessite_signature",
+   "fieldtype": "Check",
+   "label": "Nécessite une signature"
+  },
+  {
+   "fieldname": "necessite_periode",
+   "fieldtype": "Check",
+   "label": "Nécessite une période couverte"
+  },
+  {
+   "default": "1",
+   "fieldname": "utilisable_principal",
+   "fieldtype": "Check",
+   "label": "Utilisable comme principal"
+  },
+  {
+   "default": "1",
+   "fieldname": "utilisable_complementaire",
+   "fieldtype": "Check",
+   "label": "Utilisable comme complémentaire"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Fichiers et validité"
+  },
+  {
+   "description": "Ex. : pdf,xlsx — vide = paramètre général.",
+   "fieldname": "formats_autorises",
+   "fieldtype": "Data",
+   "label": "Formats autorisés"
+  },
+  {
+   "fieldname": "taille_max_mo",
+   "fieldtype": "Float",
+   "label": "Taille maximale (Mo)"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "duree_validite_jours",
+   "fieldtype": "Int",
+   "label": "Durée de validité (jours)"
+  },
+  {
+   "default": "90,60,30,7,0",
+   "fieldname": "alertes_expiration",
+   "fieldtype": "Data",
+   "label": "Alertes d'expiration (J-n)"
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Métadonnées"
+  },
+  {
+   "fieldname": "metadonnees",
+   "fieldtype": "Table",
+   "label": "Métadonnées obligatoires",
+   "options": "Reg Evidence Type Metadata"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Evidence Type",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "libelle",
+ "track_changes": 1
+}

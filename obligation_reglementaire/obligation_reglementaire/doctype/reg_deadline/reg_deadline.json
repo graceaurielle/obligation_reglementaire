@@ -1,0 +1,612 @@
+{
+ "actions": [],
+ "autoname": "ECH-.YYYY.-.######",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Échéance réglementaire avec instantané de calcul (Ch6).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "organisation",
+  "obligation",
+  "libelle",
+  "periode",
+  "debut_periode",
+  "fin_periode",
+  "cb_1",
+  "statut",
+  "date_limite",
+  "heure_limite",
+  "date_limite_initiale",
+  "criticite",
+  "domaine",
+  "en_retard",
+  "jours_retard",
+  "sb_1",
+  "responsable",
+  "unite",
+  "cb_2",
+  "controleur",
+  "validateur",
+  "sb_2",
+  "date_realisation",
+  "date_soumission",
+  "date_validation",
+  "valide_par",
+  "cb_3",
+  "delai_respecte",
+  "resultat_controle",
+  "etat_documentaire",
+  "derogation_justificatif",
+  "justification_derogation",
+  "sb_3",
+  "cause_retard",
+  "commentaire_retard",
+  "motif_attente",
+  "cb_4",
+  "motif_annulation",
+  "motif_rejet",
+  "commentaire_cloture",
+  "motif_reouverture",
+  "tab_2",
+  "type_echeance",
+  "evenement",
+  "date_reference",
+  "source_date",
+  "cb_5",
+  "regle_calcul",
+  "delai_valeur",
+  "delai_unite",
+  "calendrier",
+  "fuseau_horaire",
+  "generee_automatiquement",
+  "cle_unicite",
+  "sb_4",
+  "suspendue",
+  "jours_restants_suspension",
+  "statut_avant_suspension",
+  "sb_5",
+  "non_conformite",
+  "plan_action",
+  "dernier_seuil_alerte"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Échéance"
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "obligation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Obligation",
+   "options": "Reg Obligation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "libelle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Libellé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "periode",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Période"
+  },
+  {
+   "fieldname": "debut_periode",
+   "fieldtype": "Date",
+   "label": "Début de période"
+  },
+  {
+   "fieldname": "fin_periode",
+   "fieldtype": "Date",
+   "label": "Fin de période"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "À venir",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "À venir\nÀ traiter\nEn cours\nEn attente\nSoumise pour validation\nRéalisée\nRéalisée en retard\nEn retard\nNon conforme\nReportée\nSuspendue\nAnnulée\nClôturée"
+  },
+  {
+   "fieldname": "date_limite",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Date limite",
+   "reqd": 1
+  },
+  {
+   "fieldname": "heure_limite",
+   "fieldtype": "Time",
+   "label": "Heure limite"
+  },
+  {
+   "fieldname": "date_limite_initiale",
+   "fieldtype": "Date",
+   "label": "Date limite initiale",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "obligation.criticite",
+   "fetch_if_empty": 0,
+   "fieldname": "criticite",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Criticité",
+   "options": "Reg Criticality Level",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "obligation.domaine",
+   "fetch_if_empty": 0,
+   "fieldname": "domaine",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Domaine",
+   "options": "Reg Domain",
+   "read_only": 1
+  },
+  {
+   "fieldname": "en_retard",
+   "fieldtype": "Check",
+   "in_standard_filter": 1,
+   "label": "En retard",
+   "read_only": 1
+  },
+  {
+   "fieldname": "jours_retard",
+   "fieldtype": "Int",
+   "label": "Jours de retard",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Responsabilités"
+  },
+  {
+   "fieldname": "responsable",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Responsable d'exécution",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "unite",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Direction / unité",
+   "options": "Reg Org Unit"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "controleur",
+   "fieldtype": "Link",
+   "label": "Contrôleur",
+   "options": "User"
+  },
+  {
+   "fieldname": "validateur",
+   "fieldtype": "Link",
+   "label": "Validateur",
+   "options": "User"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Réalisation"
+  },
+  {
+   "fieldname": "date_realisation",
+   "fieldtype": "Datetime",
+   "label": "Date réelle d'exécution",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_soumission",
+   "fieldtype": "Datetime",
+   "label": "Date de soumission",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "valide_par",
+   "fieldtype": "Link",
+   "label": "Validé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "delai_respecte",
+   "fieldtype": "Check",
+   "label": "Délai respecté",
+   "read_only": 1
+  },
+  {
+   "fieldname": "resultat_controle",
+   "fieldtype": "Select",
+   "label": "Résultat du contrôle",
+   "options": "\nConforme\nConforme avec observation\nNon conforme\nIncomplet\nJustificatif insuffisant"
+  },
+  {
+   "default": "Aucun justificatif",
+   "fieldname": "etat_documentaire",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "État documentaire",
+   "options": "Aucun justificatif\nPartiellement fourni\nTous déposés\nContrôle en cours\nÀ compléter\nRejetés\nValidés\nExpirés\nSans justificatif requis",
+   "read_only": 1
+  },
+  {
+   "fieldname": "derogation_justificatif",
+   "fieldtype": "Check",
+   "label": "Dérogation : clôture sans justificatif complet"
+  },
+  {
+   "depends_on": "derogation_justificatif",
+   "fieldname": "justification_derogation",
+   "fieldtype": "Small Text",
+   "label": "Justification de la dérogation",
+   "mandatory_depends_on": "derogation_justificatif"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_3",
+   "fieldtype": "Section Break",
+   "label": "Retard, attente, annulation"
+  },
+  {
+   "fieldname": "cause_retard",
+   "fieldtype": "Link",
+   "label": "Cause du retard",
+   "options": "Reg Delay Cause"
+  },
+  {
+   "fieldname": "commentaire_retard",
+   "fieldtype": "Small Text",
+   "label": "Commentaire sur le retard"
+  },
+  {
+   "depends_on": "eval:doc.statut=='En attente'",
+   "fieldname": "motif_attente",
+   "fieldtype": "Small Text",
+   "label": "Motif de mise en attente"
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.statut=='Annulée'",
+   "fieldname": "motif_annulation",
+   "fieldtype": "Small Text",
+   "label": "Motif d'annulation"
+  },
+  {
+   "fieldname": "motif_rejet",
+   "fieldtype": "Small Text",
+   "label": "Dernier motif de rejet",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commentaire_cloture",
+   "fieldtype": "Small Text",
+   "label": "Commentaire de clôture"
+  },
+  {
+   "fieldname": "motif_reouverture",
+   "fieldtype": "Small Text",
+   "label": "Dernier motif de réouverture",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Calcul (instantané)"
+  },
+  {
+   "fieldname": "type_echeance",
+   "fieldtype": "Select",
+   "label": "Type d'échéance",
+   "options": "\nDate fixe\nPériodique\nÉvénementielle\nRelative à une date réglementaire\nConditionnelle\nPonctuelle\nManuelle",
+   "read_only": 1
+  },
+  {
+   "fieldname": "evenement",
+   "fieldtype": "Link",
+   "label": "Événement déclencheur",
+   "options": "Reg Event Occurrence",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_reference",
+   "fieldtype": "Datetime",
+   "label": "Date-heure de référence",
+   "read_only": 1
+  },
+  {
+   "fieldname": "source_date",
+   "fieldtype": "Data",
+   "label": "Source de la date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "regle_calcul",
+   "fieldtype": "Small Text",
+   "label": "Règle de calcul appliquée",
+   "read_only": 1
+  },
+  {
+   "fieldname": "delai_valeur",
+   "fieldtype": "Int",
+   "label": "Délai",
+   "read_only": 1
+  },
+  {
+   "fieldname": "delai_unite",
+   "fieldtype": "Data",
+   "label": "Unité",
+   "read_only": 1
+  },
+  {
+   "fieldname": "calendrier",
+   "fieldtype": "Link",
+   "label": "Calendrier",
+   "options": "Reg Calendar",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fuseau_horaire",
+   "fieldtype": "Data",
+   "label": "Fuseau horaire",
+   "read_only": 1
+  },
+  {
+   "fieldname": "generee_automatiquement",
+   "fieldtype": "Check",
+   "label": "Générée automatiquement",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cle_unicite",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Clé d'unicité",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_4",
+   "fieldtype": "Section Break",
+   "label": "Suspension"
+  },
+  {
+   "fieldname": "suspendue",
+   "fieldtype": "Check",
+   "label": "Suspendue",
+   "read_only": 1
+  },
+  {
+   "fieldname": "jours_restants_suspension",
+   "fieldtype": "Int",
+   "label": "Jours restants au moment de la suspension",
+   "read_only": 1
+  },
+  {
+   "fieldname": "statut_avant_suspension",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Statut avant suspension",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_5",
+   "fieldtype": "Section Break",
+   "label": "Remédiation"
+  },
+  {
+   "fieldname": "non_conformite",
+   "fieldtype": "Link",
+   "label": "Non-conformité",
+   "options": "Reg Non Conformity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "plan_action",
+   "fieldtype": "Link",
+   "label": "Plan d'action",
+   "options": "Reg Action Plan",
+   "read_only": 1
+  },
+  {
+   "fieldname": "dernier_seuil_alerte",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Dernier seuil d'alerte notifié",
+   "read_only": 1
+  }
+ ],
+ "is_calendar_and_gantt": 1,
+ "links": [
+  {
+   "group": "Justificatifs",
+   "link_doctype": "Reg Evidence",
+   "link_fieldname": "echeance"
+  },
+  {
+   "group": "Historique",
+   "link_doctype": "Reg Deadline Change",
+   "link_fieldname": "echeance"
+  },
+  {
+   "group": "Historique",
+   "link_doctype": "Reg Deadline Suspension",
+   "link_fieldname": "echeance"
+  },
+  {
+   "group": "Contrôles",
+   "link_doctype": "Reg Compliance Check",
+   "link_fieldname": "echeance"
+  },
+  {
+   "group": "Remédiation",
+   "link_doctype": "Reg Non Conformity",
+   "link_fieldname": "echeance"
+  }
+ ],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Deadline",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "obligation,libelle,responsable",
+ "show_title_field_in_link": 1,
+ "sort_field": "date_limite",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "libelle",
+ "track_changes": 1
+}

@@ -1,0 +1,305 @@
+{
+ "actions": [],
+ "autoname": "DSP-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Disposition / exigence réglementaire (arborescence livre → sous-point).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "source",
+  "version",
+  "reference",
+  "titre",
+  "titre_complet",
+  "type_disposition",
+  "cb_1",
+  "parent_reg_provision",
+  "is_group",
+  "numero",
+  "ordre",
+  "statut",
+  "disposition_precedente",
+  "sb_1",
+  "contenu",
+  "empreinte_contenu",
+  "sb_2",
+  "theme",
+  "niveau_pertinence",
+  "date_debut_validite",
+  "cb_2",
+  "date_fin_validite",
+  "commentaire_analyse",
+  "lft",
+  "rgt",
+  "old_parent"
+ ],
+ "fields": [
+  {
+   "fieldname": "source",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Texte réglementaire",
+   "options": "Reg Source",
+   "reqd": 1
+  },
+  {
+   "fieldname": "version",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Version",
+   "options": "Reg Source Version"
+  },
+  {
+   "bold": 1,
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Référence (ex. Art. 12 al. 2)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "titre",
+   "fieldtype": "Data",
+   "label": "Titre"
+  },
+  {
+   "fieldname": "titre_complet",
+   "fieldtype": "Data",
+   "label": "Libellé complet",
+   "read_only": 1
+  },
+  {
+   "fieldname": "type_disposition",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type",
+   "options": "\nLivre\nTitre\nChapitre\nSection\nSous-section\nArticle\nAlinéa\nParagraphe\nPoint\nSous-point\nAnnexe"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "parent_reg_provision",
+   "fieldtype": "Link",
+   "label": "Disposition parente",
+   "options": "Reg Provision"
+  },
+  {
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Est un groupe"
+  },
+  {
+   "fieldname": "numero",
+   "fieldtype": "Data",
+   "label": "Numéro"
+  },
+  {
+   "fieldname": "ordre",
+   "fieldtype": "Int",
+   "label": "Ordre"
+  },
+  {
+   "default": "En vigueur",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "En vigueur\nModifiée\nAbrogée\nSupprimée\nFuture"
+  },
+  {
+   "fieldname": "disposition_precedente",
+   "fieldtype": "Link",
+   "label": "Disposition de la version précédente",
+   "options": "Reg Provision"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Contenu"
+  },
+  {
+   "fieldname": "contenu",
+   "fieldtype": "Text Editor",
+   "label": "Contenu"
+  },
+  {
+   "fieldname": "empreinte_contenu",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Empreinte du contenu",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Analyse"
+  },
+  {
+   "fieldname": "theme",
+   "fieldtype": "Data",
+   "label": "Thème"
+  },
+  {
+   "fieldname": "niveau_pertinence",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Niveau de pertinence",
+   "options": "\nÉlevé\nMoyen\nFaible\nNon pertinent"
+  },
+  {
+   "fieldname": "date_debut_validite",
+   "fieldtype": "Date",
+   "label": "Début de validité"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_fin_validite",
+   "fieldtype": "Date",
+   "label": "Fin de validité"
+  },
+  {
+   "fieldname": "commentaire_analyse",
+   "fieldtype": "Small Text",
+   "label": "Commentaire d'analyse"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Ancien parent",
+   "options": "Reg Provision",
+   "read_only": 1
+  }
+ ],
+ "is_tree": 1,
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Provision",
+ "naming_rule": "Expression (old style)",
+ "nsm_parent_field": "parent_reg_provision",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "reference,source,titre",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "titre_complet",
+ "track_changes": 1
+}

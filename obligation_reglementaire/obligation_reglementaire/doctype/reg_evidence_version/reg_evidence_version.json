@@ -1,0 +1,295 @@
+{
+ "actions": [],
+ "autoname": "JVS-.YYYY.-.######",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Version d'un justificatif — immuable une fois validée, empreinte SHA-256 (Ch7).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "justificatif",
+  "numero",
+  "statut",
+  "fichier",
+  "cb_1",
+  "auteur",
+  "date_depot",
+  "deposee_apres_echeance",
+  "verrouillee",
+  "sb_1",
+  "nom_original",
+  "taille_octets",
+  "type_mime",
+  "cb_2",
+  "algorithme",
+  "empreinte",
+  "date_calcul_empreinte",
+  "sb_2",
+  "commentaire",
+  "motif_remplacement",
+  "cb_3",
+  "doublon_detecte",
+  "doublon_confirme",
+  "motif_rejet"
+ ],
+ "fields": [
+  {
+   "fieldname": "justificatif",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Justificatif",
+   "options": "Reg Evidence",
+   "reqd": 1
+  },
+  {
+   "fieldname": "numero",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "N° de version",
+   "read_only": 1
+  },
+  {
+   "default": "Déposée",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Déposée\nEn contrôle\nValidée\nValidée avec réserve\nÀ compléter\nRejetée\nRemplacée\nArchivée",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fichier",
+   "fieldtype": "Attach",
+   "label": "Fichier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "auteur",
+   "fieldtype": "Link",
+   "label": "Auteur",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_depot",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Date de dépôt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "deposee_apres_echeance",
+   "fieldtype": "Check",
+   "label": "Déposée après l'échéance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "verrouillee",
+   "fieldtype": "Check",
+   "label": "Verrouillée",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Intégrité"
+  },
+  {
+   "fieldname": "nom_original",
+   "fieldtype": "Data",
+   "label": "Nom original",
+   "read_only": 1
+  },
+  {
+   "fieldname": "taille_octets",
+   "fieldtype": "Int",
+   "label": "Taille (octets)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "type_mime",
+   "fieldtype": "Data",
+   "label": "Type MIME",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "SHA-256",
+   "fieldname": "algorithme",
+   "fieldtype": "Data",
+   "label": "Algorithme",
+   "read_only": 1
+  },
+  {
+   "fieldname": "empreinte",
+   "fieldtype": "Data",
+   "label": "Empreinte",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_calcul_empreinte",
+   "fieldtype": "Datetime",
+   "label": "Date de calcul",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Commentaires"
+  },
+  {
+   "fieldname": "commentaire",
+   "fieldtype": "Small Text",
+   "label": "Commentaire du déposant"
+  },
+  {
+   "fieldname": "motif_remplacement",
+   "fieldtype": "Small Text",
+   "label": "Motif de remplacement"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "doublon_detecte",
+   "fieldtype": "Small Text",
+   "label": "Doublon détecté",
+   "read_only": 1
+  },
+  {
+   "fieldname": "doublon_confirme",
+   "fieldtype": "Check",
+   "label": "Dépôt confirmé malgré le doublon",
+   "read_only": 1
+  },
+  {
+   "fieldname": "motif_rejet",
+   "fieldtype": "Small Text",
+   "label": "Motif de rejet",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Evidence Version",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "nom_original",
+ "track_changes": 1
+}

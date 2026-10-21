@@ -1,0 +1,709 @@
+{
+ "actions": [],
+ "autoname": "OBL-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Obligation réglementaire applicable à une organisation (Ch3, Ch5, Ch6).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "organisation",
+  "titre",
+  "description",
+  "modele",
+  "cb_1",
+  "statut",
+  "applicabilite",
+  "etat_conformite",
+  "criticite",
+  "priorite",
+  "a_revoir",
+  "motif_revue",
+  "sb_1",
+  "source",
+  "version_source",
+  "disposition_principale",
+  "autorite",
+  "cb_2",
+  "domaine",
+  "sous_domaine",
+  "type_obligation",
+  "justification_source_abrogee",
+  "dispositions",
+  "tab_2",
+  "exigence_operationnelle",
+  "resultat_attendu",
+  "conditions_particulieres",
+  "consequence_nc",
+  "sb_2",
+  "justificatif_requis",
+  "validation_justificatif_requise",
+  "justificatifs",
+  "tab_3",
+  "nature_temporelle",
+  "frequence",
+  "intervalle",
+  "intervalle_unite",
+  "date_reference",
+  "date_fixe",
+  "evenement_declencheur",
+  "condition_declenchement",
+  "cb_3",
+  "delai_valeur",
+  "delai_unite",
+  "heure_limite",
+  "calendrier",
+  "regle_jour_non_ouvre",
+  "jours_alerte",
+  "regle_calcul",
+  "sb_3",
+  "date_debut",
+  "date_fin",
+  "cb_4",
+  "date_activation",
+  "date_archivage",
+  "derniere_generation",
+  "tab_4",
+  "direction",
+  "proprietaire",
+  "responsable_operationnel",
+  "cb_5",
+  "referent_conformite",
+  "validateur",
+  "suppleant",
+  "controleur",
+  "sb_4",
+  "perimetre",
+  "dependances",
+  "sb_5",
+  "reference_doctype",
+  "reference_name",
+  "sb_6",
+  "valide_par",
+  "date_validation"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Identification"
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "titre",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Intitulé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "modele",
+   "fieldtype": "Link",
+   "label": "Obligation modèle (catalogue)",
+   "options": "Reg Template Obligation"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Brouillon",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Brouillon\nEn qualification\nValidée\nActive\nSuspendue\nClôturée\nArchivée\nObsolète"
+  },
+  {
+   "default": "À analyser",
+   "fieldname": "applicabilite",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Applicabilité",
+   "options": "À analyser\nApplicable\nApplicable sous condition\nNon applicable"
+  },
+  {
+   "default": "Non évalué",
+   "fieldname": "etat_conformite",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "État de conformité",
+   "options": "Non évalué\nConforme\nPartiellement conforme\nNon conforme"
+  },
+  {
+   "fieldname": "criticite",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Criticité",
+   "options": "Reg Criticality Level",
+   "reqd": 1
+  },
+  {
+   "default": "Normale",
+   "fieldname": "priorite",
+   "fieldtype": "Select",
+   "label": "Priorité",
+   "options": "\nBasse\nNormale\nHaute\nUrgente"
+  },
+  {
+   "fieldname": "a_revoir",
+   "fieldtype": "Check",
+   "label": "À revoir (évolution réglementaire)",
+   "read_only": 1
+  },
+  {
+   "depends_on": "a_revoir",
+   "fieldname": "motif_revue",
+   "fieldtype": "Small Text",
+   "label": "Motif de la revue",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Fondement réglementaire"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Texte réglementaire",
+   "options": "Reg Source",
+   "reqd": 1
+  },
+  {
+   "fieldname": "version_source",
+   "fieldtype": "Link",
+   "label": "Version du texte",
+   "options": "Reg Source Version"
+  },
+  {
+   "fieldname": "disposition_principale",
+   "fieldtype": "Link",
+   "label": "Disposition principale",
+   "options": "Reg Provision"
+  },
+  {
+   "fetch_from": "source.autorite",
+   "fetch_if_empty": 0,
+   "fieldname": "autorite",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Autorité",
+   "options": "Reg Authority",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "domaine",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Domaine",
+   "options": "Reg Domain",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sous_domaine",
+   "fieldtype": "Link",
+   "label": "Sous-domaine",
+   "options": "Reg Domain"
+  },
+  {
+   "fieldname": "type_obligation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Type d'obligation",
+   "options": "Reg Obligation Type"
+  },
+  {
+   "description": "Requis pour rattacher une nouvelle obligation à un texte abrogé (habilité uniquement).",
+   "fieldname": "justification_source_abrogee",
+   "fieldtype": "Small Text",
+   "label": "Justification (texte abrogé)"
+  },
+  {
+   "fieldname": "dispositions",
+   "fieldtype": "Table",
+   "label": "Dispositions liées",
+   "options": "Reg Obligation Provision"
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Exigence"
+  },
+  {
+   "fieldname": "exigence_operationnelle",
+   "fieldtype": "Text Editor",
+   "label": "Exigence opérationnelle"
+  },
+  {
+   "fieldname": "resultat_attendu",
+   "fieldtype": "Small Text",
+   "label": "Résultat attendu"
+  },
+  {
+   "fieldname": "conditions_particulieres",
+   "fieldtype": "Small Text",
+   "label": "Conditions particulières"
+  },
+  {
+   "fieldname": "consequence_nc",
+   "fieldtype": "Small Text",
+   "label": "Conséquence en cas de manquement"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Justificatifs attendus"
+  },
+  {
+   "default": "1",
+   "fieldname": "justificatif_requis",
+   "fieldtype": "Check",
+   "label": "Un justificatif est requis pour réaliser l'échéance"
+  },
+  {
+   "default": "1",
+   "fieldname": "validation_justificatif_requise",
+   "fieldtype": "Check",
+   "label": "Le justificatif doit être validé avant clôture"
+  },
+  {
+   "fieldname": "justificatifs",
+   "fieldtype": "Table",
+   "label": "Justificatifs attendus",
+   "options": "Reg Obligation Evidence"
+  },
+  {
+   "fieldname": "tab_3",
+   "fieldtype": "Tab Break",
+   "label": "Échéancier"
+  },
+  {
+   "default": "Périodique",
+   "fieldname": "nature_temporelle",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Nature temporelle",
+   "options": "\nPériodique\nÉvénementielle\nPermanente\nPonctuelle\nDate fixe\nRelative à une date réglementaire\nConditionnelle",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.nature_temporelle=='Périodique'",
+   "fieldname": "frequence",
+   "fieldtype": "Select",
+   "label": "Fréquence",
+   "mandatory_depends_on": "eval:doc.nature_temporelle=='Périodique'",
+   "options": "\nPonctuelle\nQuotidienne\nHebdomadaire\nMensuelle\nTrimestrielle\nSemestrielle\nAnnuelle\nPluriannuelle\nPersonnalisée\nÉvénementielle\nPermanente"
+  },
+  {
+   "depends_on": "eval:doc.frequence=='Personnalisée'",
+   "fieldname": "intervalle",
+   "fieldtype": "Int",
+   "label": "Intervalle (fréquence personnalisée)"
+  },
+  {
+   "depends_on": "eval:doc.frequence=='Personnalisée'",
+   "fieldname": "intervalle_unite",
+   "fieldtype": "Select",
+   "label": "Unité de l'intervalle",
+   "options": "\nJours calendaires\nSemaines\nMois\nAnnées"
+  },
+  {
+   "description": "Début de la première période.",
+   "fieldname": "date_reference",
+   "fieldtype": "Date",
+   "label": "Date de référence du calcul"
+  },
+  {
+   "depends_on": "eval:['Ponctuelle','Date fixe','Relative à une date réglementaire'].includes(doc.nature_temporelle)",
+   "fieldname": "date_fixe",
+   "fieldtype": "Date",
+   "label": "Date fixe d'échéance"
+  },
+  {
+   "depends_on": "eval:doc.nature_temporelle=='Événementielle'",
+   "fieldname": "evenement_declencheur",
+   "fieldtype": "Link",
+   "label": "Événement déclencheur",
+   "mandatory_depends_on": "eval:doc.nature_temporelle=='Événementielle'",
+   "options": "Reg Trigger Event Type"
+  },
+  {
+   "depends_on": "eval:doc.nature_temporelle=='Conditionnelle'",
+   "fieldname": "condition_declenchement",
+   "fieldtype": "Small Text",
+   "label": "Condition de déclenchement"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "delai_valeur",
+   "fieldtype": "Int",
+   "label": "Délai après fin de période / événement"
+  },
+  {
+   "default": "Jours calendaires",
+   "fieldname": "delai_unite",
+   "fieldtype": "Select",
+   "label": "Unité du délai",
+   "options": "\nMinutes\nHeures\nJours calendaires\nJours ouvrés\nSemaines\nMois\nTrimestres\nAnnées"
+  },
+  {
+   "fieldname": "heure_limite",
+   "fieldtype": "Time",
+   "label": "Heure limite"
+  },
+  {
+   "fieldname": "calendrier",
+   "fieldtype": "Link",
+   "label": "Calendrier",
+   "options": "Reg Calendar"
+  },
+  {
+   "default": "Jour ouvré suivant",
+   "fieldname": "regle_jour_non_ouvre",
+   "fieldtype": "Select",
+   "label": "Si l'échéance tombe un jour non ouvré",
+   "options": "\nAucun report\nJour ouvré suivant\nJour ouvré précédent"
+  },
+  {
+   "description": "Ex. : 30,15,7,3,1,0 — vide = paramètre général.",
+   "fieldname": "jours_alerte",
+   "fieldtype": "Data",
+   "label": "Alertes (J-n)"
+  },
+  {
+   "fieldname": "regle_calcul",
+   "fieldtype": "Small Text",
+   "label": "Règle de calcul (lisible)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_3",
+   "fieldtype": "Section Break",
+   "label": "Validité"
+  },
+  {
+   "fieldname": "date_debut",
+   "fieldtype": "Date",
+   "label": "Date de début d'application",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_fin",
+   "fieldtype": "Date",
+   "label": "Date de fin d'application"
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_activation",
+   "fieldtype": "Datetime",
+   "label": "Date d'activation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_archivage",
+   "fieldtype": "Datetime",
+   "label": "Date d'archivage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "derniere_generation",
+   "fieldtype": "Datetime",
+   "label": "Dernière génération d'échéances",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tab_4",
+   "fieldtype": "Tab Break",
+   "label": "Gouvernance"
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Direction responsable",
+   "options": "Reg Org Unit",
+   "reqd": 1
+  },
+  {
+   "fieldname": "proprietaire",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Propriétaire",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "responsable_operationnel",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Responsable opérationnel",
+   "options": "User"
+  },
+  {
+   "fieldname": "cb_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "referent_conformite",
+   "fieldtype": "Link",
+   "label": "Référent conformité",
+   "options": "User"
+  },
+  {
+   "fieldname": "validateur",
+   "fieldtype": "Link",
+   "label": "Validateur",
+   "options": "User"
+  },
+  {
+   "fieldname": "suppleant",
+   "fieldtype": "Link",
+   "label": "Suppléant",
+   "options": "User"
+  },
+  {
+   "fieldname": "controleur",
+   "fieldtype": "Link",
+   "label": "Contrôleur des justificatifs",
+   "options": "User"
+  },
+  {
+   "fieldname": "sb_4",
+   "fieldtype": "Section Break",
+   "label": "Périmètre"
+  },
+  {
+   "fieldname": "perimetre",
+   "fieldtype": "Table",
+   "label": "Périmètre d'application",
+   "options": "Reg Obligation Scope"
+  },
+  {
+   "fieldname": "dependances",
+   "fieldtype": "Table",
+   "label": "Dépendances",
+   "options": "Reg Obligation Dependency"
+  },
+  {
+   "fieldname": "sb_5",
+   "fieldtype": "Section Break",
+   "label": "Lien externe (ex. contrat — module contract_te)"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "Objet externe (type)",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Objet externe",
+   "options": "reference_doctype"
+  },
+  {
+   "fieldname": "sb_6",
+   "fieldtype": "Section Break",
+   "label": "Validation"
+  },
+  {
+   "fieldname": "valide_par",
+   "fieldtype": "Link",
+   "label": "Validé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  }
+ ],
+ "links": [
+  {
+   "group": "Suivi",
+   "link_doctype": "Reg Deadline",
+   "link_fieldname": "obligation"
+  },
+  {
+   "group": "Suivi",
+   "link_doctype": "Reg Evidence",
+   "link_fieldname": "obligation"
+  },
+  {
+   "group": "Suivi",
+   "link_doctype": "Reg Compliance Check",
+   "link_fieldname": "obligation"
+  },
+  {
+   "group": "Gouvernance",
+   "link_doctype": "Reg Applicability Decision",
+   "link_fieldname": "obligation"
+  },
+  {
+   "group": "Gouvernance",
+   "link_doctype": "Reg Responsibility Assignment",
+   "link_fieldname": "obligation"
+  },
+  {
+   "group": "Remédiation",
+   "link_doctype": "Reg Non Conformity",
+   "link_fieldname": "obligation"
+  },
+  {
+   "group": "Remédiation",
+   "link_doctype": "Reg Action Plan",
+   "link_fieldname": "obligation"
+  },
+  {
+   "group": "Remédiation",
+   "link_doctype": "Reg Finding",
+   "link_fieldname": "obligation"
+  }
+ ],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Obligation",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "titre,organisation,source",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "titre",
+ "track_changes": 1
+}

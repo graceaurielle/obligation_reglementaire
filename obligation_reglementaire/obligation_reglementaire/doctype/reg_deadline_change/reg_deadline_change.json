@@ -1,0 +1,283 @@
+{
+ "actions": [],
+ "autoname": "RPT-ECH-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Correction technique ou report métier d'une échéance — l'ancienne date reste historisée (Ch6).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "echeance",
+  "obligation",
+  "organisation",
+  "type_modification",
+  "statut",
+  "cb_1",
+  "ancienne_date",
+  "nouvelle_date",
+  "demandeur",
+  "date_demande",
+  "sb_1",
+  "motif",
+  "justification",
+  "piece",
+  "cb_2",
+  "autorite_autorisant",
+  "regle_report",
+  "sb_2",
+  "approbateur",
+  "date_approbation",
+  "commentaire_decision"
+ ],
+ "fields": [
+  {
+   "fieldname": "echeance",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Échéance",
+   "options": "Reg Deadline",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "echeance.obligation",
+   "fetch_if_empty": 0,
+   "fieldname": "obligation",
+   "fieldtype": "Link",
+   "label": "Obligation",
+   "options": "Reg Obligation",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "echeance.organisation",
+   "fetch_if_empty": 0,
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "read_only": 1
+  },
+  {
+   "fieldname": "type_modification",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type",
+   "options": "Report métier\nCorrection technique",
+   "reqd": 1
+  },
+  {
+   "default": "Demandée",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Demandée\nApprouvée\nRefusée"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ancienne_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Ancienne date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "nouvelle_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Nouvelle date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "demandeur",
+   "fieldtype": "Link",
+   "label": "Demandeur",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_demande",
+   "fieldtype": "Datetime",
+   "label": "Date de la demande",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Justification"
+  },
+  {
+   "fieldname": "motif",
+   "fieldtype": "Small Text",
+   "label": "Motif",
+   "reqd": 1
+  },
+  {
+   "fieldname": "justification",
+   "fieldtype": "Small Text",
+   "label": "Justification"
+  },
+  {
+   "fieldname": "piece",
+   "fieldtype": "Attach",
+   "label": "Pièce justificative"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "autorite_autorisant",
+   "fieldtype": "Link",
+   "label": "Autorité ayant autorisé le report",
+   "options": "Reg Authority"
+  },
+  {
+   "fieldname": "regle_report",
+   "fieldtype": "Small Text",
+   "label": "Règle permettant le report"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Décision"
+  },
+  {
+   "fieldname": "approbateur",
+   "fieldtype": "Link",
+   "label": "Approbateur",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_approbation",
+   "fieldtype": "Datetime",
+   "label": "Date de décision",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commentaire_decision",
+   "fieldtype": "Small Text",
+   "label": "Commentaire de décision"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Deadline Change",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "echeance",
+ "track_changes": 1
+}

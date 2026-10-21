@@ -1,0 +1,291 @@
+{
+ "actions": [],
+ "autoname": "DCV-.YYYY.-.######",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Version documentaire — jamais écrasée (Ch12.13).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "document",
+  "numero",
+  "type_version",
+  "statut",
+  "fichier",
+  "cb_1",
+  "version_precedente",
+  "auteur",
+  "deposant",
+  "date_depot",
+  "sb_1",
+  "nom_fichier",
+  "type_mime",
+  "cb_2",
+  "taille_octets",
+  "empreinte",
+  "sb_2",
+  "commentaire",
+  "motif_rejet",
+  "commentaire_rejet",
+  "cb_3",
+  "valide_par",
+  "date_validation"
+ ],
+ "fields": [
+  {
+   "fieldname": "document",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Document",
+   "options": "Reg Document",
+   "reqd": 1
+  },
+  {
+   "fieldname": "numero",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "N° de version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "type_version",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type de version",
+   "options": "Mineure\nMajeure"
+  },
+  {
+   "default": "Soumise",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Soumise\nEn contrôle\nValidée\nRejetée\nRemplacée\nArchivée",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fichier",
+   "fieldtype": "Attach",
+   "label": "Fichier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "version_precedente",
+   "fieldtype": "Link",
+   "label": "Version précédente",
+   "options": "Reg Document Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "auteur",
+   "fieldtype": "Data",
+   "label": "Auteur"
+  },
+  {
+   "fieldname": "deposant",
+   "fieldtype": "Link",
+   "label": "Déposant",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_depot",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Date de dépôt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Intégrité"
+  },
+  {
+   "fieldname": "nom_fichier",
+   "fieldtype": "Data",
+   "label": "Nom du fichier",
+   "read_only": 1
+  },
+  {
+   "fieldname": "type_mime",
+   "fieldtype": "Data",
+   "label": "Type MIME",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "taille_octets",
+   "fieldtype": "Int",
+   "label": "Taille (octets)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "empreinte",
+   "fieldtype": "Data",
+   "label": "Empreinte SHA-256",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Contrôle"
+  },
+  {
+   "fieldname": "commentaire",
+   "fieldtype": "Small Text",
+   "label": "Commentaire de modification"
+  },
+  {
+   "fieldname": "motif_rejet",
+   "fieldtype": "Link",
+   "label": "Motif de rejet",
+   "options": "Reg Rejection Reason",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commentaire_rejet",
+   "fieldtype": "Small Text",
+   "label": "Commentaire de rejet",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valide_par",
+   "fieldtype": "Link",
+   "label": "Validé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Document Version",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "numero",
+ "track_changes": 1
+}

@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "creation": "2026-10-13 09:00:00.000000",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "action_prerequise",
+  "intitule",
+  "obligatoire",
+  "commentaire"
+ ],
+ "fields": [
+  {
+   "fieldname": "action_prerequise",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Action prérequise",
+   "options": "Reg Corrective Action",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "action_prerequise.intitule",
+   "fetch_if_empty": 0,
+   "fieldname": "intitule",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Intitulé",
+   "read_only": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "obligatoire",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Bloquante"
+  },
+  {
+   "fieldname": "commentaire",
+   "fieldtype": "Small Text",
+   "label": "Commentaire"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Action Dependency",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_order": "DESC",
+ "states": []
+}

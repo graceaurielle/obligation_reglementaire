@@ -1,0 +1,517 @@
+{
+ "actions": [],
+ "autoname": "DOC-.YYYY.-.######",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Objet documentaire GED distinct du fichier : métadonnées, versions, conservation, gel (Ch12).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "organisation",
+  "titre",
+  "reference_documentaire",
+  "type_document",
+  "categorie",
+  "sous_categorie",
+  "description",
+  "cb_1",
+  "statut",
+  "confidentialite",
+  "version_courante",
+  "numero_version",
+  "proprietaire_metier",
+  "direction",
+  "origine",
+  "sb_1",
+  "fichier",
+  "nom_fichier",
+  "extension",
+  "cb_2",
+  "taille_octets",
+  "empreinte",
+  "auteur",
+  "sb_2",
+  "date_depot",
+  "date_entree_vigueur",
+  "date_expiration",
+  "cb_3",
+  "date_archivage_prevue",
+  "date_suppression_prevue",
+  "date_archivage",
+  "tab_2",
+  "obligation",
+  "echeance",
+  "justificatif",
+  "cb_4",
+  "non_conformite",
+  "plan_action",
+  "action",
+  "source",
+  "liens",
+  "tab_3",
+  "retention",
+  "duree_conservation_annees",
+  "point_depart_conservation",
+  "cb_5",
+  "gel",
+  "motif_gel",
+  "gel_par",
+  "date_gel",
+  "sb_3",
+  "motif_suppression",
+  "supprime_par"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Document"
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "titre",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Titre",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reference_documentaire",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Référence documentaire"
+  },
+  {
+   "fieldname": "type_document",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type documentaire",
+   "options": "Reg Document Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "categorie",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Catégorie",
+   "options": "Reg Document Category"
+  },
+  {
+   "fieldname": "sous_categorie",
+   "fieldtype": "Data",
+   "label": "Sous-catégorie"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Brouillon",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Brouillon\nSoumis\nEn contrôle\nValidé\nPublié\nRejeté\nExpiré\nArchivé\nSupprimé logiquement"
+  },
+  {
+   "default": "Interne",
+   "fieldname": "confidentialite",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Confidentialité",
+   "options": "\nPublic interne\nInterne\nConfidentiel\nStrictement confidentiel\nSensible"
+  },
+  {
+   "fieldname": "version_courante",
+   "fieldtype": "Link",
+   "label": "Version courante",
+   "options": "Reg Document Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "numero_version",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "N° de version courante",
+   "read_only": 1
+  },
+  {
+   "fieldname": "proprietaire_metier",
+   "fieldtype": "Link",
+   "label": "Propriétaire métier",
+   "options": "User"
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Direction",
+   "options": "Reg Org Unit"
+  },
+  {
+   "fieldname": "origine",
+   "fieldtype": "Select",
+   "label": "Origine",
+   "options": "Dépôt utilisateur\nReporting\nImport de masse\nSystème externe\nJustificatif\nPreuve d'action"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Fichier courant"
+  },
+  {
+   "fieldname": "fichier",
+   "fieldtype": "Attach",
+   "label": "Fichier courant",
+   "read_only": 1
+  },
+  {
+   "fieldname": "nom_fichier",
+   "fieldtype": "Data",
+   "label": "Nom du fichier",
+   "read_only": 1
+  },
+  {
+   "fieldname": "extension",
+   "fieldtype": "Data",
+   "label": "Extension",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "taille_octets",
+   "fieldtype": "Int",
+   "label": "Taille (octets)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "empreinte",
+   "fieldtype": "Data",
+   "label": "Empreinte SHA-256",
+   "read_only": 1
+  },
+  {
+   "fieldname": "auteur",
+   "fieldtype": "Data",
+   "label": "Auteur"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Dates"
+  },
+  {
+   "fieldname": "date_depot",
+   "fieldtype": "Datetime",
+   "label": "Date de dépôt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_entree_vigueur",
+   "fieldtype": "Date",
+   "label": "Date d'entrée en vigueur"
+  },
+  {
+   "fieldname": "date_expiration",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date d'expiration"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_archivage_prevue",
+   "fieldtype": "Date",
+   "label": "Date prévisionnelle d'archivage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_suppression_prevue",
+   "fieldtype": "Date",
+   "label": "Date de suppression prévue",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_archivage",
+   "fieldtype": "Datetime",
+   "label": "Date d'archivage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Rattachements"
+  },
+  {
+   "fieldname": "obligation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Obligation",
+   "options": "Reg Obligation"
+  },
+  {
+   "fieldname": "echeance",
+   "fieldtype": "Link",
+   "label": "Échéance",
+   "options": "Reg Deadline"
+  },
+  {
+   "fieldname": "justificatif",
+   "fieldtype": "Link",
+   "label": "Justificatif",
+   "options": "Reg Evidence"
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "non_conformite",
+   "fieldtype": "Link",
+   "label": "Non-conformité",
+   "options": "Reg Non Conformity"
+  },
+  {
+   "fieldname": "plan_action",
+   "fieldtype": "Link",
+   "label": "Plan d'action",
+   "options": "Reg Action Plan"
+  },
+  {
+   "fieldname": "action",
+   "fieldtype": "Link",
+   "label": "Action",
+   "options": "Reg Corrective Action"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Link",
+   "label": "Texte réglementaire",
+   "options": "Reg Source"
+  },
+  {
+   "fieldname": "liens",
+   "fieldtype": "Table",
+   "label": "Autres objets liés",
+   "options": "Reg Document Link"
+  },
+  {
+   "fieldname": "tab_3",
+   "fieldtype": "Tab Break",
+   "label": "Conservation"
+  },
+  {
+   "fieldname": "retention",
+   "fieldtype": "Link",
+   "label": "Règle de conservation",
+   "options": "Reg Retention Rule"
+  },
+  {
+   "fieldname": "duree_conservation_annees",
+   "fieldtype": "Int",
+   "label": "Durée de conservation (années)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "point_depart_conservation",
+   "fieldtype": "Data",
+   "label": "Point de départ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gel",
+   "fieldtype": "Check",
+   "in_standard_filter": 1,
+   "label": "Sous gel de conservation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "motif_gel",
+   "fieldtype": "Small Text",
+   "label": "Motif du gel",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gel_par",
+   "fieldtype": "Link",
+   "label": "Gel posé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_gel",
+   "fieldtype": "Datetime",
+   "label": "Date du gel",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_3",
+   "fieldtype": "Section Break",
+   "label": "Suppression logique"
+  },
+  {
+   "fieldname": "motif_suppression",
+   "fieldtype": "Small Text",
+   "label": "Motif de suppression",
+   "read_only": 1
+  },
+  {
+   "fieldname": "supprime_par",
+   "fieldtype": "Link",
+   "label": "Supprimé par",
+   "options": "User",
+   "read_only": 1
+  }
+ ],
+ "links": [
+  {
+   "group": "Versions",
+   "link_doctype": "Reg Document Version",
+   "link_fieldname": "document"
+  },
+  {
+   "group": "Partages",
+   "link_doctype": "Reg Document Share",
+   "link_fieldname": "document"
+  }
+ ],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Document",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "titre,reference_documentaire,type_document",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "titre",
+ "track_changes": 1
+}

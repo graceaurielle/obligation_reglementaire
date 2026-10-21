@@ -1,0 +1,356 @@
+{% extends "templates/web.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block page_content %}
+{% include "due_diligence/www/v_base_style.html" %}
+{% include "due_diligence/www/v_table_style.html" %}
+<style>
+.or-content { padding: 24px 28px 40px; max-width: 1200px; }
+.or-back { font-size: 13px; color: var(--vdb-muted); font-weight: 600; margin-bottom: 14px; display: inline-flex; gap: 6px; }
+.or-back:hover { color: var(--vdb-navy); }
+.or-head { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 22px 24px; margin-bottom: 22px; }
+.or-head-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.or-head-ref { font-size: 13px; color: var(--vdb-muted); font-weight: 600; }
+.or-head-title { font-size: 22px; font-weight: 700; color: var(--vdb-navy); letter-spacing: -.02em; margin-top: 2px; }
+.or-head-sub { font-size: 13px; color: var(--vdb-muted); margin-top: 6px; }
+.or-head-sub a { color: var(--vdb-accent); font-weight: 600; text-decoration: none; }
+.or-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.or-badge-red { background: #fee2e2; color: #b91c1c; }
+.or-badge-orange { background: #ffedd5; color: #c2410c; }
+.or-badge-green { background: #e7f6ec; color: #15803d; }
+.or-badge-blue { background: #dbeafe; color: #1e40af; }
+.or-badge-gray { background: #f1f5f9; color: #475569; }
+.or-badge-purple { background: #ede9fe; color: #6d28d9; }
+.or-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 22px; align-items: start; }
+@media (max-width: 900px) { .or-grid { grid-template-columns: 1fr; } }
+.or-card { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; }
+.or-card-title { font-size: 15px; font-weight: 700; color: var(--vdb-navy); margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+.or-info-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #eef1f8; font-size: 13px; }
+.or-info-row:last-child { border-bottom: none; }
+.or-info-k { color: var(--vdb-muted); } .or-info-v { font-weight: 600; text-align: right; }
+.or-empty { padding: 16px; text-align: center; color: var(--vdb-muted); font-size: 13px; }
+.or-mini-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.or-mini-table th { text-align: left; color: var(--vdb-muted); font-weight: 600; font-size: 11px; text-transform: uppercase; padding: 6px 8px; border-bottom: 1px solid var(--vdb-border); }
+.or-mini-table td { padding: 8px; border-bottom: 1px solid #f1f4fa; }
+.or-mini-table a { color: var(--vdb-accent); font-weight: 600; text-decoration: none; }
+.or-actions { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vdb-border); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.or-actions-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--vdb-muted); margin-right: 4px; }
+.or-act { border: 1px solid var(--vdb-navy); background: var(--vdb-navy); color: #fff; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.or-act:hover { opacity: .9; }
+.or-act.danger { background: #fff; border-color: #fecaca; color: #b91c1c; }
+.or-act.ghost { background: #fff; border-color: var(--vdb-border); color: var(--vdb-navy); }
+.or-act[disabled] { opacity: .5; cursor: not-allowed; }
+.or-act-err { width: 100%; font-size: 13px; color: #b91c1c; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 9px 12px; margin-top: 10px; }
+.or-act-ok { width: 100%; font-size: 13px; color: #15803d; background: #e7f6ec; border: 1px solid #bbf0cd; border-radius: 8px; padding: 9px 12px; margin-top: 10px; }
+.or-motif-bloc { width: 100%; margin-top: 10px; }
+.or-motif-bloc textarea, .or-motif-bloc input, .or-motif-bloc select { width: 100%; border: 1px solid #d8dee9; border-radius: 8px; padding: 9px 12px; font: inherit; font-size: 13px; margin-top: 8px; }
+.or-motif-bloc textarea { min-height: 60px; resize: vertical; }
+.or-justif-note { font-size: 12px; color: var(--vdb-muted); margin-top: 14px; background: #f8fafc; border-radius: 8px; padding: 10px 12px; }
+</style>
+
+{% set _BADGE = { "Brouillon": "gray", "En qualification": "orange", "Validée": "blue", "Active": "green",
+  "Suspendue": "orange", "Clôturée": "gray", "Obsolète": "gray", "Archivée": "gray",
+  "Ouverte": "red", "En analyse": "orange", "En traitement": "orange", "Critique": "red", "Élevée": "orange" } %}
+{% macro badge(val) %}<span class="or-badge or-badge-{{ _BADGE.get(val, 'gray') }}">{{ val }}</span>{% endmacro %}
+
+<div class="vdb-layout">
+  {% include "due_diligence/www/v_sidebar.html" %}
+  <div class="vdb-main">
+    <header class="vdb-header">
+      <button class="vdb-hamburger" id="or-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <h2>Obligation réglementaire</h2>
+      <div class="vdb-header-right">
+        <div class="vdb-user-chip"><div class="vdb-user-avatar">{{ user_initials }}</div><span>{{ user_full_name }}</span></div>
+      </div>
+    </header>
+
+    <div class="or-content">
+      <a href="/obligations" class="or-back">← Retour au tableau de bord</a>
+
+      <div class="or-head">
+        <div class="or-head-top">
+          <div>
+            <div class="or-head-ref">{{ obligation.name }}</div>
+            <div class="or-head-title">{{ obligation.titre }}</div>
+            <div class="or-head-sub">
+              {% if source_url %}Texte : <a href="{{ source_url }}">{{ obligation.source }}</a>{% else %}{{ obligation.source or "" }}{% endif %}
+              {% if obligation.domaine %} · {{ obligation.domaine }}{% endif %}
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            {{ badge(obligation.statut) }}
+            {% if obligation.applicabilite %}{{ badge(obligation.applicabilite) }}{% endif %}
+          </div>
+        </div>
+
+        {% if obligation.description %}<div class="or-head-sub" style="margin-top:12px;">{{ obligation.description }}</div>{% endif %}
+
+        <div class="or-actions" id="or-actions" {% if not buttons and not peut_generer_echeances %}style="display:none;"{% endif %}>
+          <span class="or-actions-label">Statut</span>
+          <div id="or-actions-btns" style="display:flex;flex-wrap:wrap;gap:10px;">
+            {% for b in buttons %}
+            <button type="button" class="or-act{% if b.danger %} danger{% endif %}"
+                    data-action="{{ b.action }}" data-needs-motif="{{ 1 if b.get('needs_motif') else 0 }}">{{ b.label }}</button>
+            {% endfor %}
+            {% if peut_generer_echeances %}
+            <button type="button" class="or-act ghost" id="or-btn-generer">Générer les échéances</button>
+            {% endif %}
+          </div>
+          <div class="or-motif-bloc" id="or-motif-bloc" hidden>
+            <textarea id="or-motif" placeholder="Motif…"></textarea>
+          </div>
+          <div class="or-act-err" id="or-act-err" style="display:none;"></div>
+          <div class="or-act-ok" id="or-act-ok" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="or-grid">
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">Exigence</div>
+            <div class="or-info-row"><span class="or-info-k">Résultat attendu</span><span class="or-info-v">{{ obligation.resultat_attendu or "—" }}</span></div>
+            {% if obligation.exigence_operationnelle %}<div class="or-info-row"><span class="or-info-k">Exigence opérationnelle</span><span class="or-info-v">{{ obligation.exigence_operationnelle }}</span></div>{% endif %}
+            {% if obligation.conditions_particulieres %}<div class="or-info-row"><span class="or-info-k">Conditions particulières</span><span class="or-info-v">{{ obligation.conditions_particulieres }}</span></div>{% endif %}
+            {% if obligation.consequence_nc %}<div class="or-info-row"><span class="or-info-k">Conséquence en cas de manquement</span><span class="or-info-v">{{ obligation.consequence_nc }}</span></div>{% endif %}
+            <div class="or-info-row"><span class="or-info-k">État de conformité</span><span class="or-info-v">{{ badge(obligation.etat_conformite) }}</span></div>
+          </div>
+
+          <div class="or-card">
+            <div class="or-card-title">Échéances ouvertes ({{ echeances|length }})</div>
+            {% if echeances %}
+            <table class="or-mini-table">
+              <thead><tr><th>Période</th><th>Date limite</th><th>Statut</th><th>Responsable</th></tr></thead>
+              <tbody>
+                {% for e in echeances %}
+                <tr>
+                  <td><a href="{{ e.detail_url }}">{{ e.periode or e.name }}</a></td>
+                  <td>{{ frappe.utils.formatdate(e.date_limite, "dd/MM/yyyy") if e.date_limite else "—" }}</td>
+                  <td>{{ badge(e.statut) }}</td>
+                  <td>{{ e.responsable or "—" }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+            <div class="or-empty">Aucune échéance ouverte.</div>
+            {% endif %}
+          </div>
+
+          <div class="or-card">
+            <div class="or-card-title">Non-conformités liées ({{ non_conformites|length }})</div>
+            {% if non_conformites %}
+            <table class="or-mini-table">
+              <thead><tr><th>NC</th><th>Gravité</th><th>Statut</th><th>Responsable</th></tr></thead>
+              <tbody>
+                {% for nc in non_conformites %}
+                <tr>
+                  <td><a href="{{ nc.detail_url }}">{{ nc.intitule or nc.name }}</a></td>
+                  <td>{{ badge(nc.gravite) }}</td>
+                  <td>{{ badge(nc.statut) }}</td>
+                  <td>{{ nc.responsable or "—" }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+            <div class="or-empty">Aucune non-conformité ouverte.</div>
+            {% endif %}
+          </div>
+
+          {% if peut_modifier_justifie %}
+          <div class="or-card">
+            <div class="or-card-title">Modifier un champ sensible</div>
+            <div class="or-justif-note">La modification d'un champ sensible sur une obligation {{ obligation.statut|lower }} doit être justifiée. La justification est conservée dans l'historique.</div>
+            <div class="or-motif-bloc" style="margin-top:12px;">
+              <select id="or-justif-champ">
+                <option value="">Champ à modifier…</option>
+                {% for c in champs_sensibles %}<option value="{{ c.field }}">{{ c.label }} (actuel : {{ c.value or "—" }})</option>{% endfor %}
+              </select>
+              <input type="text" id="or-justif-valeur" placeholder="Nouvelle valeur…">
+              <textarea id="or-justif-motif" placeholder="Justification…"></textarea>
+              <button type="button" class="or-act" id="or-btn-justif" style="margin-top:8px;">Appliquer</button>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">Détail</div>
+            <div class="or-info-row"><span class="or-info-k">Criticité</span><span class="or-info-v">{{ obligation.criticite or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Priorité</span><span class="or-info-v">{{ obligation.priorite or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Nature temporelle</span><span class="or-info-v">{{ obligation.nature_temporelle or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Fréquence</span><span class="or-info-v">{{ obligation.frequence or "—" }}</span></div>
+            {% if obligation.regle_calcul %}<div class="or-info-row"><span class="or-info-k">Règle de calcul</span><span class="or-info-v">{{ obligation.regle_calcul }}</span></div>{% endif %}
+            <div class="or-info-row"><span class="or-info-k">Début d'application</span><span class="or-info-v">{{ frappe.utils.formatdate(obligation.date_debut, "dd/MM/yyyy") if obligation.date_debut else "—" }}</span></div>
+            {% if obligation.date_fin %}<div class="or-info-row"><span class="or-info-k">Fin d'application</span><span class="or-info-v">{{ frappe.utils.formatdate(obligation.date_fin, "dd/MM/yyyy") }}</span></div>{% endif %}
+            {% if obligation.derniere_generation %}<div class="or-info-row"><span class="or-info-k">Dernière génération d'échéances</span><span class="or-info-v">{{ frappe.utils.format_datetime(obligation.derniere_generation, "dd/MM/yyyy HH:mm") }}</span></div>{% endif %}
+          </div>
+
+          <div class="or-card">
+            <div class="or-card-title">Gouvernance</div>
+            <div class="or-info-row"><span class="or-info-k">Direction</span><span class="or-info-v">{{ obligation.direction or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Propriétaire</span><span class="or-info-v">{{ obligation.proprietaire or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Responsable opérationnel</span><span class="or-info-v">{{ obligation.responsable_operationnel or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Référent conformité</span><span class="or-info-v">{{ obligation.referent_conformite or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Validateur</span><span class="or-info-v">{{ obligation.validateur or "—" }}</span></div>
+            {% if obligation.valide_par %}<div class="or-info-row"><span class="or-info-k">Validé par</span><span class="or-info-v">{{ obligation.valide_par }}{% if obligation.date_validation %} · {{ frappe.utils.format_datetime(obligation.date_validation, "dd/MM/yyyy") }}{% endif %}</span></div>{% endif %}
+          </div>
+
+          {% if obligation.motif_revue or obligation.a_revoir %}
+          <div class="or-card">
+            <div class="or-card-title">Revue</div>
+            <div class="or-info-row"><span class="or-info-k">À revoir</span><span class="or-info-v">{{ "Oui" if obligation.a_revoir else "Non" }}</span></div>
+            {% if obligation.motif_revue %}<div class="or-info-row"><span class="or-info-k">Motif</span><span class="or-info-v">{{ obligation.motif_revue }}</span></div>{% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="vdb-sidebar-overlay" id="or-sidebar-overlay"></div>
+
+<script>
+(function () {
+  var burger = document.getElementById('or-hamburger'), sidebar = document.getElementById('vdb-sidebar'), overlay = document.getElementById('or-sidebar-overlay');
+  function toggle() { if (!sidebar) return; sidebar.classList.toggle('open'); if (overlay) overlay.classList.toggle('open'); }
+  if (burger) burger.addEventListener('click', toggle);
+  if (overlay) overlay.addEventListener('click', toggle);
+})();
+
+function messageErreur(j, defaut) {
+  try {
+    var msgs = JSON.parse(j._server_messages || '[]');
+    if (msgs.length) { var m = JSON.parse(msgs[0]); return m.message || defaut; }
+  } catch (e) {}
+  return (j && j.exc_type === 'PermissionError') ? "Vous n'êtes pas autorisé à effectuer cette action." : defaut;
+}
+function appelerApi(method, args) {
+  return fetch('/api/method/' + method, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': frappe.csrf_token || 'fetch' },
+    body: JSON.stringify(args)
+  }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); });
+}
+
+(function () {
+  var zone = document.getElementById('or-actions');
+  if (!zone) return;
+  var err = document.getElementById('or-act-err'),
+      ok = document.getElementById('or-act-ok'),
+      blocMotif = document.getElementById('or-motif-bloc'),
+      champMotif = document.getElementById('or-motif'),
+      name = {{ obligation.name | tojson }};
+
+  function verrouiller(etat) {
+    Array.prototype.forEach.call(zone.querySelectorAll('button'), function (b) { b.disabled = etat; });
+  }
+  function masquerMessages() { err.style.display = 'none'; ok.style.display = 'none'; }
+
+  var pendingBtn = null;
+
+  document.getElementById('or-actions-btns').addEventListener('click', function (ev) {
+    var btn = ev.target.closest('button[data-action]');
+    if (!btn) return;
+    masquerMessages();
+    var statut = btn.dataset.action, needsMotif = btn.dataset.needsMotif === '1';
+    if (needsMotif && (blocMotif.hidden || pendingBtn !== btn)) {
+      blocMotif.hidden = false;
+      pendingBtn = btn;
+      champMotif.focus();
+      return;
+    }
+    var motif = needsMotif ? champMotif.value.trim() : null;
+    if (needsMotif && !motif) {
+      champMotif.focus();
+      err.textContent = "Précisez un motif.";
+      err.style.display = 'block';
+      return;
+    }
+    verrouiller(true);
+    appelerApi('obligation_reglementaire.api.obligation_transition', { obligation: name, statut: statut, motif: motif }).then(function (res) {
+      if (!res.ok || res.j.message === undefined) {
+        verrouiller(false);
+        err.textContent = messageErreur(res.j, "L'action n'a pas pu être appliquée.");
+        err.style.display = 'block';
+        return;
+      }
+      window.location.reload();
+    }).catch(function () {
+      verrouiller(false);
+      err.textContent = "Le serveur n'a pas répondu. Réessayez.";
+      err.style.display = 'block';
+    });
+  });
+
+  var btnGenerer = document.getElementById('or-btn-generer');
+  if (btnGenerer) {
+    btnGenerer.addEventListener('click', function () {
+      masquerMessages();
+      verrouiller(true);
+      appelerApi('obligation_reglementaire.api.generate_deadlines', { obligation: name }).then(function (res) {
+        verrouiller(false);
+        if (!res.ok || res.j.message === undefined) {
+          err.textContent = messageErreur(res.j, "La génération a échoué.");
+          err.style.display = 'block';
+          return;
+        }
+        var n = (res.j.message.creees || []).length;
+        if (n) {
+          window.location.reload();
+        } else {
+          ok.textContent = "Aucune nouvelle échéance à générer.";
+          ok.style.display = 'block';
+        }
+      }).catch(function () {
+        verrouiller(false);
+        err.textContent = "Le serveur n'a pas répondu. Réessayez.";
+        err.style.display = 'block';
+      });
+    });
+  }
+})();
+
+(function () {
+  var btn = document.getElementById('or-btn-justif');
+  if (!btn) return;
+  var err = document.getElementById('or-act-err'), ok = document.getElementById('or-act-ok'),
+      name = {{ obligation.name | tojson }};
+
+  btn.addEventListener('click', function () {
+    err.style.display = 'none'; ok.style.display = 'none';
+    var champ = document.getElementById('or-justif-champ').value;
+    var valeur = document.getElementById('or-justif-valeur').value;
+    var justification = document.getElementById('or-justif-motif').value.trim();
+    if (!champ || !valeur.trim() || !justification) {
+      err.textContent = "Champ, nouvelle valeur et justification sont obligatoires.";
+      err.style.display = 'block';
+      return;
+    }
+    btn.disabled = true;
+    var values = {};
+    values[champ] = valeur;
+    appelerApi('obligation_reglementaire.api.obligation_update_with_justification', {
+      obligation: name, values: values, justification: justification,
+    }).then(function (res) {
+      if (!res.ok || res.j.message === undefined) {
+        btn.disabled = false;
+        err.textContent = messageErreur(res.j, "La modification n'a pas pu être enregistrée.");
+        err.style.display = 'block';
+        return;
+      }
+      window.location.reload();
+    }).catch(function () {
+      btn.disabled = false;
+      err.textContent = "Le serveur n'a pas répondu. Réessayez.";
+      err.style.display = 'block';
+    });
+  });
+})();
+</script>
+{% endblock %}

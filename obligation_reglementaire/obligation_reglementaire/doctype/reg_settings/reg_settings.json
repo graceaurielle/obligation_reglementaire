@@ -1,0 +1,491 @@
+{
+ "actions": [],
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Paramètres généraux et règles métier du module (Ch13.19, 13.24).",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "organisation_defaut",
+  "calendrier_defaut",
+  "fuseau_horaire",
+  "cb_1",
+  "langue_defaut",
+  "devise",
+  "format_reference",
+  "sb_1",
+  "separation_taches",
+  "validation_parametres_sensibles",
+  "cb_2",
+  "justification_changements_sensibles",
+  "autoriser_suppression_logique",
+  "tab_2",
+  "horizon_generation_jours",
+  "jours_alerte_defaut",
+  "jours_a_traiter",
+  "cb_3",
+  "heure_limite_defaut",
+  "regle_jour_non_ouvre",
+  "max_occurrences_generation",
+  "tab_3",
+  "taille_max_mo",
+  "formats_autorises",
+  "cb_4",
+  "jours_controle_defaut",
+  "jours_resoumission_defaut",
+  "alertes_expiration_defaut",
+  "tab_4",
+  "nc_auto_sur_rejet",
+  "nc_auto_sur_retard",
+  "jours_retard_nc",
+  "cb_5",
+  "pa_auto_poids_min",
+  "efficacite_requise_poids_min",
+  "max_prolongations_alerte",
+  "tab_5",
+  "notifications_actives",
+  "email_actif",
+  "cb_6",
+  "fenetre_anti_doublon_heures",
+  "max_tentatives_envoi",
+  "resume_quotidien_actif",
+  "tab_6",
+  "poids_critique",
+  "poids_elevee",
+  "poids_moyenne",
+  "poids_faible",
+  "cb_7",
+  "seuil_vigilance_retard",
+  "seuil_alerte_retard",
+  "horizons_echeances",
+  "tranches_anciennete_nc",
+  "tab_7",
+  "duree_conservation_defaut",
+  "point_depart_conservation"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Général"
+  },
+  {
+   "fieldname": "organisation_defaut",
+   "fieldtype": "Link",
+   "label": "Organisation par défaut",
+   "options": "Reg Organization"
+  },
+  {
+   "fieldname": "calendrier_defaut",
+   "fieldtype": "Link",
+   "label": "Calendrier par défaut",
+   "options": "Reg Calendar"
+  },
+  {
+   "default": "Africa/Abidjan",
+   "fieldname": "fuseau_horaire",
+   "fieldtype": "Data",
+   "label": "Fuseau horaire"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "fr",
+   "fieldname": "langue_defaut",
+   "fieldtype": "Data",
+   "label": "Langue par défaut"
+  },
+  {
+   "fieldname": "devise",
+   "fieldtype": "Link",
+   "label": "Devise",
+   "options": "Currency"
+  },
+  {
+   "default": "TYPE-AAAA-NNNNNN",
+   "fieldname": "format_reference",
+   "fieldtype": "Data",
+   "label": "Format des références",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Séparation des tâches & gouvernance"
+  },
+  {
+   "default": "1",
+   "description": "RG-SEC-004 : l'auteur d'un objet ne peut pas le valider.",
+   "fieldname": "separation_taches",
+   "fieldtype": "Check",
+   "label": "Séparation des tâches activée"
+  },
+  {
+   "default": "1",
+   "fieldname": "validation_parametres_sensibles",
+   "fieldtype": "Check",
+   "label": "Validation des paramètres sensibles (4 yeux)"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "justification_changements_sensibles",
+   "fieldtype": "Check",
+   "label": "Justification obligatoire des changements sensibles"
+  },
+  {
+   "default": "1",
+   "fieldname": "autoriser_suppression_logique",
+   "fieldtype": "Check",
+   "label": "Autoriser la suppression logique des documents"
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Échéances"
+  },
+  {
+   "default": "400",
+   "fieldname": "horizon_generation_jours",
+   "fieldtype": "Int",
+   "label": "Horizon de génération des échéances (jours)"
+  },
+  {
+   "default": "30,15,7,3,1,0",
+   "description": "Liste séparée par des virgules.",
+   "fieldname": "jours_alerte_defaut",
+   "fieldtype": "Data",
+   "label": "Jours d'alerte par défaut (J-n)"
+  },
+  {
+   "default": "30",
+   "fieldname": "jours_a_traiter",
+   "fieldtype": "Int",
+   "label": "Passage « À traiter » à J-"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "23:59:59",
+   "fieldname": "heure_limite_defaut",
+   "fieldtype": "Time",
+   "label": "Heure limite par défaut"
+  },
+  {
+   "default": "Jour ouvré suivant",
+   "fieldname": "regle_jour_non_ouvre",
+   "fieldtype": "Select",
+   "label": "Règle jour non ouvré par défaut",
+   "options": "\nAucun report\nJour ouvré suivant\nJour ouvré précédent"
+  },
+  {
+   "default": "60",
+   "fieldname": "max_occurrences_generation",
+   "fieldtype": "Int",
+   "label": "Nombre max. d'occurrences générées par passage"
+  },
+  {
+   "fieldname": "tab_3",
+   "fieldtype": "Tab Break",
+   "label": "Justificatifs"
+  },
+  {
+   "default": "50",
+   "fieldname": "taille_max_mo",
+   "fieldtype": "Float",
+   "label": "Taille maximale d'un fichier (Mo)"
+  },
+  {
+   "default": "pdf,doc,docx,xls,xlsx,csv,ppt,pptx,odt,ods,txt,png,jpg,jpeg,tif,tiff,zip,msg,eml,xml,json",
+   "fieldname": "formats_autorises",
+   "fieldtype": "Small Text",
+   "label": "Formats autorisés"
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "5",
+   "fieldname": "jours_controle_defaut",
+   "fieldtype": "Int",
+   "label": "Délai de contrôle par défaut (jours)"
+  },
+  {
+   "default": "10",
+   "fieldname": "jours_resoumission_defaut",
+   "fieldtype": "Int",
+   "label": "Délai de resoumission par défaut (jours)"
+  },
+  {
+   "default": "90,60,30,7,0",
+   "fieldname": "alertes_expiration_defaut",
+   "fieldtype": "Data",
+   "label": "Alertes d'expiration par défaut (J-n)"
+  },
+  {
+   "fieldname": "tab_4",
+   "fieldtype": "Tab Break",
+   "label": "Non-conformités & plans"
+  },
+  {
+   "default": "1",
+   "fieldname": "nc_auto_sur_rejet",
+   "fieldtype": "Check",
+   "label": "Créer une non-conformité sur rejet de justificatif"
+  },
+  {
+   "default": "1",
+   "fieldname": "nc_auto_sur_retard",
+   "fieldtype": "Check",
+   "label": "Proposer une non-conformité sur échéance en retard"
+  },
+  {
+   "default": "5",
+   "fieldname": "jours_retard_nc",
+   "fieldtype": "Int",
+   "label": "Retard (jours) avant création de la non-conformité"
+  },
+  {
+   "fieldname": "cb_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "3",
+   "description": "Poids du référentiel de criticité (Critique=4, Élevée=3, …).",
+   "fieldname": "pa_auto_poids_min",
+   "fieldtype": "Int",
+   "label": "Plan d'action automatique à partir du poids de criticité"
+  },
+  {
+   "default": "3",
+   "fieldname": "efficacite_requise_poids_min",
+   "fieldtype": "Int",
+   "label": "Vérification d'efficacité requise à partir du poids"
+  },
+  {
+   "default": "3",
+   "fieldname": "max_prolongations_alerte",
+   "fieldtype": "Int",
+   "label": "Nombre de prolongations signalé comme anormal"
+  },
+  {
+   "fieldname": "tab_5",
+   "fieldtype": "Tab Break",
+   "label": "Notifications"
+  },
+  {
+   "default": "1",
+   "fieldname": "notifications_actives",
+   "fieldtype": "Check",
+   "label": "Moteur de notifications actif"
+  },
+  {
+   "default": "1",
+   "fieldname": "email_actif",
+   "fieldtype": "Check",
+   "label": "Canal e-mail actif"
+  },
+  {
+   "fieldname": "cb_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "24",
+   "fieldname": "fenetre_anti_doublon_heures",
+   "fieldtype": "Int",
+   "label": "Fenêtre anti-duplication (heures)"
+  },
+  {
+   "default": "3",
+   "fieldname": "max_tentatives_envoi",
+   "fieldtype": "Int",
+   "label": "Tentatives d'envoi maximum"
+  },
+  {
+   "default": "1",
+   "fieldname": "resume_quotidien_actif",
+   "fieldtype": "Check",
+   "label": "Résumé quotidien actif"
+  },
+  {
+   "fieldname": "tab_6",
+   "fieldtype": "Tab Break",
+   "label": "Tableaux de bord"
+  },
+  {
+   "default": "4",
+   "fieldname": "poids_critique",
+   "fieldtype": "Int",
+   "label": "Poids « Critique »"
+  },
+  {
+   "default": "3",
+   "fieldname": "poids_elevee",
+   "fieldtype": "Int",
+   "label": "Poids « Élevée »"
+  },
+  {
+   "default": "2",
+   "fieldname": "poids_moyenne",
+   "fieldtype": "Int",
+   "label": "Poids « Moyenne »"
+  },
+  {
+   "default": "1",
+   "fieldname": "poids_faible",
+   "fieldtype": "Int",
+   "label": "Poids « Faible »"
+  },
+  {
+   "fieldname": "cb_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "5",
+   "fieldname": "seuil_vigilance_retard",
+   "fieldtype": "Percent",
+   "label": "Seuil de vigilance retard (%)"
+  },
+  {
+   "default": "10",
+   "fieldname": "seuil_alerte_retard",
+   "fieldtype": "Percent",
+   "label": "Seuil d'alerte retard (%)"
+  },
+  {
+   "default": "0,7,15,30,60,90",
+   "fieldname": "horizons_echeances",
+   "fieldtype": "Data",
+   "label": "Horizons d'échéances (jours)"
+  },
+  {
+   "default": "30,60,90,180",
+   "fieldname": "tranches_anciennete_nc",
+   "fieldtype": "Data",
+   "label": "Tranches d'ancienneté NC (jours)"
+  },
+  {
+   "fieldname": "tab_7",
+   "fieldtype": "Tab Break",
+   "label": "Conservation"
+  },
+  {
+   "default": "10",
+   "fieldname": "duree_conservation_defaut",
+   "fieldtype": "Int",
+   "label": "Durée de conservation par défaut (années)"
+  },
+  {
+   "default": "Validation",
+   "fieldname": "point_depart_conservation",
+   "fieldtype": "Select",
+   "label": "Point de départ par défaut",
+   "options": "\nCréation\nValidation\nFin de l'obligation\nClôture de l'échéance\nClôture de la non-conformité\nClôture du plan d'action"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

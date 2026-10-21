@@ -1,0 +1,421 @@
+{
+ "actions": [],
+ "autoname": "field:code",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Obligation modèle du catalogue SaaS — jamais une obligation client (Ch5).",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "code",
+  "intitule",
+  "description",
+  "secteur_principal",
+  "secteurs",
+  "famille",
+  "cb_1",
+  "statut",
+  "version",
+  "valide_juridiquement",
+  "valide_par",
+  "date_validation",
+  "date_entree_vigueur",
+  "date_fin",
+  "sb_1",
+  "juridiction",
+  "autorite",
+  "source",
+  "version_source",
+  "disposition",
+  "cb_2",
+  "domaine",
+  "sous_domaine",
+  "type_obligation",
+  "nature_temporelle",
+  "criticite",
+  "tab_2",
+  "responsable_type",
+  "frequence",
+  "evenement_declencheur",
+  "cb_3",
+  "delai_valeur",
+  "delai_unite",
+  "regle_calcul",
+  "sb_2",
+  "controle_attendu",
+  "consequence_nc",
+  "justificatifs",
+  "tab_3",
+  "regles",
+  "note_applicabilite",
+  "sb_3",
+  "resume_derniere_modif"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Identification"
+  },
+  {
+   "bold": 1,
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "intitule",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Intitulé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "secteur_principal",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Secteur principal",
+   "options": "Reg Sector",
+   "reqd": 1
+  },
+  {
+   "fieldname": "secteurs",
+   "fieldtype": "Table MultiSelect",
+   "label": "Autres secteurs",
+   "options": "Reg Template Sector"
+  },
+  {
+   "fieldname": "famille",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Famille",
+   "options": "Reg Catalogue Family"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Brouillon",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Brouillon\nEn validation\nValidé\nActif\nRetiré"
+  },
+  {
+   "default": "1",
+   "fieldname": "version",
+   "fieldtype": "Int",
+   "label": "Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "valide_juridiquement",
+   "fieldtype": "Check",
+   "in_standard_filter": 1,
+   "label": "Validé juridiquement"
+  },
+  {
+   "fieldname": "valide_par",
+   "fieldtype": "Link",
+   "label": "Validé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_entree_vigueur",
+   "fieldtype": "Date",
+   "label": "Date d'entrée en vigueur"
+  },
+  {
+   "fieldname": "date_fin",
+   "fieldtype": "Date",
+   "label": "Date de fin"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Fondement"
+  },
+  {
+   "default": "Cote d'Ivoire",
+   "fieldname": "juridiction",
+   "fieldtype": "Link",
+   "label": "Juridiction",
+   "options": "Country"
+  },
+  {
+   "fieldname": "autorite",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Autorité",
+   "options": "Reg Authority"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Link",
+   "label": "Texte réglementaire",
+   "options": "Reg Source"
+  },
+  {
+   "fieldname": "version_source",
+   "fieldtype": "Link",
+   "label": "Version du texte",
+   "options": "Reg Source Version"
+  },
+  {
+   "fieldname": "disposition",
+   "fieldtype": "Link",
+   "label": "Disposition",
+   "options": "Reg Provision"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "domaine",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Domaine",
+   "options": "Reg Domain"
+  },
+  {
+   "fieldname": "sous_domaine",
+   "fieldtype": "Link",
+   "label": "Sous-domaine",
+   "options": "Reg Domain"
+  },
+  {
+   "fieldname": "type_obligation",
+   "fieldtype": "Link",
+   "label": "Type d'obligation",
+   "options": "Reg Obligation Type"
+  },
+  {
+   "fieldname": "nature_temporelle",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Nature temporelle",
+   "options": "\nPériodique\nÉvénementielle\nPermanente\nPonctuelle\nDate fixe\nRelative à une date réglementaire\nConditionnelle"
+  },
+  {
+   "fieldname": "criticite",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Criticité",
+   "options": "Reg Criticality Level"
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Exécution"
+  },
+  {
+   "fieldname": "responsable_type",
+   "fieldtype": "Data",
+   "label": "Fonction responsable type"
+  },
+  {
+   "fieldname": "frequence",
+   "fieldtype": "Select",
+   "label": "Fréquence",
+   "options": "\nPonctuelle\nQuotidienne\nHebdomadaire\nMensuelle\nTrimestrielle\nSemestrielle\nAnnuelle\nPluriannuelle\nPersonnalisée\nÉvénementielle\nPermanente"
+  },
+  {
+   "fieldname": "evenement_declencheur",
+   "fieldtype": "Link",
+   "label": "Événement déclencheur",
+   "options": "Reg Trigger Event Type"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "delai_valeur",
+   "fieldtype": "Int",
+   "label": "Délai"
+  },
+  {
+   "fieldname": "delai_unite",
+   "fieldtype": "Select",
+   "label": "Unité du délai",
+   "options": "\nMinutes\nHeures\nJours calendaires\nJours ouvrés\nSemaines\nMois\nTrimestres\nAnnées"
+  },
+  {
+   "fieldname": "regle_calcul",
+   "fieldtype": "Small Text",
+   "label": "Règle de calcul de l'échéance"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Contrôle"
+  },
+  {
+   "fieldname": "controle_attendu",
+   "fieldtype": "Small Text",
+   "label": "Contrôle attendu"
+  },
+  {
+   "fieldname": "consequence_nc",
+   "fieldtype": "Small Text",
+   "label": "Conséquence en cas de non-conformité"
+  },
+  {
+   "fieldname": "justificatifs",
+   "fieldtype": "Table",
+   "label": "Justificatifs attendus",
+   "options": "Reg Template Evidence"
+  },
+  {
+   "fieldname": "tab_3",
+   "fieldtype": "Tab Break",
+   "label": "Applicabilité"
+  },
+  {
+   "fieldname": "regles",
+   "fieldtype": "Table",
+   "label": "Conditions d'applicabilité",
+   "options": "Reg Template Rule"
+  },
+  {
+   "fieldname": "note_applicabilite",
+   "fieldtype": "Small Text",
+   "label": "Note d'applicabilité"
+  },
+  {
+   "fieldname": "sb_3",
+   "fieldtype": "Section Break",
+   "label": "Historique des versions"
+  },
+  {
+   "fieldname": "resume_derniere_modif",
+   "fieldtype": "Small Text",
+   "label": "Résumé de la dernière modification"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Template Obligation",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "intitule,secteur_principal",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "intitule",
+ "track_changes": 1
+}

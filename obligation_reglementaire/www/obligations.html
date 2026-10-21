@@ -1,0 +1,162 @@
+{% extends "templates/web.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block page_content %}
+{% include "due_diligence/www/v_base_style.html" %}
+{% include "due_diligence/www/v_table_style.html" %}
+<style>
+.or-content { padding: 24px 28px 40px; max-width: 1440px; }
+.or-kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.or-kpi { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px;
+  padding: 18px 20px; position: relative; overflow: hidden; transition: box-shadow .2s, transform .2s; }
+.or-kpi:hover { box-shadow: 0 8px 20px rgba(15,28,44,.08); transform: translateY(-2px); }
+.or-kpi::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--accent, #0f1c2c); }
+.or-kpi-label { font-size: 12px; font-weight: 600; color: var(--vdb-muted); margin-bottom: 4px; }
+.or-kpi-value { font-size: 28px; font-weight: 700; letter-spacing: -.02em; color: var(--vdb-navy); }
+.or-kpi-sub { font-size: 11px; color: var(--vdb-muted); margin-top: 2px; }
+@media (max-width: 640px) { .or-kpi-grid { grid-template-columns: repeat(2, 1fr); } .or-content { padding: 16px; } }
+
+.or-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+@media (max-width: 900px) { .or-row { grid-template-columns: 1fr; } }
+.or-card { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 24px; }
+.or-card-title { font-size: 15px; font-weight: 700; color: var(--vdb-navy); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.or-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.or-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--vdb-muted); padding: 8px 10px; border-bottom: 1px solid var(--vdb-border); }
+.or-table td { padding: 10px; border-bottom: 1px solid #eef1f8; color: var(--vdb-text); }
+.or-table tr:last-child td { border-bottom: none; }
+.or-table a { color: var(--vdb-accent); font-weight: 600; text-decoration: none; }
+.or-table a:hover { text-decoration: underline; }
+.or-empty { padding: 22px; text-align: center; color: var(--vdb-muted); font-size: 13px; }
+.or-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.or-badge-red { background: #fee2e2; color: #b91c1c; }
+.or-badge-orange { background: #ffedd5; color: #c2410c; }
+.or-badge-green { background: #e7f6ec; color: #15803d; }
+.or-badge-blue { background: #dbeafe; color: #1e40af; }
+.or-badge-gray { background: #f1f5f9; color: #475569; }
+.or-badge-purple { background: #ede9fe; color: #6d28d9; }
+
+.or-horizon-bars { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.or-horizon-pill { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px;
+  background: var(--vdb-card); border: 1px solid var(--vdb-border); font-size: 12.5px; font-weight: 600; }
+.or-horizon-dot { width: 10px; height: 10px; border-radius: 50%; }
+.or-horizon-cnt { font-size: 18px; font-weight: 700; color: var(--vdb-navy); margin-left: 4px; }
+.or-more { display: inline-block; margin-top: 10px; font-size: 12.5px; font-weight: 600; color: var(--vdb-accent); }
+</style>
+
+<div class="vdb-layout">
+  {% include "due_diligence/www/v_sidebar.html" %}
+  <div class="vdb-main">
+    <header class="vdb-header">
+      <button class="vdb-hamburger" id="or-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <h2>Obligations réglementaires</h2>
+      <div class="vdb-header-right">
+        <div class="vdb-user-chip">
+          <div class="vdb-user-avatar">{{ user_initials }}</div>
+          <span>{{ user_full_name }}</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="or-content">
+      <!-- KPIs -->
+      <div class="or-kpi-grid">
+        {% for k in kpis %}
+        <div class="or-kpi" style="--accent: {{ k.accent }};">
+          <div class="or-kpi-label">{{ k.label }}</div>
+          <div class="or-kpi-value">{{ k.value }}</div>
+          {% if k.sub %}<div class="or-kpi-sub">{{ k.sub }}</div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Horizons -->
+      <div class="or-card">
+        <div class="or-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+          Échéances par horizon
+        </div>
+        <div class="or-horizon-bars">
+          {% for h in horizons %}
+          <div class="or-horizon-pill">
+            <div class="or-horizon-dot" style="background: {{ h.color }};"></div>
+            {{ h.label }}
+            <span class="or-horizon-cnt">{{ h.count }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Tableaux -->
+      <div class="or-row">
+        <div class="or-card">
+          <div class="or-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+            Échéances urgentes
+          </div>
+          {% if echeances_urgentes %}
+          <table class="or-table">
+            <tr><th>Échéance</th><th>Date limite</th><th>Statut</th><th>Responsable</th></tr>
+            {% for e in echeances_urgentes %}
+            <tr>
+              <td><a href="/obligations-echeances-detail?name={{ e.name }}">{{ e.libelle or e.name }}</a></td>
+              <td>{{ frappe.utils.formatdate(e.date_limite, "dd/MM/yyyy") }}</td>
+              <td>
+                {% if e.statut == "En retard" %}<span class="or-badge or-badge-red">{{ e.statut }}</span>
+                {% elif e.statut in ("À traiter", "En cours") %}<span class="or-badge or-badge-orange">{{ e.statut }}</span>
+                {% else %}<span class="or-badge or-badge-blue">{{ e.statut }}</span>{% endif %}
+              </td>
+              <td>{{ e.responsable or "—" }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+          <a class="or-more" href="/obligations-echeances">Voir toutes les échéances →</a>
+          {% else %}
+          <div class="or-empty">Aucune échéance urgente. Tout est sous contrôle ✓</div>
+          {% endif %}
+        </div>
+
+        <div class="or-card">
+          <div class="or-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Non-conformités ouvertes
+          </div>
+          {% if nc_recentes %}
+          <table class="or-table">
+            <tr><th>NC</th><th>Gravité</th><th>Statut</th><th>Responsable</th></tr>
+            {% for nc in nc_recentes %}
+            <tr>
+              <td><a href="/obligations-nc-detail?name={{ nc.name }}">{{ nc.intitule or nc.name }}</a></td>
+              <td>
+                {% if nc.gravite in ("Critique", "Élevée", "Majeure") %}<span class="or-badge or-badge-red">{{ nc.gravite }}</span>
+                {% elif nc.gravite %}<span class="or-badge or-badge-orange">{{ nc.gravite }}</span>
+                {% else %}<span class="or-badge or-badge-gray">—</span>{% endif %}
+              </td>
+              <td><span class="or-badge or-badge-purple">{{ nc.statut }}</span></td>
+              <td>{{ nc.responsable or "—" }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+          <a class="or-more" href="/obligations-nc">Voir toutes les NC →</a>
+          {% else %}
+          <div class="or-empty">Aucune non-conformité ouverte ✓</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Hamburger mobile
+(function() {
+  var btn = document.getElementById('or-hamburger');
+  if (btn) btn.addEventListener('click', function() {
+    document.getElementById('vdb-sidebar').classList.toggle('open');
+  });
+})();
+</script>
+{% endblock %}

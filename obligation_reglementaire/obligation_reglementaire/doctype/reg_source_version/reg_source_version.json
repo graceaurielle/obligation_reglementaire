@@ -1,0 +1,265 @@
+{
+ "actions": [],
+ "autoname": "SRV-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Version d'un texte réglementaire (Ch3, Ch4).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "source",
+  "numero_version",
+  "libelle",
+  "statut",
+  "est_consolidee",
+  "cb_1",
+  "version_precedente",
+  "date_publication",
+  "date_entree_vigueur",
+  "date_fin_validite",
+  "chevauchement_autorise",
+  "sb_1",
+  "resume_modifications",
+  "natures",
+  "textes_modificatifs",
+  "sb_2",
+  "fichier",
+  "cb_2",
+  "valide_par",
+  "date_validation",
+  "analyse_impact"
+ ],
+ "fields": [
+  {
+   "fieldname": "source",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Texte réglementaire",
+   "options": "Reg Source",
+   "reqd": 1
+  },
+  {
+   "fieldname": "numero_version",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Numéro de version",
+   "reqd": 1
+  },
+  {
+   "fieldname": "libelle",
+   "fieldtype": "Data",
+   "label": "Libellé"
+  },
+  {
+   "default": "Brouillon",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Brouillon\nValidée\nEn vigueur\nRemplacée\nArchivée"
+  },
+  {
+   "fieldname": "est_consolidee",
+   "fieldtype": "Check",
+   "label": "Version consolidée"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "version_precedente",
+   "fieldtype": "Link",
+   "label": "Version précédente",
+   "options": "Reg Source Version"
+  },
+  {
+   "fieldname": "date_publication",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date de publication"
+  },
+  {
+   "fieldname": "date_entree_vigueur",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date d'entrée en vigueur",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_fin_validite",
+   "fieldtype": "Date",
+   "label": "Date de fin de validité"
+  },
+  {
+   "fieldname": "chevauchement_autorise",
+   "fieldtype": "Check",
+   "label": "Chevauchement de validité autorisé"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Modifications"
+  },
+  {
+   "fieldname": "resume_modifications",
+   "fieldtype": "Text Editor",
+   "label": "Résumé des modifications"
+  },
+  {
+   "fieldname": "natures",
+   "fieldtype": "Table",
+   "label": "Nature des modifications",
+   "options": "Reg Version Change Nature"
+  },
+  {
+   "depends_on": "est_consolidee",
+   "fieldname": "textes_modificatifs",
+   "fieldtype": "Table",
+   "label": "Textes modificatifs (version consolidée)",
+   "options": "Reg Version Modifying Text"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Validation"
+  },
+  {
+   "fieldname": "fichier",
+   "fieldtype": "Attach",
+   "label": "Fichier de la version"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valide_par",
+   "fieldtype": "Link",
+   "label": "Validé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "analyse_impact",
+   "fieldtype": "Link",
+   "label": "Analyse d'impact",
+   "options": "Reg Impact Analysis",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Source Version",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "source,numero_version",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "libelle",
+ "track_changes": 1
+}

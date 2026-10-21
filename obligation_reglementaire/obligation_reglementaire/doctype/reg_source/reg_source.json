@@ -1,0 +1,465 @@
+{
+ "actions": [],
+ "autoname": "SRC-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Source / texte réglementaire (Ch3, Ch4).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "reference_officielle",
+  "titre_officiel",
+  "titre_court",
+  "type_source",
+  "autorite",
+  "cb_1",
+  "statut",
+  "non_encore_applicable",
+  "pays",
+  "zone_competence",
+  "langue",
+  "confidentialite",
+  "responsable_interne",
+  "sb_1",
+  "resume",
+  "objet",
+  "champ_application",
+  "cb_2",
+  "source_officielle",
+  "lien_officiel",
+  "version_courante",
+  "sb_2",
+  "domaines",
+  "territoires",
+  "mots_cles",
+  "tab_2",
+  "date_adoption",
+  "date_publication",
+  "date_entree_vigueur",
+  "date_debut_application",
+  "cb_3",
+  "date_fin_application",
+  "date_abrogation",
+  "date_validation",
+  "valide_par",
+  "sb_3",
+  "suspensions",
+  "tab_3",
+  "relations",
+  "relations_inverses_html",
+  "documents",
+  "traductions",
+  "tab_4",
+  "score_qualite",
+  "anomalies_qualite",
+  "cb_4",
+  "doublon_potentiel",
+  "forcer_doublon",
+  "justification_doublon"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Identification"
+  },
+  {
+   "bold": 1,
+   "fieldname": "reference_officielle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Référence officielle",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "titre_officiel",
+   "fieldtype": "Small Text",
+   "label": "Titre officiel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "titre_court",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Titre court",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type_source",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type de texte",
+   "options": "Reg Source Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "autorite",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Autorité émettrice",
+   "options": "Reg Authority",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Brouillon",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Brouillon\nEn analyse\nVérifiée\nValidée\nEn vigueur\nModifiée\nRemplacée\nSuspendue\nAbrogée\nArchivée"
+  },
+  {
+   "fieldname": "non_encore_applicable",
+   "fieldtype": "Check",
+   "label": "Publiée — non encore applicable",
+   "read_only": 1
+  },
+  {
+   "default": "Cote d'Ivoire",
+   "fieldname": "pays",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Pays principal",
+   "options": "Country"
+  },
+  {
+   "fieldname": "zone_competence",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Zone de compétence",
+   "options": "\nNationale\nRégionale\nCommunautaire\nInternationale"
+  },
+  {
+   "default": "fr",
+   "fieldname": "langue",
+   "fieldtype": "Data",
+   "label": "Langue originale"
+  },
+  {
+   "default": "Public interne",
+   "fieldname": "confidentialite",
+   "fieldtype": "Select",
+   "label": "Confidentialité",
+   "options": "\nPublic interne\nInterne\nConfidentiel\nStrictement confidentiel\nSensible"
+  },
+  {
+   "fieldname": "responsable_interne",
+   "fieldtype": "Link",
+   "label": "Responsable interne",
+   "options": "User"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Contenu"
+  },
+  {
+   "fieldname": "resume",
+   "fieldtype": "Text Editor",
+   "label": "Résumé"
+  },
+  {
+   "fieldname": "objet",
+   "fieldtype": "Small Text",
+   "label": "Objet"
+  },
+  {
+   "fieldname": "champ_application",
+   "fieldtype": "Small Text",
+   "label": "Champ d'application"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "source_officielle",
+   "fieldtype": "Data",
+   "label": "Source officielle (Journal, Bulletin…)"
+  },
+  {
+   "fieldname": "lien_officiel",
+   "fieldtype": "Data",
+   "label": "Lien officiel"
+  },
+  {
+   "fieldname": "version_courante",
+   "fieldtype": "Link",
+   "label": "Version en vigueur",
+   "options": "Reg Source Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Domaines et territoires"
+  },
+  {
+   "fieldname": "domaines",
+   "fieldtype": "Table",
+   "label": "Domaines",
+   "options": "Reg Source Domain"
+  },
+  {
+   "fieldname": "territoires",
+   "fieldtype": "Table",
+   "label": "Territoires d'application",
+   "options": "Reg Source Territory"
+  },
+  {
+   "fieldname": "mots_cles",
+   "fieldtype": "Table MultiSelect",
+   "label": "Mots-clés",
+   "options": "Reg Source Keyword"
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Dates"
+  },
+  {
+   "fieldname": "date_adoption",
+   "fieldtype": "Date",
+   "label": "Date d'adoption"
+  },
+  {
+   "fieldname": "date_publication",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date de publication"
+  },
+  {
+   "fieldname": "date_entree_vigueur",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Date d'entrée en vigueur"
+  },
+  {
+   "fieldname": "date_debut_application",
+   "fieldtype": "Date",
+   "label": "Date de début d'application"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_fin_application",
+   "fieldtype": "Date",
+   "label": "Date de fin d'application"
+  },
+  {
+   "fieldname": "date_abrogation",
+   "fieldtype": "Date",
+   "label": "Date d'abrogation"
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "valide_par",
+   "fieldtype": "Link",
+   "label": "Validé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_3",
+   "fieldtype": "Section Break",
+   "label": "Suspensions"
+  },
+  {
+   "fieldname": "suspensions",
+   "fieldtype": "Table",
+   "label": "Suspensions",
+   "options": "Reg Source Suspension"
+  },
+  {
+   "fieldname": "tab_3",
+   "fieldtype": "Tab Break",
+   "label": "Relations & documents"
+  },
+  {
+   "fieldname": "relations",
+   "fieldtype": "Table",
+   "label": "Relations avec d'autres textes",
+   "options": "Reg Source Relation"
+  },
+  {
+   "fieldname": "relations_inverses_html",
+   "fieldtype": "HTML",
+   "label": "Relations inverses"
+  },
+  {
+   "fieldname": "documents",
+   "fieldtype": "Table",
+   "label": "Documents (texte officiel, consolidé, traduction…)",
+   "options": "Reg Source Document"
+  },
+  {
+   "fieldname": "traductions",
+   "fieldtype": "Table",
+   "label": "Traductions",
+   "options": "Reg Source Translation"
+  },
+  {
+   "fieldname": "tab_4",
+   "fieldtype": "Tab Break",
+   "label": "Qualité"
+  },
+  {
+   "fieldname": "score_qualite",
+   "fieldtype": "Percent",
+   "label": "Score de qualité",
+   "read_only": 1
+  },
+  {
+   "fieldname": "anomalies_qualite",
+   "fieldtype": "Small Text",
+   "label": "Anomalies détectées",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "doublon_potentiel",
+   "fieldtype": "Small Text",
+   "label": "Doublons potentiels détectés",
+   "read_only": 1
+  },
+  {
+   "fieldname": "forcer_doublon",
+   "fieldtype": "Check",
+   "label": "Créer malgré le doublon (habilité)"
+  },
+  {
+   "depends_on": "forcer_doublon",
+   "fieldname": "justification_doublon",
+   "fieldtype": "Small Text",
+   "label": "Justification de la création malgré doublon",
+   "mandatory_depends_on": "forcer_doublon"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Source",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "reference_officielle,titre_officiel,autorite",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "titre_court",
+ "track_changes": 1
+}

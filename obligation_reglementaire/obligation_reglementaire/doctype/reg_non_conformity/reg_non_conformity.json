@@ -1,0 +1,423 @@
+{
+ "actions": [],
+ "autoname": "NC-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Non-conformité réglementaire (Ch3, Ch7, Ch8).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "organisation",
+  "intitule",
+  "origine",
+  "gravite",
+  "cb_1",
+  "statut",
+  "responsable",
+  "direction",
+  "date_detection",
+  "date_cible",
+  "anciennete_jours",
+  "sb_1",
+  "obligation",
+  "echeance",
+  "justificatif",
+  "constat",
+  "cb_2",
+  "source",
+  "disposition",
+  "domaine",
+  "plan_action",
+  "sb_2",
+  "description",
+  "cause",
+  "impact",
+  "cb_3",
+  "recurrente",
+  "creee_automatiquement",
+  "evenement_doctype",
+  "evenement_name",
+  "tab_2",
+  "decision_cloture",
+  "cloture_par",
+  "date_cloture",
+  "cb_4",
+  "motif_annulation",
+  "risque_residuel_accepte",
+  "justification_acceptation"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Non-conformité"
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "intitule",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Intitulé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "origine",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Origine",
+   "options": "\nJustificatif rejeté\nAbsence de justificatif\nRetard d'échéance\nContrôle de conformité\nAudit interne\nContrôle externe\nMission d'une autorité de supervision\nIncident\nDétection manuelle\nAutre",
+   "reqd": 1
+  },
+  {
+   "fieldname": "gravite",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Gravité / criticité",
+   "options": "Reg Criticality Level",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Ouverte",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Ouverte\nEn analyse\nEn traitement\nMesure compensatoire en place\nEn attente de vérification\nClôturée\nAnnulée"
+  },
+  {
+   "fieldname": "responsable",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Responsable",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Direction",
+   "options": "Reg Org Unit"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date_detection",
+   "fieldtype": "Date",
+   "label": "Date de détection",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_cible",
+   "fieldtype": "Date",
+   "label": "Date cible de résolution"
+  },
+  {
+   "fieldname": "anciennete_jours",
+   "fieldtype": "Int",
+   "label": "Ancienneté (jours)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Rattachements"
+  },
+  {
+   "fieldname": "obligation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Obligation",
+   "options": "Reg Obligation"
+  },
+  {
+   "fieldname": "echeance",
+   "fieldtype": "Link",
+   "label": "Échéance",
+   "options": "Reg Deadline"
+  },
+  {
+   "fieldname": "justificatif",
+   "fieldtype": "Link",
+   "label": "Justificatif",
+   "options": "Reg Evidence"
+  },
+  {
+   "fieldname": "constat",
+   "fieldtype": "Link",
+   "label": "Constat",
+   "options": "Reg Finding"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "obligation.source",
+   "fetch_if_empty": 0,
+   "fieldname": "source",
+   "fieldtype": "Link",
+   "label": "Texte réglementaire",
+   "options": "Reg Source",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "obligation.disposition_principale",
+   "fetch_if_empty": 0,
+   "fieldname": "disposition",
+   "fieldtype": "Link",
+   "label": "Disposition",
+   "options": "Reg Provision",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "obligation.domaine",
+   "fetch_if_empty": 0,
+   "fieldname": "domaine",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Domaine",
+   "options": "Reg Domain",
+   "read_only": 1
+  },
+  {
+   "fieldname": "plan_action",
+   "fieldtype": "Link",
+   "label": "Plan d'action",
+   "options": "Reg Action Plan",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Analyse"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cause",
+   "fieldtype": "Small Text",
+   "label": "Cause"
+  },
+  {
+   "fieldname": "impact",
+   "fieldtype": "Small Text",
+   "label": "Impact"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "recurrente",
+   "fieldtype": "Check",
+   "in_standard_filter": 1,
+   "label": "Non-conformité récurrente",
+   "read_only": 1
+  },
+  {
+   "fieldname": "creee_automatiquement",
+   "fieldtype": "Check",
+   "label": "Créée automatiquement",
+   "read_only": 1
+  },
+  {
+   "fieldname": "evenement_doctype",
+   "fieldtype": "Link",
+   "label": "Événement déclencheur (type)",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "evenement_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Événement déclencheur",
+   "options": "evenement_doctype",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Clôture"
+  },
+  {
+   "fieldname": "decision_cloture",
+   "fieldtype": "Small Text",
+   "label": "Décision de clôture"
+  },
+  {
+   "fieldname": "cloture_par",
+   "fieldtype": "Link",
+   "label": "Clôturée par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_cloture",
+   "fieldtype": "Datetime",
+   "label": "Date de clôture",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.statut=='Annulée'",
+   "fieldname": "motif_annulation",
+   "fieldtype": "Small Text",
+   "label": "Motif d'annulation"
+  },
+  {
+   "fieldname": "risque_residuel_accepte",
+   "fieldtype": "Check",
+   "label": "Risque résiduel accepté"
+  },
+  {
+   "depends_on": "risque_residuel_accepte",
+   "fieldname": "justification_acceptation",
+   "fieldtype": "Small Text",
+   "label": "Justification de l'acceptation",
+   "mandatory_depends_on": "risque_residuel_accepte"
+  }
+ ],
+ "links": [
+  {
+   "group": "Remédiation",
+   "link_doctype": "Reg Action Plan",
+   "link_fieldname": "non_conformite"
+  },
+  {
+   "group": "Remédiation",
+   "link_doctype": "Reg Effectiveness Check",
+   "link_fieldname": "non_conformite"
+  }
+ ],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Non Conformity",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "intitule,obligation",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "intitule",
+ "track_changes": 1
+}

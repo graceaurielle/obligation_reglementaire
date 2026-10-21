@@ -1,0 +1,407 @@
+{
+ "actions": [],
+ "autoname": "CTL-.YYYY.-.######",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Contrôle d'une version précise d'un justificatif — la décision est figée à la soumission (Ch7).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "justificatif",
+  "version",
+  "organisation",
+  "obligation",
+  "echeance",
+  "cb_1",
+  "controleur",
+  "fonction",
+  "date_prise_en_charge",
+  "date_limite_controle",
+  "date_decision",
+  "methode_validation",
+  "sb_1",
+  "items",
+  "sb_2",
+  "resultat",
+  "commentaire",
+  "sb_3",
+  "motifs",
+  "criteres_non_satisfaits",
+  "corrections_attendues",
+  "cb_2",
+  "date_limite_resoumission",
+  "priorite",
+  "sb_4",
+  "complements_attendus",
+  "sb_5",
+  "reserve_nature",
+  "reserve_justification",
+  "reserve_criticite",
+  "cb_3",
+  "reserve_responsable",
+  "reserve_date_resolution",
+  "reserve_statut",
+  "reserve_plan_action",
+  "sb_6",
+  "non_conformite",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "justificatif",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Justificatif",
+   "options": "Reg Evidence",
+   "reqd": 1
+  },
+  {
+   "fieldname": "version",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Version contrôlée",
+   "options": "Reg Evidence Version",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "justificatif.organisation",
+   "fetch_if_empty": 0,
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "justificatif.obligation",
+   "fetch_if_empty": 0,
+   "fieldname": "obligation",
+   "fieldtype": "Link",
+   "label": "Obligation",
+   "options": "Reg Obligation",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "justificatif.echeance",
+   "fetch_if_empty": 0,
+   "fieldname": "echeance",
+   "fieldtype": "Link",
+   "label": "Échéance",
+   "options": "Reg Deadline",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "controleur",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Contrôleur",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fonction",
+   "fieldtype": "Data",
+   "label": "Fonction"
+  },
+  {
+   "default": "Now",
+   "fieldname": "date_prise_en_charge",
+   "fieldtype": "Datetime",
+   "label": "Prise en charge"
+  },
+  {
+   "fieldname": "date_limite_controle",
+   "fieldtype": "Date",
+   "label": "Date limite de contrôle"
+  },
+  {
+   "fieldname": "date_decision",
+   "fieldtype": "Datetime",
+   "label": "Date de décision",
+   "read_only": 1
+  },
+  {
+   "fieldname": "methode_validation",
+   "fieldtype": "Select",
+   "label": "Méthode",
+   "options": "Contrôle documentaire\nContrôle sur pièces\nRapprochement système\nÉchantillonnage\nEntretien\nContrôle sur place"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Check-list"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Points de contrôle",
+   "options": "Reg Evidence Review Item"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Décision"
+  },
+  {
+   "fieldname": "resultat",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Décision",
+   "options": "\nValidé\nValidé avec réserve\nÀ compléter\nRejeté"
+  },
+  {
+   "fieldname": "commentaire",
+   "fieldtype": "Small Text",
+   "label": "Commentaire"
+  },
+  {
+   "depends_on": "\"eval:doc.resultat=='Rejeté'\"",
+   "fieldname": "sb_3",
+   "fieldtype": "Section Break",
+   "label": "Rejet"
+  },
+  {
+   "fieldname": "motifs",
+   "fieldtype": "Table",
+   "label": "Motifs de rejet",
+   "options": "Reg Evidence Review Reason"
+  },
+  {
+   "fieldname": "criteres_non_satisfaits",
+   "fieldtype": "Small Text",
+   "label": "Critères non satisfaits"
+  },
+  {
+   "fieldname": "corrections_attendues",
+   "fieldtype": "Small Text",
+   "label": "Corrections attendues",
+   "mandatory_depends_on": "eval:doc.resultat=='Rejeté'"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_limite_resoumission",
+   "fieldtype": "Date",
+   "label": "Date limite de resoumission",
+   "mandatory_depends_on": "eval:['Rejeté','À compléter'].includes(doc.resultat)"
+  },
+  {
+   "fieldname": "priorite",
+   "fieldtype": "Select",
+   "label": "Priorité",
+   "options": "\nNormale\nÉlevée\nCritique"
+  },
+  {
+   "depends_on": "\"eval:doc.resultat=='À",
+   "fieldname": "sb_4",
+   "fieldtype": "Section Break",
+   "label": "Compléments compléter'\""
+  },
+  {
+   "fieldname": "complements_attendus",
+   "fieldtype": "Small Text",
+   "label": "Compléments attendus",
+   "mandatory_depends_on": "eval:doc.resultat=='À compléter'"
+  },
+  {
+   "depends_on": "\"eval:doc.resultat=='Validé",
+   "fieldname": "sb_5",
+   "fieldtype": "Section Break",
+   "label": "Réserve avec réserve'\""
+  },
+  {
+   "fieldname": "reserve_nature",
+   "fieldtype": "Small Text",
+   "label": "Nature de la réserve",
+   "mandatory_depends_on": "eval:doc.resultat=='Validé avec réserve'"
+  },
+  {
+   "fieldname": "reserve_justification",
+   "fieldtype": "Small Text",
+   "label": "Justification"
+  },
+  {
+   "fieldname": "reserve_criticite",
+   "fieldtype": "Link",
+   "label": "Criticité de la réserve",
+   "options": "Reg Criticality Level"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reserve_responsable",
+   "fieldtype": "Link",
+   "label": "Responsable de la levée",
+   "options": "User"
+  },
+  {
+   "fieldname": "reserve_date_resolution",
+   "fieldtype": "Date",
+   "label": "Date de résolution prévue"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "reserve_statut",
+   "fieldtype": "Select",
+   "label": "Statut de la réserve",
+   "options": "\nOuverte\nLevée"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "reserve_plan_action",
+   "fieldtype": "Link",
+   "label": "Plan d'action",
+   "options": "Reg Action Plan"
+  },
+  {
+   "fieldname": "sb_6",
+   "fieldtype": "Section Break",
+   "label": "Suite"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "non_conformite",
+   "fieldtype": "Link",
+   "label": "Non-conformité créée",
+   "options": "Reg Non Conformity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Amendé depuis",
+   "no_copy": 1,
+   "options": "Reg Evidence Review",
+   "read_only": 1
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Evidence Review",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1,
+   "submit": 1,
+   "cancel": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1,
+   "submit": 1,
+   "cancel": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "justificatif",
+ "track_changes": 1
+}

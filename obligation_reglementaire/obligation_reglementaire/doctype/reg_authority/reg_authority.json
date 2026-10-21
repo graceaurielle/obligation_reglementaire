@@ -1,0 +1,245 @@
+{
+ "actions": [],
+ "autoname": "field:sigle",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Autorités et organismes émetteurs (Ch3, Ch13.13).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sigle",
+  "nom_officiel",
+  "type_autorite",
+  "zone_competence",
+  "pays",
+  "cb_1",
+  "statut",
+  "remplacee_par",
+  "domaine",
+  "date_debut",
+  "date_fin",
+  "sb_1",
+  "site_web",
+  "adresse",
+  "cb_2",
+  "email",
+  "telephone",
+  "description"
+ ],
+ "fields": [
+  {
+   "bold": 1,
+   "fieldname": "sigle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Sigle",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "nom_officiel",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nom officiel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type_autorite",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type d'autorité",
+   "options": "Reg Authority Type"
+  },
+  {
+   "fieldname": "zone_competence",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Zone de compétence",
+   "options": "\nNationale\nRégionale\nCommunautaire\nInternationale"
+  },
+  {
+   "fieldname": "pays",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Pays",
+   "options": "Country"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Active",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Active\nInactive\nRemplacée"
+  },
+  {
+   "depends_on": "eval:doc.statut=='Remplacée'",
+   "fieldname": "remplacee_par",
+   "fieldtype": "Link",
+   "label": "Remplacée par",
+   "options": "Reg Authority"
+  },
+  {
+   "fieldname": "domaine",
+   "fieldtype": "Link",
+   "label": "Domaine principal",
+   "options": "Reg Domain"
+  },
+  {
+   "fieldname": "date_debut",
+   "fieldtype": "Date",
+   "label": "Date de création"
+  },
+  {
+   "fieldname": "date_fin",
+   "fieldtype": "Date",
+   "label": "Date de fin"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Coordonnées"
+  },
+  {
+   "fieldname": "site_web",
+   "fieldtype": "Data",
+   "label": "Site officiel"
+  },
+  {
+   "fieldname": "adresse",
+   "fieldtype": "Small Text",
+   "label": "Adresse"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "E-mail"
+  },
+  {
+   "fieldname": "telephone",
+   "fieldtype": "Data",
+   "label": "Téléphone"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Authority",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "nom_officiel",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "nom_officiel",
+ "track_changes": 1
+}

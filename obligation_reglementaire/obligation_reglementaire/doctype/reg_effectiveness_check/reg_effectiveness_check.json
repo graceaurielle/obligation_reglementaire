@@ -1,0 +1,270 @@
+{
+ "actions": [],
+ "autoname": "EFF-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Vérification d'efficacité différée (Ch8.22).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "plan",
+  "non_conformite",
+  "organisation",
+  "statut",
+  "cb_1",
+  "date_prevue",
+  "responsable",
+  "date_realisation",
+  "sb_1",
+  "methode",
+  "perimetre",
+  "criteres_efficacite",
+  "echantillon",
+  "sb_2",
+  "resultats",
+  "anomalies",
+  "conclusion",
+  "cb_2",
+  "resultat",
+  "suite_donnee",
+  "preuve"
+ ],
+ "fields": [
+  {
+   "fieldname": "plan",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Plan d'action",
+   "options": "Reg Action Plan",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "plan.non_conformite",
+   "fetch_if_empty": 0,
+   "fieldname": "non_conformite",
+   "fieldtype": "Link",
+   "label": "Non-conformité",
+   "options": "Reg Non Conformity",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "plan.organisation",
+   "fetch_if_empty": 0,
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "read_only": 1
+  },
+  {
+   "default": "Planifiée",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Planifiée\nEn cours\nRéalisée\nAnnulée"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_prevue",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date prévue",
+   "reqd": 1
+  },
+  {
+   "fieldname": "responsable",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Responsable",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_realisation",
+   "fieldtype": "Date",
+   "label": "Date de réalisation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Méthode"
+  },
+  {
+   "fieldname": "methode",
+   "fieldtype": "Small Text",
+   "label": "Méthode"
+  },
+  {
+   "fieldname": "perimetre",
+   "fieldtype": "Small Text",
+   "label": "Périmètre"
+  },
+  {
+   "fieldname": "criteres_efficacite",
+   "fieldtype": "Small Text",
+   "label": "Critères d'efficacité"
+  },
+  {
+   "fieldname": "echantillon",
+   "fieldtype": "Small Text",
+   "label": "Échantillon"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Résultat"
+  },
+  {
+   "fieldname": "resultats",
+   "fieldtype": "Small Text",
+   "label": "Résultats"
+  },
+  {
+   "fieldname": "anomalies",
+   "fieldtype": "Small Text",
+   "label": "Anomalies constatées"
+  },
+  {
+   "fieldname": "conclusion",
+   "fieldtype": "Small Text",
+   "label": "Conclusion"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "resultat",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Résultat",
+   "options": "\nEfficace\nPartiellement efficace\nInefficace"
+  },
+  {
+   "fieldname": "suite_donnee",
+   "fieldtype": "Select",
+   "label": "Suite donnée",
+   "options": "\nAucune\nAction complémentaire\nProlongation de la remédiation\nNouveau plan\nRéouverture du plan"
+  },
+  {
+   "fieldname": "preuve",
+   "fieldtype": "Attach",
+   "label": "Preuve"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Effectiveness Check",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "plan",
+ "track_changes": 1
+}

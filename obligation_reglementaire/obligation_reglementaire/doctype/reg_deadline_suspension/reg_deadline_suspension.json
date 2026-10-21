@@ -1,0 +1,238 @@
+{
+ "actions": [],
+ "autoname": "SUS-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Suspension d'une échéance — le temps restant est conservé et recalculé à la levée (Ch6).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "echeance",
+  "organisation",
+  "statut",
+  "motif",
+  "cb_1",
+  "date_debut",
+  "date_fin_prevue",
+  "date_fin_effective",
+  "jours_restants",
+  "sb_1",
+  "responsable",
+  "autorite_autorisant",
+  "cb_2",
+  "justificatif",
+  "nouvelle_date_limite"
+ ],
+ "fields": [
+  {
+   "fieldname": "echeance",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Échéance",
+   "options": "Reg Deadline",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "echeance.organisation",
+   "fetch_if_empty": 0,
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "read_only": 1
+  },
+  {
+   "default": "Active",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Active\nLevée\nAnnulée",
+   "read_only": 1
+  },
+  {
+   "fieldname": "motif",
+   "fieldtype": "Small Text",
+   "label": "Motif",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date_debut",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Début",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_fin_prevue",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Fin prévue"
+  },
+  {
+   "fieldname": "date_fin_effective",
+   "fieldtype": "Date",
+   "label": "Fin effective",
+   "read_only": 1
+  },
+  {
+   "fieldname": "jours_restants",
+   "fieldtype": "Int",
+   "label": "Jours restants au début",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Autorisation"
+  },
+  {
+   "fieldname": "responsable",
+   "fieldtype": "Link",
+   "label": "Responsable",
+   "options": "User"
+  },
+  {
+   "fieldname": "autorite_autorisant",
+   "fieldtype": "Link",
+   "label": "Autorité ayant autorisé",
+   "options": "Reg Authority"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "justificatif",
+   "fieldtype": "Attach",
+   "label": "Justificatif"
+  },
+  {
+   "fieldname": "nouvelle_date_limite",
+   "fieldtype": "Date",
+   "label": "Nouvelle date limite calculée",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Deadline Suspension",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "echeance",
+ "track_changes": 1
+}

@@ -1,0 +1,356 @@
+{% extends "templates/web.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block page_content %}
+{% include "due_diligence/www/v_base_style.html" %}
+{% include "due_diligence/www/v_table_style.html" %}
+<style>
+.or-content { padding: 24px 28px 40px; max-width: 1100px; }
+.or-back { font-size: 13px; color: var(--vdb-muted); font-weight: 600; margin-bottom: 14px; display: inline-flex; gap: 6px; }
+.or-back:hover { color: var(--vdb-navy); }
+.or-head { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 22px 24px; margin-bottom: 22px; }
+.or-head-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.or-head-ref { font-size: 13px; color: var(--vdb-muted); font-weight: 600; }
+.or-head-title { font-size: 20px; font-weight: 700; color: var(--vdb-navy); letter-spacing: -.02em; margin-top: 2px; }
+.or-head-sub { font-size: 13px; color: var(--vdb-muted); margin-top: 6px; }
+.or-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.or-badge-red { background: #fee2e2; color: #b91c1c; }
+.or-badge-orange { background: #ffedd5; color: #c2410c; }
+.or-badge-green { background: #e7f6ec; color: #15803d; }
+.or-badge-blue { background: #dbeafe; color: #1e40af; }
+.or-badge-gray { background: #f1f5f9; color: #475569; }
+.or-card { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; }
+.or-card-title { font-size: 15px; font-weight: 700; color: var(--vdb-navy); margin-bottom: 14px; }
+.or-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.or-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--vdb-muted); padding: 8px 10px; border-bottom: 1px solid var(--vdb-border); }
+.or-table td { padding: 10px; border-bottom: 1px solid #eef1f8; vertical-align: top; }
+.or-table tr:last-child td { border-bottom: none; }
+.or-empty { padding: 16px; text-align: center; color: var(--vdb-muted); font-size: 13px; }
+.or-info-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #eef1f8; font-size: 13px; }
+.or-info-row:last-child { border-bottom: none; }
+.or-info-k { color: var(--vdb-muted); } .or-info-v { font-weight: 600; text-align: right; }
+
+.or-field { margin-bottom: 16px; }
+.or-field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--vdb-navy); margin-bottom: 6px; }
+.or-field select, .or-field textarea, .or-field input[type=date], .or-field input[type=text] {
+  width: 100%; border: 1px solid #d8dee9; border-radius: 8px; padding: 9px 12px; font: inherit; font-size: 13.5px; }
+.or-field textarea { min-height: 70px; resize: vertical; }
+.or-cond { display: none; }
+.or-cond.show { display: block; }
+.or-motif-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; }
+.or-motif-row select { flex: 0 0 220px; }
+.or-motif-row textarea { flex: 1; min-height: 38px; }
+.or-motif-rm { border: none; background: none; color: #b91c1c; font-size: 18px; cursor: pointer; padding: 4px 8px; }
+.or-add-motif { font-size: 12.5px; font-weight: 600; color: var(--vdb-accent); background: none; border: none; cursor: pointer; padding: 0; }
+.or-act { border: 1px solid var(--vdb-navy); background: var(--vdb-navy); color: #fff; border-radius: 8px; padding: 10px 20px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.or-act[disabled] { opacity: .5; cursor: not-allowed; }
+.or-act-err { font-size: 13px; color: #b91c1c; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 9px 12px; margin-top: 12px; display: none; }
+.or-item-select { min-width: 150px; }
+</style>
+
+{% set _BADGE = { "Rejeté": "red", "À compléter": "orange", "Validé": "green", "Validé avec réserve": "green" } %}
+
+<div class="vdb-layout">
+  {% include "due_diligence/www/v_sidebar.html" %}
+  <div class="vdb-main">
+    <header class="vdb-header">
+      <button class="vdb-hamburger" id="or-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <h2>Contrôle de justificatif</h2>
+      <div class="vdb-header-right">
+        <div class="vdb-user-chip"><div class="vdb-user-avatar">{{ user_initials }}</div><span>{{ user_full_name }}</span></div>
+      </div>
+    </header>
+
+    <div class="or-content">
+      <a href="{{ ev_url or '/obligations-justificatifs' }}" class="or-back">← Retour au justificatif</a>
+
+      <div class="or-head">
+        <div class="or-head-top">
+          <div>
+            <div class="or-head-ref">{{ ctl.name }}</div>
+            <div class="or-head-title">Contrôle — {{ ev.libelle or ctl.justificatif }}</div>
+            <div class="or-head-sub">{{ ev.type_justificatif or "—" }} · Contrôleur : {{ ctl.controleur }}</div>
+          </div>
+          {% if ctl.resultat %}<span class="or-badge or-badge-{{ _BADGE.get(ctl.resultat, 'gray') }}">{{ ctl.resultat }}</span>
+          {% else %}<span class="or-badge or-badge-gray">Brouillon</span>{% endif %}
+        </div>
+      </div>
+
+      {% if editable %}
+      <div class="or-card">
+        <div class="or-card-title">Points de contrôle</div>
+        {% if ctl.items %}
+        <table class="or-table" id="or-items-table">
+          <tr><th>Critère</th><th>Type</th><th>Obligatoire</th><th>Résultat</th><th>Commentaire</th></tr>
+          {% for it in ctl.items %}
+          <tr data-critere="{{ it.critere }}">
+            <td>{{ it.critere }}</td>
+            <td>{{ it.type_controle or "—" }}</td>
+            <td>{{ "Oui" if it.obligatoire else "Non" }}</td>
+            <td>
+              <select class="or-item-select or-item-resultat">
+                <option value="" {% if not it.resultat %}selected{% endif %}></option>
+                <option value="Conforme" {% if it.resultat == "Conforme" %}selected{% endif %}>Conforme</option>
+                <option value="Non conforme" {% if it.resultat == "Non conforme" %}selected{% endif %}>Non conforme</option>
+                <option value="Non applicable" {% if it.resultat == "Non applicable" %}selected{% endif %}>Non applicable</option>
+              </select>
+            </td>
+            <td><textarea class="or-item-commentaire" rows="1" style="min-height:34px;">{{ it.commentaire or "" }}</textarea></td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% else %}
+        <div class="or-empty">Aucun point de contrôle (checklist) défini pour ce type de justificatif.</div>
+        {% endif %}
+      </div>
+
+      <div class="or-card">
+        <div class="or-card-title">Décision</div>
+
+        <div class="or-field">
+          <label>Résultat du contrôle</label>
+          <select id="or-resultat">
+            <option value="">— Choisir —</option>
+            <option value="Validé">Validé</option>
+            <option value="Validé avec réserve">Validé avec réserve</option>
+            <option value="À compléter">À compléter</option>
+            <option value="Rejeté">Rejeté</option>
+          </select>
+        </div>
+
+        <div class="or-field">
+          <label>Commentaire général</label>
+          <textarea id="or-commentaire"></textarea>
+        </div>
+
+        <div class="or-cond" id="or-cond-rejet">
+          <div class="or-field">
+            <label>Motifs de rejet</label>
+            <div id="or-motifs-list"></div>
+            <button type="button" class="or-add-motif" id="or-add-motif">+ Ajouter un motif</button>
+          </div>
+        </div>
+
+        <div class="or-cond" id="or-cond-corrections">
+          <div class="or-field">
+            <label>Corrections attendues</label>
+            <textarea id="or-corrections"></textarea>
+          </div>
+        </div>
+
+        <div class="or-cond" id="or-cond-complements">
+          <div class="or-field">
+            <label>Compléments attendus</label>
+            <textarea id="or-complements"></textarea>
+          </div>
+        </div>
+
+        <div class="or-cond" id="or-cond-delai">
+          <div class="or-field">
+            <label>Date limite de resoumission</label>
+            <input type="date" id="or-date-limite">
+          </div>
+        </div>
+
+        <div class="or-cond" id="or-cond-reserve">
+          <div class="or-field">
+            <label>Nature de la réserve</label>
+            <textarea id="or-reserve-nature"></textarea>
+          </div>
+          <div class="or-field">
+            <label>Justification de la réserve</label>
+            <textarea id="or-reserve-justification"></textarea>
+          </div>
+        </div>
+
+        <button type="button" class="or-act" id="or-submit">Soumettre le contrôle</button>
+        <div class="or-act-err" id="or-act-err"></div>
+      </div>
+      {% else %}
+      <div class="or-card">
+        <div class="or-card-title">Décision — {{ ctl.resultat }}</div>
+        {% if ctl.commentaire %}<div class="or-info-row"><span class="or-info-k">Commentaire</span><span class="or-info-v">{{ ctl.commentaire }}</span></div>{% endif %}
+        {% if ctl.motifs %}
+        <div class="or-info-row" style="display:block;">
+          <span class="or-info-k">Motifs</span>
+          <ul style="margin:6px 0 0;padding-left:18px;">
+            {% for m in ctl.motifs %}<li>{{ m.libelle }}{% if m.commentaire %} — {{ m.commentaire }}{% endif %}</li>{% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        {% if ctl.corrections_attendues %}<div class="or-info-row"><span class="or-info-k">Corrections attendues</span><span class="or-info-v">{{ ctl.corrections_attendues }}</span></div>{% endif %}
+        {% if ctl.complements_attendus %}<div class="or-info-row"><span class="or-info-k">Compléments attendus</span><span class="or-info-v">{{ ctl.complements_attendus }}</span></div>{% endif %}
+        {% if ctl.date_limite_resoumission %}<div class="or-info-row"><span class="or-info-k">Date limite resoumission</span><span class="or-info-v">{{ frappe.utils.formatdate(ctl.date_limite_resoumission, "dd/MM/yyyy") }}</span></div>{% endif %}
+        {% if ctl.reserve_nature %}<div class="or-info-row"><span class="or-info-k">Réserve</span><span class="or-info-v">{{ ctl.reserve_nature }}</span></div>{% endif %}
+      </div>
+      {% if ctl.items %}
+      <div class="or-card">
+        <div class="or-card-title">Points de contrôle</div>
+        <table class="or-table">
+          <tr><th>Critère</th><th>Résultat</th><th>Commentaire</th></tr>
+          {% for it in ctl.items %}
+          <tr><td>{{ it.critere }}</td><td>{{ it.resultat or "—" }}</td><td>{{ it.commentaire or "—" }}</td></tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="vdb-sidebar-overlay" id="or-sidebar-overlay"></div>
+
+{% if editable %}
+<script>
+(function () {
+  var burger = document.getElementById('or-hamburger'), sidebar = document.getElementById('vdb-sidebar'), overlay = document.getElementById('or-sidebar-overlay');
+  function toggle() { if (!sidebar) return; sidebar.classList.toggle('open'); if (overlay) overlay.classList.toggle('open'); }
+  if (burger) burger.addEventListener('click', toggle);
+  if (overlay) overlay.addEventListener('click', toggle);
+})();
+
+(function () {
+  var MOTIFS_OPTIONS = {{ motifs_options | tojson }};
+  var reviewName = {{ ctl.name | tojson }};
+  var selResultat = document.getElementById('or-resultat'),
+      motifsList = document.getElementById('or-motifs-list'),
+      btnAddMotif = document.getElementById('or-add-motif'),
+      btnSubmit = document.getElementById('or-submit'),
+      err = document.getElementById('or-act-err');
+
+  var CONDS = {
+    "Rejeté": ["or-cond-rejet", "or-cond-corrections", "or-cond-delai"],
+    "À compléter": ["or-cond-complements", "or-cond-delai"],
+    "Validé avec réserve": ["or-cond-reserve"],
+    "Validé": [],
+    "": [],
+  };
+
+  function majConditions() {
+    var actifs = CONDS[selResultat.value] || [];
+    document.querySelectorAll('.or-cond').forEach(function (el) {
+      el.classList.toggle('show', actifs.indexOf(el.id) !== -1);
+    });
+  }
+  selResultat.addEventListener('change', majConditions);
+  majConditions();
+
+  function motifOptionsHtml(selected) {
+    return MOTIFS_OPTIONS.map(function (m) {
+      return '<option value="' + m.name + '"' + (m.name === selected ? ' selected' : '') + '>' + m.libelle + '</option>';
+    }).join('');
+  }
+
+  function ajouterMotif() {
+    var row = document.createElement('div');
+    row.className = 'or-motif-row';
+    row.innerHTML = '<select class="or-motif-select"><option value=""></option>' + motifOptionsHtml() + '</select>' +
+      '<textarea class="or-motif-commentaire" placeholder="Commentaire (facultatif)"></textarea>' +
+      '<button type="button" class="or-motif-rm">×</button>';
+    row.querySelector('.or-motif-rm').addEventListener('click', function () { row.remove(); });
+    motifsList.appendChild(row);
+  }
+  btnAddMotif.addEventListener('click', ajouterMotif);
+
+  function collecterItems() {
+    return Array.prototype.map.call(document.querySelectorAll('#or-items-table tr[data-critere]'), function (tr) {
+      return {
+        critere: tr.dataset.critere,
+        resultat: tr.querySelector('.or-item-resultat').value || null,
+        commentaire: tr.querySelector('.or-item-commentaire').value.trim() || null,
+      };
+    });
+  }
+
+  function collecterMotifs() {
+    return Array.prototype.map.call(motifsList.querySelectorAll('.or-motif-row'), function (row) {
+      return { motif: row.querySelector('.or-motif-select').value, commentaire: row.querySelector('.or-motif-commentaire').value.trim() || null };
+    }).filter(function (m) { return m.motif; });
+  }
+
+  btnSubmit.addEventListener('click', function () {
+    err.style.display = 'none';
+    var resultat = selResultat.value;
+    if (!resultat) {
+      err.textContent = "Choisissez un résultat de contrôle.";
+      err.style.display = 'block';
+      return;
+    }
+    if (resultat === 'Rejeté' && !collecterMotifs().length) {
+      err.textContent = "Un rejet doit comporter au moins un motif.";
+      err.style.display = 'block';
+      return;
+    }
+    if (resultat === 'Validé avec réserve') {
+      var nat = document.getElementById('or-reserve-nature').value.trim();
+      var just = document.getElementById('or-reserve-justification').value.trim();
+      if (!nat || !just) {
+        err.textContent = "Une validation avec réserve exige la nature et la justification.";
+        err.style.display = 'block';
+        return;
+      }
+    }
+
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = 'Envoi…';
+
+    var payload = {
+      review_name: reviewName,
+      resultat: resultat,
+      items: JSON.stringify(collecterItems()),
+      commentaire: document.getElementById('or-commentaire').value.trim() || null,
+    };
+    if (resultat === 'Rejeté') {
+      payload.motifs = JSON.stringify(collecterMotifs());
+      payload.corrections_attendues = document.getElementById('or-corrections').value.trim() || null;
+      payload.date_limite_resoumission = document.getElementById('or-date-limite').value || null;
+    }
+    if (resultat === 'À compléter') {
+      payload.complements_attendus = document.getElementById('or-complements').value.trim() || null;
+      payload.date_limite_resoumission = document.getElementById('or-date-limite').value || null;
+    }
+    if (resultat === 'Validé avec réserve') {
+      payload.reserve_nature = document.getElementById('or-reserve-nature').value.trim();
+      payload.reserve_justification = document.getElementById('or-reserve-justification').value.trim();
+    }
+
+    fetch('/api/method/obligation_reglementaire.api.submit_evidence_review', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': frappe.csrf_token || 'fetch' },
+      body: JSON.stringify(payload),
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); }).then(function (res) {
+      if (!res.ok || res.j.message === undefined) {
+        var msg = "Le contrôle n'a pas pu être soumis.";
+        try {
+          var msgs = JSON.parse(res.j._server_messages || '[]');
+          if (msgs.length) { var m = JSON.parse(msgs[0]); msg = m.message || msg; }
+        } catch (e) {}
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = 'Soumettre le contrôle';
+        err.textContent = msg;
+        err.style.display = 'block';
+        return;
+      }
+      window.location.href = '/obligations-justificatifs-detail?name=' + encodeURIComponent(res.j.message.justificatif);
+    }).catch(function () {
+      btnSubmit.disabled = false;
+      btnSubmit.textContent = 'Soumettre le contrôle';
+      err.textContent = "Le serveur n'a pas répondu. Réessayez.";
+      err.style.display = 'block';
+    });
+  });
+})();
+</script>
+{% else %}
+<script>
+(function () {
+  var btn = document.getElementById('or-hamburger');
+  if (btn) btn.addEventListener('click', function () { document.getElementById('vdb-sidebar').classList.toggle('open'); });
+})();
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,240 @@
+{
+ "actions": [],
+ "autoname": "CFG-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Workflow de validation des paramètres sensibles : proposée → contrôlée → validée → activée (Ch13.34).",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "objet",
+  "statut",
+  "cible_doctype",
+  "cible_nom",
+  "cb_1",
+  "propose_par",
+  "date_proposition",
+  "controle_par",
+  "date_controle",
+  "valide_par",
+  "date_validation",
+  "date_activation",
+  "sb_1",
+  "justification",
+  "valeurs_actuelles",
+  "valeurs_proposees",
+  "motif_rejet"
+ ],
+ "fields": [
+  {
+   "fieldname": "objet",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Objet de la modification",
+   "reqd": 1
+  },
+  {
+   "default": "Proposée",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Proposée\nContrôlée\nValidée\nActivée\nRejetée",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cible_doctype",
+   "fieldtype": "Link",
+   "label": "Paramètre (type)",
+   "options": "DocType",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cible_nom",
+   "fieldtype": "Dynamic Link",
+   "label": "Paramètre (document)",
+   "options": "cible_doctype",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "propose_par",
+   "fieldtype": "Link",
+   "label": "Proposé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_proposition",
+   "fieldtype": "Datetime",
+   "label": "Date de proposition",
+   "read_only": 1
+  },
+  {
+   "fieldname": "controle_par",
+   "fieldtype": "Link",
+   "label": "Contrôlé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_controle",
+   "fieldtype": "Datetime",
+   "label": "Date de contrôle",
+   "read_only": 1
+  },
+  {
+   "fieldname": "valide_par",
+   "fieldtype": "Link",
+   "label": "Validé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_activation",
+   "fieldtype": "Datetime",
+   "label": "Date d'activation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Contenu"
+  },
+  {
+   "fieldname": "justification",
+   "fieldtype": "Small Text",
+   "label": "Justification",
+   "reqd": 1
+  },
+  {
+   "fieldname": "valeurs_actuelles",
+   "fieldtype": "Code",
+   "label": "Valeurs actuelles (JSON)",
+   "options": "JSON",
+   "read_only": 1
+  },
+  {
+   "description": "Ex. : {\"jours_alerte_defaut\": \"30,15,10,7,3,1,0\"}",
+   "fieldname": "valeurs_proposees",
+   "fieldtype": "Code",
+   "label": "Valeurs proposées (JSON)",
+   "options": "JSON",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.statut=='Rejetée'",
+   "fieldname": "motif_rejet",
+   "fieldtype": "Small Text",
+   "label": "Motif de rejet"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Config Change Request",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "objet",
+ "track_changes": 1
+}

@@ -1,0 +1,373 @@
+{
+ "actions": [],
+ "autoname": "PRF-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Profil réglementaire du client : base du moteur d'applicabilité (Ch5).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "organisation",
+  "raison_sociale",
+  "secteur",
+  "sous_secteur",
+  "forme_juridique",
+  "cb_1",
+  "statut",
+  "valide_par",
+  "date_validation",
+  "derniere_evaluation",
+  "sb_1",
+  "pays_implantation",
+  "nb_etablissements",
+  "filiales",
+  "tab_2",
+  "activites",
+  "produits",
+  "services",
+  "canaux",
+  "tab_3",
+  "effectif",
+  "categories_personnel",
+  "sous_traitants",
+  "cb_2",
+  "donnees_personnelles",
+  "donnees_sensibles",
+  "donnees_financieres",
+  "donnees_paiement",
+  "sb_2",
+  "systemes_critiques",
+  "cloud",
+  "cb_3",
+  "videosurveillance",
+  "ecommerce",
+  "interconnexions",
+  "tab_4",
+  "reponses"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Identité"
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fetch_from": "organisation.nom_legal",
+   "fetch_if_empty": 0,
+   "fieldname": "raison_sociale",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Raison sociale"
+  },
+  {
+   "fieldname": "secteur",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Secteur",
+   "options": "Reg Sector",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sous_secteur",
+   "fieldtype": "Link",
+   "label": "Sous-secteur",
+   "options": "Reg Sub Sector"
+  },
+  {
+   "fieldname": "forme_juridique",
+   "fieldtype": "Data",
+   "label": "Forme juridique"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Brouillon",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Statut",
+   "options": "Brouillon\nValidé\nÀ réviser"
+  },
+  {
+   "fieldname": "valide_par",
+   "fieldtype": "Link",
+   "label": "Validé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "derniere_evaluation",
+   "fieldtype": "Datetime",
+   "label": "Dernière évaluation d'applicabilité",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Implantation"
+  },
+  {
+   "fieldname": "pays_implantation",
+   "fieldtype": "Table",
+   "label": "Pays d'implantation",
+   "options": "Reg Profile Country"
+  },
+  {
+   "fieldname": "nb_etablissements",
+   "fieldtype": "Int",
+   "label": "Nombre d'établissements"
+  },
+  {
+   "fieldname": "filiales",
+   "fieldtype": "Small Text",
+   "label": "Filiales"
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Activités"
+  },
+  {
+   "fieldname": "activites",
+   "fieldtype": "Table",
+   "label": "Activités",
+   "options": "Reg Profile Activity"
+  },
+  {
+   "fieldname": "produits",
+   "fieldtype": "Small Text",
+   "label": "Produits"
+  },
+  {
+   "fieldname": "services",
+   "fieldtype": "Small Text",
+   "label": "Services"
+  },
+  {
+   "fieldname": "canaux",
+   "fieldtype": "Small Text",
+   "label": "Canaux de distribution"
+  },
+  {
+   "fieldname": "tab_3",
+   "fieldtype": "Tab Break",
+   "label": "Population & données"
+  },
+  {
+   "fieldname": "effectif",
+   "fieldtype": "Int",
+   "label": "Effectif"
+  },
+  {
+   "fieldname": "categories_personnel",
+   "fieldtype": "Small Text",
+   "label": "Catégories de personnel"
+  },
+  {
+   "fieldname": "sous_traitants",
+   "fieldtype": "Check",
+   "label": "Recours à des sous-traitants"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "donnees_personnelles",
+   "fieldtype": "Check",
+   "label": "Traite des données personnelles"
+  },
+  {
+   "fieldname": "donnees_sensibles",
+   "fieldtype": "Check",
+   "label": "Traite des données sensibles"
+  },
+  {
+   "fieldname": "donnees_financieres",
+   "fieldtype": "Check",
+   "label": "Traite des données financières"
+  },
+  {
+   "fieldname": "donnees_paiement",
+   "fieldtype": "Check",
+   "label": "Traite des données de paiement"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Technologies"
+  },
+  {
+   "fieldname": "systemes_critiques",
+   "fieldtype": "Check",
+   "label": "Systèmes critiques"
+  },
+  {
+   "fieldname": "cloud",
+   "fieldtype": "Check",
+   "label": "Recours au cloud"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "videosurveillance",
+   "fieldtype": "Check",
+   "label": "Vidéosurveillance"
+  },
+  {
+   "fieldname": "ecommerce",
+   "fieldtype": "Check",
+   "label": "E-commerce / services en ligne"
+  },
+  {
+   "fieldname": "interconnexions",
+   "fieldtype": "Check",
+   "label": "Interconnexions avec des tiers"
+  },
+  {
+   "fieldname": "tab_4",
+   "fieldtype": "Tab Break",
+   "label": "Questionnaire"
+  },
+  {
+   "fieldname": "reponses",
+   "fieldtype": "Table",
+   "label": "Réponses aux critères",
+   "options": "Reg Profile Answer"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Profile",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "raison_sociale",
+ "track_changes": 1
+}

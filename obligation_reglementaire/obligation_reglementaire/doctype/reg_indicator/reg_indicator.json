@@ -1,0 +1,195 @@
+{
+ "actions": [],
+ "autoname": "field:code",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Indicateur gouverné : définition, formule, seuils (Ch9.45).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "code",
+  "libelle",
+  "methode",
+  "unite",
+  "cb_1",
+  "sens",
+  "seuil_vigilance",
+  "seuil_alerte",
+  "proprietaire",
+  "actif",
+  "sb_1",
+  "definition",
+  "formule"
+ ],
+ "fields": [
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "libelle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Libellé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "methode",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Méthode de calcul",
+   "options": "taux_conformite\ntaux_conformite_pondere\nobligations_actives\nobligations_non_evaluees\necheances_en_retard\ntaux_retard_echeances\necheances_7_jours\njustificatifs_attendus\njustificatifs_en_controle\ntaux_rejet_justificatifs\ndelai_moyen_validation_justificatifs\njustificatifs_expires\nnc_ouvertes\nnc_critiques_ouvertes\nnc_anciennete_moyenne\npa_ouverts\npa_critiques_ouverts\npa_en_retard\ntaux_realisation_pa\nactions_en_retard\nactions_bloquees\nprolongations_en_attente\npa_prolonges_plusieurs_fois\ntaux_reouverture_pa\nobligations_sans_responsable\nsources_sans_obligation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "unite",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Unité",
+   "options": "%\nNombre\nJours"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sens",
+   "fieldtype": "Select",
+   "label": "Sens",
+   "options": "Plus bas est mieux\nPlus haut est mieux"
+  },
+  {
+   "fieldname": "seuil_vigilance",
+   "fieldtype": "Float",
+   "label": "Seuil de vigilance"
+  },
+  {
+   "fieldname": "seuil_alerte",
+   "fieldtype": "Float",
+   "label": "Seuil d'alerte"
+  },
+  {
+   "fieldname": "proprietaire",
+   "fieldtype": "Link",
+   "label": "Propriétaire",
+   "options": "User"
+  },
+  {
+   "default": "1",
+   "fieldname": "actif",
+   "fieldtype": "Check",
+   "label": "Actif"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Définition"
+  },
+  {
+   "fieldname": "definition",
+   "fieldtype": "Small Text",
+   "label": "Définition",
+   "reqd": 1
+  },
+  {
+   "fieldname": "formule",
+   "fieldtype": "Small Text",
+   "label": "Formule documentée"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Indicator",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "libelle",
+ "track_changes": 1
+}

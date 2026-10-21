@@ -1,0 +1,175 @@
+{% extends "templates/web.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block page_content %}
+{% include "due_diligence/www/v_base_style.html" %}
+{% include "due_diligence/www/v_table_style.html" %}
+<style>
+.or-content { padding: 24px 28px 40px; max-width: 1100px; }
+.or-back { font-size: 13px; color: var(--vdb-muted); font-weight: 600; margin-bottom: 14px; display: inline-flex; gap: 6px; }
+.or-back:hover { color: var(--vdb-navy); }
+.or-head { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 22px 24px; margin-bottom: 22px; }
+.or-head-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.or-head-ref { font-size: 13px; color: var(--vdb-muted); font-weight: 600; }
+.or-head-title { font-size: 22px; font-weight: 700; color: var(--vdb-navy); letter-spacing: -.02em; margin-top: 2px; }
+.or-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.or-badge-red { background: #fee2e2; color: #b91c1c; }
+.or-badge-orange { background: #ffedd5; color: #c2410c; }
+.or-badge-green { background: #e7f6ec; color: #15803d; }
+.or-badge-blue { background: #dbeafe; color: #1e40af; }
+.or-badge-gray { background: #f1f5f9; color: #475569; }
+.or-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 22px; align-items: start; }
+@media (max-width: 900px) { .or-grid { grid-template-columns: 1fr; } }
+.or-card { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; }
+.or-card-title { font-size: 15px; font-weight: 700; color: var(--vdb-navy); margin-bottom: 14px; }
+.or-info-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #eef1f8; font-size: 13px; }
+.or-info-row:last-child { border-bottom: none; }
+.or-info-k { color: var(--vdb-muted); } .or-info-v { font-weight: 600; text-align: right; }
+.or-info-v a { color: var(--vdb-accent); text-decoration: none; }
+.or-empty { padding: 16px; text-align: center; color: var(--vdb-muted); font-size: 13px; }
+.or-act { border: 1px solid var(--vdb-navy); background: var(--vdb-navy); color: #fff; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.or-act[disabled] { opacity: .5; cursor: not-allowed; }
+.or-form-row select, .or-form-row textarea { width: 100%; border: 1px solid #d8dee9; border-radius: 8px; padding: 9px 12px; font: inherit; font-size: 13px; margin-top: 8px; }
+.or-form-row textarea { min-height: 70px; resize: vertical; }
+.or-form-status { font-size: 12px; color: var(--vdb-muted); margin-top: 8px; }
+.or-form-status.err { color: #b91c1c; }
+</style>
+
+{% set _BADGE_STATUT = { "Proposée": "blue", "En analyse": "orange", "Validée": "green", "Rejetée": "red", "Générée": "green" } %}
+{% set _BADGE_ETAT = { "Applicable": "green", "Potentiellement applicable": "orange", "Non applicable": "gray" } %}
+{% set _BADGE_CONF = { "Élevé": "green", "Moyen": "orange", "Faible": "red" } %}
+
+<div class="vdb-layout">
+  {% include "due_diligence/www/v_sidebar.html" %}
+  <div class="vdb-main">
+    <header class="vdb-header">
+      <button class="vdb-hamburger" id="or-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <h2>Proposition d'applicabilité</h2>
+      <div class="vdb-header-right">
+        <div class="vdb-user-chip"><div class="vdb-user-avatar">{{ user_initials }}</div><span>{{ user_full_name }}</span></div>
+      </div>
+    </header>
+
+    <div class="or-content">
+      <a href="/obligations" class="or-back">← Retour au tableau de bord</a>
+
+      <div class="or-head">
+        <div class="or-head-top">
+          <div>
+            <div class="or-head-ref">{{ doc.name }}</div>
+            <div class="or-head-title">{{ doc.intitule_modele }}</div>
+          </div>
+          <span class="or-badge or-badge-{{ _BADGE_STATUT.get(doc.statut, 'gray') }}">{{ doc.statut }}</span>
+        </div>
+      </div>
+
+      <div class="or-grid">
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">Analyse du moteur</div>
+            <div class="or-info-row"><span class="or-info-k">État proposé</span><span class="or-info-v"><span class="or-badge or-badge-{{ _BADGE_ETAT.get(doc.etat_propose, 'gray') }}">{{ doc.etat_propose or "—" }}</span></span></div>
+            <div class="or-info-row"><span class="or-info-k">Indice de confiance</span><span class="or-info-v"><span class="or-badge or-badge-{{ _BADGE_CONF.get(doc.score_confiance, 'gray') }}">{{ doc.score_confiance or "—" }}</span></span></div>
+            {% if doc.criteres_satisfaits %}<div style="margin-top:10px;"><div class="or-card-title" style="font-size:12px;margin-bottom:4px;">Critères satisfaits</div><div style="font-size:13px;white-space:pre-wrap;">{{ doc.criteres_satisfaits }}</div></div>{% endif %}
+            {% if doc.criteres_non_satisfaits %}<div style="margin-top:10px;"><div class="or-card-title" style="font-size:12px;margin-bottom:4px;">Critères non satisfaits / inconnus</div><div style="font-size:13px;white-space:pre-wrap;">{{ doc.criteres_non_satisfaits }}</div></div>{% endif %}
+          </div>
+
+          {% if peut_decider %}
+          <div class="or-card">
+            <div class="or-card-title">Décision humaine</div>
+            <div class="or-form-row">
+              <select id="or-decision">
+                <option value="">Choisir une décision…</option>
+                <option value="Applicable">Applicable</option>
+                <option value="Non applicable">Non applicable</option>
+                <option value="Applicable sous condition">Applicable sous condition</option>
+                <option value="À analyser">À analyser</option>
+              </select>
+              <textarea id="or-justification" placeholder="Justification (obligatoire si la décision diffère de l'état proposé, ou pour « Non applicable »/« Applicable sous condition »)…"></textarea>
+              <button type="button" class="or-act" id="or-btn-decider" style="margin-top:8px;">Enregistrer la décision</button>
+              <div class="or-form-status" id="or-decision-statut"></div>
+            </div>
+          </div>
+          {% else %}
+          <div class="or-card">
+            <div class="or-card-title">Décision humaine</div>
+            <div class="or-info-row"><span class="or-info-k">Décision</span><span class="or-info-v">{{ doc.decision or "—" }}</span></div>
+            {% if doc.justification %}<div class="or-info-row"><span class="or-info-k">Justification</span><span class="or-info-v">{{ doc.justification }}</span></div>{% endif %}
+            <div class="or-info-row"><span class="or-info-k">Décideur</span><span class="or-info-v">{{ decideur_nom or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Date de décision</span><span class="or-info-v">{{ frappe.utils.format_datetime(doc.date_decision, "dd/MM/yyyy HH:mm") if doc.date_decision else "—" }}</span></div>
+          </div>
+          {% endif %}
+        </div>
+
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">Contexte</div>
+            <div class="or-info-row"><span class="or-info-k">Organisation</span><span class="or-info-v">{{ doc.organisation or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Profil réglementaire</span><span class="or-info-v">{{ doc.profil or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Obligation modèle</span><span class="or-info-v">{{ doc.modele or "—" }}</span></div>
+            {% if obligation_url %}<div class="or-info-row"><span class="or-info-k">Obligation générée</span><span class="or-info-v"><a href="{{ obligation_url }}">{{ doc.obligation }}</a></span></div>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="vdb-sidebar-overlay" id="or-sidebar-overlay"></div>
+
+<script>
+(function () {
+  var burger = document.getElementById('or-hamburger'), sidebar = document.getElementById('vdb-sidebar'), overlay = document.getElementById('or-sidebar-overlay');
+  function toggle() { if (!sidebar) return; sidebar.classList.toggle('open'); if (overlay) overlay.classList.toggle('open'); }
+  if (burger) burger.addEventListener('click', toggle);
+  if (overlay) overlay.addEventListener('click', toggle);
+})();
+
+function messageErreur(j, defaut) {
+  try {
+    var msgs = JSON.parse(j._server_messages || '[]');
+    if (msgs.length) { var m = JSON.parse(msgs[0]); return m.message || defaut; }
+  } catch (e) {}
+  return (j && j.exc_type === 'PermissionError') ? "Vous n'êtes pas autorisé à effectuer cette action." : defaut;
+}
+function appelerApi(method, args) {
+  return fetch('/api/method/' + method, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': frappe.csrf_token || 'fetch' },
+    body: JSON.stringify(args)
+  }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); });
+}
+var PROPOSAL_NAME = {{ doc.name | tojson }};
+
+(function () {
+  var btn = document.getElementById('or-btn-decider');
+  if (!btn) return;
+  var statutEl = document.getElementById('or-decision-statut');
+  btn.addEventListener('click', function () {
+    var decision = document.getElementById('or-decision').value;
+    var justification = document.getElementById('or-justification').value.trim();
+    statutEl.classList.remove('err');
+    if (!decision) { statutEl.textContent = "Choisissez une décision."; statutEl.classList.add('err'); return; }
+    btn.disabled = true;
+    statutEl.textContent = "Enregistrement…";
+    appelerApi('obligation_reglementaire.api.decide_proposal', {
+      proposal: PROPOSAL_NAME, decision: decision, justification: justification || null,
+    }).then(function (res) {
+      if (!res.ok || res.j.message === undefined) {
+        btn.disabled = false;
+        statutEl.textContent = messageErreur(res.j, "La décision n'a pas pu être enregistrée.");
+        statutEl.classList.add('err');
+        return;
+      }
+      window.location.reload();
+    }).catch(function () {
+      btn.disabled = false;
+      statutEl.textContent = "Le serveur n'a pas répondu. Réessayez.";
+      statutEl.classList.add('err');
+    });
+  });
+})();
+</script>
+{% endblock %}

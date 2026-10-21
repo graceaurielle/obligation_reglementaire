@@ -1,0 +1,345 @@
+{% extends "templates/web.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block page_content %}
+{% include "due_diligence/www/v_base_style.html" %}
+{% include "due_diligence/www/v_table_style.html" %}
+<style>
+.or-content { padding: 24px 28px 40px; max-width: 1200px; }
+.or-back { font-size: 13px; color: var(--vdb-muted); font-weight: 600; margin-bottom: 14px; display: inline-flex; gap: 6px; }
+.or-back:hover { color: var(--vdb-navy); }
+.or-head { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 22px 24px; margin-bottom: 22px; }
+.or-head-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.or-head-ref { font-size: 13px; color: var(--vdb-muted); font-weight: 600; }
+.or-head-title { font-size: 22px; font-weight: 700; color: var(--vdb-navy); letter-spacing: -.02em; margin-top: 2px; }
+.or-head-sub { font-size: 13px; color: var(--vdb-muted); margin-top: 6px; }
+.or-head-sub a { color: var(--vdb-accent); font-weight: 600; text-decoration: none; }
+.or-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.or-badge-red { background: #fee2e2; color: #b91c1c; }
+.or-badge-orange { background: #ffedd5; color: #c2410c; }
+.or-badge-green { background: #e7f6ec; color: #15803d; }
+.or-badge-blue { background: #dbeafe; color: #1e40af; }
+.or-badge-gray { background: #f1f5f9; color: #475569; }
+.or-badge-purple { background: #ede9fe; color: #6d28d9; }
+.or-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 22px; align-items: start; }
+@media (max-width: 900px) { .or-grid { grid-template-columns: 1fr; } }
+.or-card { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; }
+.or-card-title { font-size: 15px; font-weight: 700; color: var(--vdb-navy); margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+.or-info-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #eef1f8; font-size: 13px; }
+.or-info-row:last-child { border-bottom: none; }
+.or-info-k { color: var(--vdb-muted); } .or-info-v { font-weight: 600; text-align: right; }
+.or-empty { padding: 16px; text-align: center; color: var(--vdb-muted); font-size: 13px; }
+.or-actions { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vdb-border); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.or-actions-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--vdb-muted); margin-right: 4px; }
+.or-act { border: 1px solid var(--vdb-navy); background: var(--vdb-navy); color: #fff; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.or-act:hover { opacity: .9; }
+.or-act.danger { background: #fff; border-color: #fecaca; color: #b91c1c; }
+.or-act.ghost { background: #fff; border-color: var(--vdb-border); color: var(--vdb-navy); }
+.or-act[disabled] { opacity: .5; cursor: not-allowed; }
+.or-act-err { width: 100%; font-size: 13px; color: #b91c1c; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 9px 12px; margin-top: 10px; }
+.or-motif-bloc { width: 100%; margin-top: 10px; }
+.or-motif-bloc textarea, .or-motif-bloc input, .or-motif-bloc select { width: 100%; border: 1px solid #d8dee9; border-radius: 8px; padding: 9px 12px; font: inherit; font-size: 13px; margin-top: 8px; }
+.or-motif-bloc textarea { min-height: 60px; resize: vertical; }
+.or-proof-card { border: 1px solid var(--vdb-border); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+.or-proof-card:last-child { margin-bottom: 0; }
+.or-proof-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+</style>
+
+{% set _BADGE = { "Non commencée": "gray", "Planifiée": "blue", "En cours": "orange", "Bloquée": "red",
+  "Soumise à contrôle": "purple", "Retour pour correction": "red", "Validée": "green", "Annulée": "gray",
+  "À contrôler": "orange", "Acceptée": "green", "Rejetée": "red", "Complément demandé": "orange", "Remplacée": "gray" } %}
+{% macro badge(val) %}<span class="or-badge or-badge-{{ _BADGE.get(val, 'gray') }}">{{ val }}</span>{% endmacro %}
+
+{% set TYPES_PREUVE = ["Procédure", "Instruction", "Rapport", "Compte rendu", "Capture applicative",
+  "Fichier de configuration", "Rapport de test", "Procès-verbal", "Attestation", "Registre",
+  "Extrait de système", "Preuve de formation", "Preuve de déploiement", "Correspondance officielle",
+  "Décision", "Validation", "Autre"] %}
+
+<div class="vdb-layout">
+  {% include "due_diligence/www/v_sidebar.html" %}
+  <div class="vdb-main">
+    <header class="vdb-header">
+      <button class="vdb-hamburger" id="or-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <h2>Action corrective</h2>
+      <div class="vdb-header-right">
+        <div class="vdb-user-chip"><div class="vdb-user-avatar">{{ user_initials }}</div><span>{{ user_full_name }}</span></div>
+      </div>
+    </header>
+
+    <div class="or-content">
+      <a href="/obligations-plans" class="or-back">← Retour aux plans d'action</a>
+
+      <div class="or-head">
+        <div class="or-head-top">
+          <div>
+            <div class="or-head-ref">{{ action.name }}</div>
+            <div class="or-head-title">{{ action.intitule or action.name }}</div>
+            <div class="or-head-sub">
+              {% if plan_url %}Plan : <a href="{{ plan_url }}">{{ action.plan }}{% if plan %} ({{ plan.statut }}){% endif %}</a>{% endif %}
+            </div>
+          </div>
+          {{ badge(action.statut) }}
+        </div>
+
+        {% if action.description %}<div class="or-head-sub" style="margin-top:12px;">{{ action.description }}</div>{% endif %}
+
+        <div class="or-actions" id="or-actions" {% if not buttons %}style="display:none;"{% endif %}>
+          <span class="or-actions-label">Actions</span>
+          <div id="or-actions-btns" style="display:flex;flex-wrap:wrap;gap:10px;">
+            {% for b in buttons %}
+            <button type="button" class="or-act{% if b.danger %} danger{% endif %}"
+                    data-action="{{ b.action }}" data-needs-motif="{{ 1 if b.get('needs_motif') else 0 }}">{{ b.label }}</button>
+            {% endfor %}
+          </div>
+          <div class="or-motif-bloc" id="or-motif-bloc" hidden>
+            <textarea id="or-motif" placeholder="Motif…"></textarea>
+          </div>
+          <div class="or-act-err" id="or-act-err" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="or-grid">
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">
+              Preuves de réalisation ({{ proofs|length }})
+              <button type="button" class="or-act" id="or-btn-depot-preuve" style="padding:6px 12px;font-size:12px;">Déposer une preuve</button>
+            </div>
+            <div class="or-motif-bloc" id="or-depot-bloc" hidden>
+              <select id="or-depot-type">
+                <option value="">Type de preuve…</option>
+                {% for t in TYPES_PREUVE %}<option value="{{ t }}">{{ t }}</option>{% endfor %}
+              </select>
+              <input type="text" id="or-depot-libelle" placeholder="Libellé…">
+              <input type="file" id="or-depot-fichier">
+              <button type="button" class="or-act" id="or-btn-depot-confirmer" style="margin-top:8px;">Envoyer</button>
+            </div>
+            {% if proofs %}
+            {% for p in proofs %}
+            <div class="or-proof-card">
+              <div class="or-proof-top">
+                <div>
+                  <b>{{ p.libelle or p.type_preuve }}</b> <small style="color:var(--vdb-muted);">v{{ p.numero_version }} — {{ p.type_preuve }}</small>
+                </div>
+                {{ badge(p.statut) }}
+              </div>
+              <div class="or-info-row"><span class="or-info-k">Déposant</span><span class="or-info-v">{{ p.deposant or "—" }} {% if p.date_depot %}· {{ frappe.utils.format_datetime(p.date_depot, "dd/MM/yyyy HH:mm") }}{% endif %}</span></div>
+              {% if p.fichier %}<div class="or-info-row"><span class="or-info-k">Fichier</span><span class="or-info-v"><a href="{{ p.fichier }}" target="_blank">Ouvrir</a></span></div>{% endif %}
+              {% if p.controleur %}<div class="or-info-row"><span class="or-info-k">Contrôleur</span><span class="or-info-v">{{ p.controleur }}</span></div>{% endif %}
+              {% if p.commentaire_controle %}<div class="or-info-row"><span class="or-info-k">Commentaire</span><span class="or-info-v">{{ p.commentaire_controle }}</span></div>{% endif %}
+
+              {% if peut_reviewer and p.statut in ("À contrôler", "Complément demandé") %}
+              <div class="or-motif-bloc">
+                <select class="or-proof-motif">
+                  <option value="">Motif (si rejet)…</option>
+                  {% for m in motifs_rejet %}<option value="{{ m.name }}">{{ m.libelle }}</option>{% endfor %}
+                </select>
+                <textarea class="or-proof-commentaire" placeholder="Commentaire…"></textarea>
+                <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                  <button type="button" class="or-act or-proof-decide" data-proof="{{ p.name }}" data-decision="Acceptée">Accepter</button>
+                  <button type="button" class="or-act ghost or-proof-decide" data-proof="{{ p.name }}" data-decision="Complément demandé">Compléter</button>
+                  <button type="button" class="or-act danger or-proof-decide" data-proof="{{ p.name }}" data-decision="Rejetée">Rejeter</button>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="or-empty">Aucune preuve déposée.</div>
+            {% endif %}
+          </div>
+
+          {% if dependances %}
+          <div class="or-card">
+            <div class="or-card-title">Dépendances</div>
+            {% for d in dependances %}
+            <div class="or-info-row"><span class="or-info-k">{{ d.intitule or d.action_prerequise }}{% if d.obligatoire %} <small>(bloquante)</small>{% endif %}</span><span class="or-info-v">{{ d.action_prerequise }}</span></div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">Détail</div>
+            <div class="or-info-row"><span class="or-info-k">Priorité</span><span class="or-info-v">{{ action.priorite or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Responsable</span><span class="or-info-v">{{ action.responsable or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Contrôleur</span><span class="or-info-v">{{ action.controleur or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Fin prévue</span><span class="or-info-v">{{ frappe.utils.formatdate(action.date_fin_prevue, "dd/MM/yyyy") if action.date_fin_prevue else "—" }}{% if action.en_retard %} <span class="or-badge or-badge-red">retard</span>{% endif %}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Avancement</span><span class="or-info-v">{{ action.avancement or 0 }}%</span></div>
+            <div class="or-info-row"><span class="or-info-k">Preuve attendue</span><span class="or-info-v">{{ action.preuve_attendue or "—" }}</span></div>
+            {% if action.critere_acceptation %}<div class="or-info-row"><span class="or-info-k">Critère d'acceptation</span><span class="or-info-v">{{ action.critere_acceptation }}</span></div>{% endif %}
+            <div class="or-info-row"><span class="or-info-k">Prolongations</span><span class="or-info-v">{{ action.nb_prolongations or 0 }}</span></div>
+          </div>
+
+          {% if action.statut in ("Annulée", "Bloquée") or action.motif_retour %}
+          <div class="or-card">
+            <div class="or-card-title">Historique</div>
+            {% if action.motif_blocage %}<div class="or-info-row"><span class="or-info-k">Motif de blocage</span><span class="or-info-v">{{ action.motif_blocage }}</span></div>{% endif %}
+            {% if action.motif_retour %}<div class="or-info-row"><span class="or-info-k">Dernier motif de retour</span><span class="or-info-v">{{ action.motif_retour }}</span></div>{% endif %}
+            {% if action.motif_annulation %}<div class="or-info-row"><span class="or-info-k">Motif d'annulation</span><span class="or-info-v">{{ action.motif_annulation }}</span></div>{% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="vdb-sidebar-overlay" id="or-sidebar-overlay"></div>
+
+<script>
+(function () {
+  var burger = document.getElementById('or-hamburger'), sidebar = document.getElementById('vdb-sidebar'), overlay = document.getElementById('or-sidebar-overlay');
+  function toggle() { if (!sidebar) return; sidebar.classList.toggle('open'); if (overlay) overlay.classList.toggle('open'); }
+  if (burger) burger.addEventListener('click', toggle);
+  if (overlay) overlay.addEventListener('click', toggle);
+})();
+
+function messageErreur(j, defaut) {
+  try {
+    var msgs = JSON.parse(j._server_messages || '[]');
+    if (msgs.length) { var m = JSON.parse(msgs[0]); return m.message || defaut; }
+  } catch (e) {}
+  return (j && j.exc_type === 'PermissionError') ? "Vous n'êtes pas autorisé à effectuer cette action." : defaut;
+}
+function appelerApi(method, args) {
+  return fetch('/api/method/' + method, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': frappe.csrf_token || 'fetch' },
+    body: JSON.stringify(args)
+  }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); });
+}
+
+(function () {
+  var zone = document.getElementById('or-actions');
+  if (!zone) return;
+  var err = document.getElementById('or-act-err'),
+      blocMotif = document.getElementById('or-motif-bloc'),
+      champMotif = document.getElementById('or-motif'),
+      name = {{ action.name | tojson }};
+
+  function verrouiller(etat) {
+    Array.prototype.forEach.call(zone.querySelectorAll('button'), function (b) { b.disabled = etat; });
+  }
+
+  var pendingBtn = null;
+
+  document.getElementById('or-actions-btns').addEventListener('click', function (ev) {
+    var btn = ev.target.closest('button[data-action]');
+    if (!btn) return;
+    err.style.display = 'none';
+    var action = btn.dataset.action, needsMotif = btn.dataset.needsMotif === '1';
+    if (needsMotif && (blocMotif.hidden || pendingBtn !== btn)) {
+      blocMotif.hidden = false;
+      pendingBtn = btn;
+      champMotif.focus();
+      return;
+    }
+    var motif = needsMotif ? champMotif.value.trim() : null;
+    if (needsMotif && !motif) {
+      champMotif.focus();
+      err.textContent = "Précisez un motif.";
+      err.style.display = 'block';
+      return;
+    }
+    verrouiller(true);
+    appelerApi('obligation_reglementaire.api.corrective_action', { name: name, action: action, motif: motif }).then(function (res) {
+      if (!res.ok || res.j.message === undefined) {
+        verrouiller(false);
+        err.textContent = messageErreur(res.j, "L'action n'a pas pu être appliquée.");
+        err.style.display = 'block';
+        return;
+      }
+      window.location.reload();
+    }).catch(function () {
+      verrouiller(false);
+      err.textContent = "Le serveur n'a pas répondu. Réessayez.";
+      err.style.display = 'block';
+    });
+  });
+})();
+
+(function () {
+  var btnOuvrir = document.getElementById('or-btn-depot-preuve'),
+      bloc = document.getElementById('or-depot-bloc'),
+      btnConfirmer = document.getElementById('or-btn-depot-confirmer'),
+      err = document.getElementById('or-act-err'),
+      name = {{ action.name | tojson }};
+  if (!btnOuvrir) return;
+
+  btnOuvrir.addEventListener('click', function () { bloc.hidden = !bloc.hidden; });
+
+  btnConfirmer.addEventListener('click', function () {
+    var type = document.getElementById('or-depot-type').value;
+    var libelle = document.getElementById('or-depot-libelle').value.trim();
+    var fichier = document.getElementById('or-depot-fichier').files[0];
+    if (!type || !libelle || !fichier) {
+      err.textContent = "Type, libellé et fichier sont obligatoires.";
+      err.style.display = 'block';
+      return;
+    }
+    btnConfirmer.disabled = true;
+    var fd = new FormData();
+    fd.append('file', fichier, fichier.name);
+    fd.append('is_private', '1');
+    fd.append('folder', 'Home/Attachments');
+    fetch('/api/method/upload_file', {
+      method: 'POST', body: fd, headers: { 'X-Frappe-CSRF-Token': frappe.csrf_token || 'fetch' },
+    }).then(function (r) { return r.json(); }).then(function (up) {
+      if (!up.message) throw new Error('upload');
+      return appelerApi('obligation_reglementaire.api.add_action_proof', {
+        action: name, type_preuve: type, libelle: libelle, file_url: up.message.file_url,
+      });
+    }).then(function (res) {
+      if (!res.ok || res.j.message === undefined) {
+        btnConfirmer.disabled = false;
+        err.textContent = messageErreur(res.j, "Le dépôt n'a pas pu être enregistré.");
+        err.style.display = 'block';
+        return;
+      }
+      window.location.reload();
+    }).catch(function () {
+      btnConfirmer.disabled = false;
+      err.textContent = "Le dépôt n'a pas pu être enregistré.";
+      err.style.display = 'block';
+    });
+  });
+})();
+
+(function () {
+  var cards = document.querySelectorAll('.or-proof-decide');
+  if (!cards.length) return;
+
+  Array.prototype.forEach.call(cards, function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('.or-proof-card');
+      var motif = card.querySelector('.or-proof-motif').value || null;
+      var commentaire = card.querySelector('.or-proof-commentaire').value.trim() || null;
+      var decision = btn.dataset.decision;
+      if (decision !== 'Acceptée' && !motif && !commentaire) {
+        window.alert("Un motif ou un commentaire est obligatoire pour ce choix.");
+        return;
+      }
+      Array.prototype.forEach.call(card.querySelectorAll('button'), function (b) { b.disabled = true; });
+      appelerApi('obligation_reglementaire.api.review_action_proof', {
+        proof: btn.dataset.proof, decision: decision, motif: motif, commentaire: commentaire,
+      }).then(function (res) {
+        if (!res.ok || res.j.message === undefined) {
+          Array.prototype.forEach.call(card.querySelectorAll('button'), function (b) { b.disabled = false; });
+          window.alert(messageErreur(res.j, "La décision n'a pas pu être enregistrée."));
+          return;
+        }
+        window.location.reload();
+      }).catch(function () {
+        Array.prototype.forEach.call(card.querySelectorAll('button'), function (b) { b.disabled = false; });
+        window.alert("Le serveur n'a pas répondu. Réessayez.");
+      });
+    });
+  });
+})();
+</script>
+{% endblock %}

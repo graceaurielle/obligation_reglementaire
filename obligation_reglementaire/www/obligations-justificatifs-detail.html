@@ -1,0 +1,320 @@
+{% extends "templates/web.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block page_content %}
+{% include "due_diligence/www/v_base_style.html" %}
+{% include "due_diligence/www/v_table_style.html" %}
+<style>
+.or-content { padding: 24px 28px 40px; max-width: 1200px; }
+.or-back { font-size: 13px; color: var(--vdb-muted); font-weight: 600; margin-bottom: 14px; display: inline-flex; gap: 6px; }
+.or-back:hover { color: var(--vdb-navy); }
+.or-head { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 22px 24px; margin-bottom: 22px; }
+.or-head-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.or-head-ref { font-size: 13px; color: var(--vdb-muted); font-weight: 600; }
+.or-head-title { font-size: 22px; font-weight: 700; color: var(--vdb-navy); letter-spacing: -.02em; margin-top: 2px; }
+.or-head-sub { font-size: 13px; color: var(--vdb-muted); margin-top: 6px; }
+.or-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.or-badge-red { background: #fee2e2; color: #b91c1c; }
+.or-badge-orange { background: #ffedd5; color: #c2410c; }
+.or-badge-green { background: #e7f6ec; color: #15803d; }
+.or-badge-blue { background: #dbeafe; color: #1e40af; }
+.or-badge-gray { background: #f1f5f9; color: #475569; }
+.or-badge-purple { background: #ede9fe; color: #6d28d9; }
+.or-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 22px; align-items: start; }
+@media (max-width: 900px) { .or-grid { grid-template-columns: 1fr; } }
+.or-card { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; }
+.or-card-title { font-size: 15px; font-weight: 700; color: var(--vdb-navy); margin-bottom: 14px; }
+.or-info-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #eef1f8; font-size: 13px; }
+.or-info-row:last-child { border-bottom: none; }
+.or-info-k { color: var(--vdb-muted); } .or-info-v { font-weight: 600; text-align: right; }
+.or-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.or-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--vdb-muted); padding: 8px 10px; border-bottom: 1px solid var(--vdb-border); }
+.or-table td { padding: 10px; border-bottom: 1px solid #eef1f8; }
+.or-table tr:last-child td { border-bottom: none; }
+.or-table a { color: var(--vdb-accent); font-weight: 600; text-decoration: none; }
+.or-empty { padding: 16px; text-align: center; color: var(--vdb-muted); font-size: 13px; }
+.or-actions { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vdb-border); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.or-actions-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--vdb-muted); margin-right: 4px; }
+.or-act { border: 1px solid var(--vdb-navy); background: var(--vdb-navy); color: #fff; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.or-act:hover { opacity: .9; }
+.or-act.danger { background: #fff; border-color: #fecaca; color: #b91c1c; }
+.or-act[disabled] { opacity: .5; cursor: not-allowed; }
+.or-act-err { width: 100%; font-size: 13px; color: #b91c1c; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 9px 12px; margin-top: 10px; }
+.or-motif-bloc { width: 100%; margin-top: 10px; }
+.or-motif-bloc textarea, .or-motif-bloc input[type=file] { width: 100%; border: 1px solid #d8dee9; border-radius: 8px; padding: 9px 12px; font: inherit; font-size: 13px; }
+.or-motif-bloc textarea { min-height: 70px; resize: vertical; margin-top: 8px; }
+.or-rejet-box { margin-top: 7px; padding: 10px 12px; border-radius: 8px; background: #fee2e2; font-size: 12.5px; line-height: 1.5; color: #991b1b; }
+</style>
+
+{% set _BADGE = {
+  "Rejeté": "red", "Expiré": "red", "Annulé": "red",
+  "À compléter": "orange", "En cours de contrôle": "orange", "Soumis à nouveau": "orange",
+  "Validé": "green", "Validé avec réserve": "green",
+  "Attendu": "blue", "Demandé": "blue", "À fournir": "blue", "Déposé": "blue",
+  "Remplacé": "gray", "Archivé": "gray",
+} %}
+{% macro badge(val) %}<span class="or-badge or-badge-{{ _BADGE.get(val, 'gray') }}">{{ val }}</span>{% endmacro %}
+
+<div class="vdb-layout">
+  {% include "due_diligence/www/v_sidebar.html" %}
+  <div class="vdb-main">
+    <header class="vdb-header">
+      <button class="vdb-hamburger" id="or-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <h2>Justificatif</h2>
+      <div class="vdb-header-right">
+        <div class="vdb-user-chip"><div class="vdb-user-avatar">{{ user_initials }}</div><span>{{ user_full_name }}</span></div>
+      </div>
+    </header>
+
+    <div class="or-content">
+      <a href="/obligations-justificatifs" class="or-back">← Retour aux justificatifs</a>
+
+      <div class="or-head">
+        <div class="or-head-top">
+          <div>
+            <div class="or-head-ref">{{ ev.name }}</div>
+            <div class="or-head-title">{{ ev.libelle or ev.name }}</div>
+            <div class="or-head-sub">
+              {{ ev.type_justificatif or "—" }}
+              {% if echeance_url %} · <a href="{{ echeance_url }}">Échéance {{ ev.echeance }}</a>{% endif %}
+            </div>
+          </div>
+          {{ badge(ev.statut) }}
+        </div>
+
+        {% if ev.motif_rejet %}
+        <div class="or-rejet-box"><b>Motif :</b> {{ ev.motif_rejet }}</div>
+        {% endif %}
+
+        <div class="or-actions" id="or-actions" {% if not buttons %}style="display:none;"{% endif %}>
+          <span class="or-actions-label">Actions</span>
+          <div id="or-actions-btns" style="display:flex;flex-wrap:wrap;gap:10px;">
+            {% for b in buttons %}
+            <button type="button" class="or-act{% if b.danger %} danger{% endif %}"
+                    data-action="{{ b.action }}" data-needs-motif="{{ 1 if b.get('needs_motif') else 0 }}">{{ b.label }}</button>
+            {% endfor %}
+          </div>
+          <div class="or-motif-bloc" id="or-depot-bloc" hidden>
+            <input type="file" id="or-fichier">
+            <textarea id="or-motif" placeholder="Commentaire / motif (selon l'action)…"></textarea>
+          </div>
+          <div class="or-act-err" id="or-act-err" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="or-grid">
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">Historique des versions</div>
+            {% if versions %}
+            <table class="or-table">
+              <tr><th>#</th><th>Statut</th><th>Auteur</th><th>Déposée le</th><th>Fichier</th></tr>
+              {% for v in versions %}
+              <tr>
+                <td>{{ v.numero }}</td>
+                <td>{{ badge(v.statut) }}</td>
+                <td>{{ v.auteur or "—" }}</td>
+                <td>{{ frappe.utils.format_datetime(v.date_depot, "dd/MM/yyyy HH:mm") if v.date_depot else "—" }}</td>
+                <td>{% if v.fichier %}<a href="{{ v.fichier }}" target="_blank">Ouvrir</a>{% else %}—{% endif %}</td>
+              </tr>
+              {% endfor %}
+            </table>
+            {% else %}
+            <div class="or-empty">Aucune version déposée.</div>
+            {% endif %}
+          </div>
+
+          {% if review %}
+          <div class="or-card">
+            <div class="or-card-title">Dernier contrôle — {{ review.resultat }}</div>
+            {% if review.motifs %}
+            <div class="or-rejet-box">
+              {% for m in review.motifs %}<div>• {{ m.libelle }}{% if m.commentaire %} — {{ m.commentaire }}{% endif %}</div>{% endfor %}
+            </div>
+            {% endif %}
+            {% if review.corrections_attendues %}<div class="or-info-row"><span class="or-info-k">Corrections attendues</span><span class="or-info-v">{{ review.corrections_attendues }}</span></div>{% endif %}
+            {% if review.complements_attendus %}<div class="or-info-row"><span class="or-info-k">Compléments attendus</span><span class="or-info-v">{{ review.complements_attendus }}</span></div>{% endif %}
+            {% if review.reserve_nature %}<div class="or-info-row"><span class="or-info-k">Réserve</span><span class="or-info-v">{{ review.reserve_nature }}</span></div>{% endif %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">Détail</div>
+            <div class="or-info-row"><span class="or-info-k">Obligatoire</span><span class="or-info-v">{{ "Oui" if ev.obligatoire else "Non" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Responsable</span><span class="or-info-v">{{ ev.responsable or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Déposant</span><span class="or-info-v">{{ ev.deposant or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Validité</span><span class="or-info-v">{% if ev.date_fin_validite %}jusqu'au {{ frappe.utils.formatdate(ev.date_fin_validite, "dd/MM/yyyy") }}{% else %}—{% endif %}</span></div>
+            {% if max_mo %}<div class="or-info-row"><span class="or-info-k">Taille max.</span><span class="or-info-v">{{ max_mo }} Mo</span></div>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="vdb-sidebar-overlay" id="or-sidebar-overlay"></div>
+
+<script>
+(function () {
+  var burger = document.getElementById('or-hamburger'),
+      sidebar = document.getElementById('vdb-sidebar'),
+      overlay = document.getElementById('or-sidebar-overlay');
+  function toggle() { if (!sidebar) return; sidebar.classList.toggle('open'); if (overlay) overlay.classList.toggle('open'); }
+  if (burger) burger.addEventListener('click', toggle);
+  if (overlay) overlay.addEventListener('click', toggle);
+})();
+
+(function () {
+  var zoneBtns = document.getElementById('or-actions-btns'),
+      err = document.getElementById('or-act-err'),
+      blocDepot = document.getElementById('or-depot-bloc'),
+      champFichier = document.getElementById('or-fichier'),
+      champMotif = document.getElementById('or-motif'),
+      name = {{ ev.name | tojson }};
+  if (!zoneBtns) return;
+
+  function messageErreur(j, defaut) {
+    try {
+      var msgs = JSON.parse(j._server_messages || '[]');
+      if (msgs.length) { var m = JSON.parse(msgs[0]); return m.message || defaut; }
+    } catch (e) {}
+    return (j && j.exc_type === 'PermissionError') ? "Vous n'êtes pas autorisé à effectuer cette action." : defaut;
+  }
+
+  function verrouiller(etat) {
+    Array.prototype.forEach.call(zoneBtns.querySelectorAll('button'), function (b) { b.disabled = etat; });
+  }
+
+  var pendingBtn = null;
+
+  function appelerApi(method, args) {
+    return fetch('/api/method/' + method, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': frappe.csrf_token || 'fetch' },
+      body: JSON.stringify(args)
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); });
+  }
+
+  zoneBtns.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('button[data-action]');
+    if (!btn || btn.disabled) return;
+    err.style.display = 'none';
+
+    var action = btn.dataset.action;
+
+    if (action === 'deposit') {
+      if (blocDepot.hidden || pendingBtn !== btn) {
+        blocDepot.hidden = false;
+        pendingBtn = btn;
+        return;
+      }
+      var fichier = champFichier.files[0];
+      if (!fichier) {
+        err.textContent = "Choisissez un fichier à déposer.";
+        err.style.display = 'block';
+        return;
+      }
+      verrouiller(true);
+      var libelle = btn.textContent;
+      btn.textContent = 'Envoi…';
+
+      var fd = new FormData();
+      fd.append('file', fichier, fichier.name);
+      fd.append('is_private', '1');
+      fd.append('folder', 'Home/Attachments');
+      fetch('/api/method/upload_file', {
+        method: 'POST', body: fd, headers: { 'X-Frappe-CSRF-Token': frappe.csrf_token || 'fetch' },
+      }).then(function (r) { return r.json(); }).then(function (up) {
+        if (!up.message) throw new Error('upload');
+        return deposer(up.message.file_url, 0);
+      }).catch(function () {
+        btn.textContent = libelle;
+        verrouiller(false);
+        err.textContent = "Le dépôt n'a pas pu être enregistré.";
+        err.style.display = 'block';
+      });
+
+      function deposer(fileUrl, confirmerDoublon) {
+        return appelerApi('obligation_reglementaire.api.deposit_evidence', {
+          evidence_name: name, file_url: fileUrl, commentaire: champMotif.value.trim() || null,
+          confirmer_doublon: confirmerDoublon,
+        }).then(function (res) {
+          if (!res.ok || res.j.message === undefined) throw new Error('refuse');
+          if (res.j.message.doublon) {
+            if (window.confirm("Un fichier identique existe déjà sur un autre justificatif ("
+                + res.j.message.doublon.map(function (d) { return d.justificatif; }).join(', ')
+                + "). Déposer quand même ?")) {
+              return deposer(fileUrl, 1);
+            }
+            btn.textContent = libelle;
+            verrouiller(false);
+            return;
+          }
+          window.location.reload();
+        });
+      }
+      return;
+    }
+
+    if (action === 'cancel' || action === 'replace') {
+      if (blocDepot.hidden || pendingBtn !== btn) {
+        blocDepot.hidden = false;
+        champFichier.style.display = 'none';
+        pendingBtn = btn;
+        champMotif.focus();
+        return;
+      }
+      var motif = champMotif.value.trim();
+      if (!motif) {
+        champMotif.focus();
+        err.textContent = "Précisez un motif.";
+        err.style.display = 'block';
+        return;
+      }
+      verrouiller(true);
+      var methode = action === 'cancel' ? 'obligation_reglementaire.api.cancel_evidence' : 'obligation_reglementaire.api.replace_evidence';
+      appelerApi(methode, { evidence_name: name, motif: motif }).then(function (res) {
+        if (!res.ok || res.j.message === undefined) {
+          verrouiller(false);
+          err.textContent = messageErreur(res.j, "L'action n'a pas pu être appliquée.");
+          err.style.display = 'block';
+          return;
+        }
+        if (action === 'replace') {
+          window.location.href = '/obligations-justificatifs-detail?name=' + encodeURIComponent(res.j.message);
+        } else {
+          window.location.reload();
+        }
+      }).catch(function () {
+        verrouiller(false);
+        err.textContent = "Le serveur n'a pas répondu. Réessayez.";
+        err.style.display = 'block';
+      });
+      return;
+    }
+
+    if (action === 'start_review') {
+      verrouiller(true);
+      appelerApi('obligation_reglementaire.api.start_evidence_review', { evidence_name: name }).then(function (res) {
+        if (!res.ok || res.j.message === undefined) {
+          verrouiller(false);
+          err.textContent = messageErreur(res.j, "L'action n'a pas pu être appliquée.");
+          err.style.display = 'block';
+          return;
+        }
+        window.location.href = '/obligations-controle-detail?name=' + encodeURIComponent(res.j.message);
+      }).catch(function () {
+        verrouiller(false);
+        err.textContent = "Le serveur n'a pas répondu. Réessayez.";
+        err.style.display = 'block';
+      });
+    }
+  });
+})();
+</script>
+{% endblock %}

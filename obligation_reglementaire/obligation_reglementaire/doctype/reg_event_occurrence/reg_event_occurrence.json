@@ -1,0 +1,251 @@
+{
+ "actions": [],
+ "autoname": "EVT-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Occurrence d'un événement métier : génère les échéances des obligations événementielles (Ch6).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "organisation",
+  "type_evenement",
+  "libelle",
+  "statut",
+  "gravite",
+  "cb_1",
+  "date_evenement",
+  "date_connaissance",
+  "source_date",
+  "enregistre_par",
+  "nb_echeances",
+  "sb_1",
+  "description",
+  "reference_doctype",
+  "reference_name",
+  "motif_annulation"
+ ],
+ "fields": [
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type_evenement",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type d'événement",
+   "options": "Reg Trigger Event Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "libelle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Libellé",
+   "reqd": 1
+  },
+  {
+   "default": "Enregistré",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Enregistré\nQualifié\nTraité\nClôturé\nAnnulé"
+  },
+  {
+   "fieldname": "gravite",
+   "fieldtype": "Link",
+   "label": "Gravité",
+   "options": "Reg Criticality Level"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_evenement",
+   "fieldtype": "Datetime",
+   "label": "Date-heure de l'événement",
+   "reqd": 1
+  },
+  {
+   "description": "Point de départ des délais si renseigné.",
+   "fieldname": "date_connaissance",
+   "fieldtype": "Datetime",
+   "label": "Date-heure de connaissance (référence)"
+  },
+  {
+   "fieldname": "source_date",
+   "fieldtype": "Select",
+   "label": "Source de la date",
+   "options": "Saisie manuelle\nSystème externe\nModule contrats\nModule incidents\nRegistre de gouvernance"
+  },
+  {
+   "fieldname": "enregistre_par",
+   "fieldtype": "Link",
+   "label": "Enregistré par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "nb_echeances",
+   "fieldtype": "Int",
+   "label": "Échéances générées",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Description"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "Objet source (type)",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Objet source",
+   "options": "reference_doctype"
+  },
+  {
+   "depends_on": "eval:doc.statut=='Annulé'",
+   "fieldname": "motif_annulation",
+   "fieldtype": "Small Text",
+   "label": "Motif d'annulation"
+  }
+ ],
+ "links": [
+  {
+   "group": "Échéances",
+   "link_doctype": "Reg Deadline",
+   "link_fieldname": "evenement"
+  }
+ ],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Event Occurrence",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "libelle",
+ "track_changes": 1
+}

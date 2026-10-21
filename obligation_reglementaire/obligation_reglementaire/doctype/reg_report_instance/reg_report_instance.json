@@ -1,0 +1,573 @@
+{
+ "actions": [],
+ "autoname": "RAP-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Instance de reporting : période, périmètre, filtres, données figées, circuit, transmission (Ch10.5).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "modele",
+  "version_modele",
+  "organisation",
+  "intitule",
+  "cb_1",
+  "statut",
+  "version",
+  "version_precedente",
+  "officiel",
+  "fige",
+  "sb_1",
+  "type_periode",
+  "date_debut",
+  "date_fin",
+  "date_arrete",
+  "cb_2",
+  "direction",
+  "domaine",
+  "autorite",
+  "responsable_filtre",
+  "criticite",
+  "tab_2",
+  "date_generation",
+  "genere_par",
+  "date_actualisation_donnees",
+  "filtres_appliques",
+  "donnees",
+  "formules",
+  "resultat_html",
+  "fichier_pdf",
+  "fichier_excel",
+  "erreur_generation",
+  "sb_2",
+  "synthese",
+  "commentaires",
+  "tab_3",
+  "preparateur",
+  "controleur",
+  "date_controle",
+  "cb_3",
+  "validateur",
+  "date_validation",
+  "reserves",
+  "sb_3",
+  "motif_rejet",
+  "elements_a_corriger",
+  "cb_4",
+  "rejete_par",
+  "date_rejet",
+  "sb_4",
+  "diffusions",
+  "tab_4",
+  "fichier_transmis",
+  "date_transmission",
+  "canal_transmission",
+  "destinataire_transmission",
+  "cb_5",
+  "reference_transmission",
+  "preuve_depot",
+  "accuse_reception",
+  "transmis_par",
+  "sb_5",
+  "motif_rejet_autorite",
+  "courrier_autorite",
+  "cb_6",
+  "date_rejet_autorite",
+  "nouvelle_echeance",
+  "responsable_correction"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Rapport"
+  },
+  {
+   "fieldname": "modele",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Modèle",
+   "options": "Reg Report Template",
+   "reqd": 1
+  },
+  {
+   "fieldname": "version_modele",
+   "fieldtype": "Int",
+   "label": "Version du modèle",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "intitule",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Intitulé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Brouillon",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Brouillon\nEn préparation\nÀ contrôler\nContrôlé\nÀ valider\nRejeté\nÀ corriger\nValidé\nDiffusé\nPrêt à transmettre\nTransmis\nAccusé réception obtenu\nRejeté par le destinataire\nÀ corriger après transmission\nClôturé\nÉchec de génération\nArchivé"
+  },
+  {
+   "default": "1",
+   "fieldname": "version",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Version du rapport",
+   "read_only": 1
+  },
+  {
+   "fieldname": "version_precedente",
+   "fieldtype": "Link",
+   "label": "Version précédente",
+   "options": "Reg Report Instance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "officiel",
+   "fieldtype": "Check",
+   "label": "Rapport officiel"
+  },
+  {
+   "fieldname": "fige",
+   "fieldtype": "Check",
+   "label": "Données figées",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Période et périmètre"
+  },
+  {
+   "fieldname": "type_periode",
+   "fieldtype": "Select",
+   "label": "Période",
+   "options": "Mensuel\nJournalier\nHebdomadaire\nTrimestriel\nSemestriel\nAnnuel\nPersonnalisée",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_debut",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Du",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_fin",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Au",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_arrete",
+   "fieldtype": "Date",
+   "label": "Situation arrêtée au",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Link",
+   "label": "Direction",
+   "options": "Reg Org Unit"
+  },
+  {
+   "fieldname": "domaine",
+   "fieldtype": "Link",
+   "label": "Domaine réglementaire",
+   "options": "Reg Domain"
+  },
+  {
+   "fieldname": "autorite",
+   "fieldtype": "Link",
+   "label": "Autorité",
+   "options": "Reg Authority"
+  },
+  {
+   "fieldname": "responsable_filtre",
+   "fieldtype": "Link",
+   "label": "Responsable",
+   "options": "User"
+  },
+  {
+   "fieldname": "criticite",
+   "fieldtype": "Link",
+   "label": "Criticité",
+   "options": "Reg Criticality Level"
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Données"
+  },
+  {
+   "fieldname": "date_generation",
+   "fieldtype": "Datetime",
+   "label": "Date de génération",
+   "read_only": 1
+  },
+  {
+   "fieldname": "genere_par",
+   "fieldtype": "Link",
+   "label": "Généré par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_actualisation_donnees",
+   "fieldtype": "Datetime",
+   "label": "Dernière actualisation des données",
+   "read_only": 1
+  },
+  {
+   "fieldname": "filtres_appliques",
+   "fieldtype": "Code",
+   "label": "Filtres appliqués (JSON)",
+   "options": "JSON",
+   "read_only": 1
+  },
+  {
+   "fieldname": "donnees",
+   "fieldtype": "Code",
+   "label": "Données figées (JSON)",
+   "options": "JSON",
+   "read_only": 1
+  },
+  {
+   "fieldname": "formules",
+   "fieldtype": "Small Text",
+   "label": "Formules appliquées",
+   "read_only": 1
+  },
+  {
+   "fieldname": "resultat_html",
+   "fieldtype": "HTML",
+   "label": "Aperçu"
+  },
+  {
+   "fieldname": "fichier_pdf",
+   "fieldtype": "Attach",
+   "label": "Fichier PDF",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fichier_excel",
+   "fieldtype": "Attach",
+   "label": "Fichier Excel",
+   "read_only": 1
+  },
+  {
+   "fieldname": "erreur_generation",
+   "fieldtype": "Small Text",
+   "label": "Erreur de génération",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Commentaires de gestion"
+  },
+  {
+   "fieldname": "synthese",
+   "fieldtype": "Text Editor",
+   "label": "Synthèse / conclusion"
+  },
+  {
+   "fieldname": "commentaires",
+   "fieldtype": "Table",
+   "label": "Commentaires de gestion",
+   "options": "Reg Report Comment"
+  },
+  {
+   "fieldname": "tab_3",
+   "fieldtype": "Tab Break",
+   "label": "Circuit"
+  },
+  {
+   "fieldname": "preparateur",
+   "fieldtype": "Link",
+   "label": "Préparateur",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "controleur",
+   "fieldtype": "Link",
+   "label": "Contrôleur",
+   "options": "User"
+  },
+  {
+   "fieldname": "date_controle",
+   "fieldtype": "Datetime",
+   "label": "Date de contrôle",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "validateur",
+   "fieldtype": "Link",
+   "label": "Validateur",
+   "options": "User"
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reserves",
+   "fieldtype": "Small Text",
+   "label": "Réserves"
+  },
+  {
+   "fieldname": "sb_3",
+   "fieldtype": "Section Break",
+   "label": "Rejet"
+  },
+  {
+   "fieldname": "motif_rejet",
+   "fieldtype": "Small Text",
+   "label": "Motif de rejet",
+   "read_only": 1
+  },
+  {
+   "fieldname": "elements_a_corriger",
+   "fieldtype": "Small Text",
+   "label": "Éléments à corriger",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rejete_par",
+   "fieldtype": "Link",
+   "label": "Rejeté par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_rejet",
+   "fieldtype": "Datetime",
+   "label": "Date de rejet",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_4",
+   "fieldtype": "Section Break",
+   "label": "Diffusion"
+  },
+  {
+   "fieldname": "diffusions",
+   "fieldtype": "Table",
+   "label": "Diffusion",
+   "options": "Reg Report Distribution"
+  },
+  {
+   "fieldname": "tab_4",
+   "fieldtype": "Tab Break",
+   "label": "Transmission"
+  },
+  {
+   "fieldname": "fichier_transmis",
+   "fieldtype": "Attach",
+   "label": "Fichier transmis"
+  },
+  {
+   "fieldname": "date_transmission",
+   "fieldtype": "Datetime",
+   "label": "Date-heure de transmission"
+  },
+  {
+   "fieldname": "canal_transmission",
+   "fieldtype": "Select",
+   "label": "Canal",
+   "options": "\nPortail de l'autorité\nE-mail\nCourrier\nDépôt physique\nAutre"
+  },
+  {
+   "fieldname": "destinataire_transmission",
+   "fieldtype": "Data",
+   "label": "Destinataire"
+  },
+  {
+   "fieldname": "cb_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reference_transmission",
+   "fieldtype": "Data",
+   "label": "Référence de transmission"
+  },
+  {
+   "fieldname": "preuve_depot",
+   "fieldtype": "Attach",
+   "label": "Preuve de dépôt"
+  },
+  {
+   "fieldname": "accuse_reception",
+   "fieldtype": "Attach",
+   "label": "Accusé de réception"
+  },
+  {
+   "fieldname": "transmis_par",
+   "fieldtype": "Link",
+   "label": "Transmis par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_5",
+   "fieldtype": "Section Break",
+   "label": "Rejet par l'autorité"
+  },
+  {
+   "fieldname": "motif_rejet_autorite",
+   "fieldtype": "Small Text",
+   "label": "Motif du rejet par l'autorité"
+  },
+  {
+   "fieldname": "courrier_autorite",
+   "fieldtype": "Attach",
+   "label": "Courrier / message reçu"
+  },
+  {
+   "fieldname": "cb_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_rejet_autorite",
+   "fieldtype": "Date",
+   "label": "Date du rejet"
+  },
+  {
+   "fieldname": "nouvelle_echeance",
+   "fieldtype": "Date",
+   "label": "Nouvelle échéance"
+  },
+  {
+   "fieldname": "responsable_correction",
+   "fieldtype": "Link",
+   "label": "Responsable de la correction",
+   "options": "User"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Report Instance",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "intitule",
+ "track_changes": 1
+}

@@ -1,0 +1,640 @@
+{
+ "app": "obligation_reglementaire",
+ "charts": [],
+ "content": "[]",
+ "creation": "2026-10-13 09:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "shield",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Obligations réglementaires",
+ "links": [
+  {
+   "hidden": 0,
+   "label": "Obligations et échéances",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Obligations réglementaires",
+   "link_count": 0,
+   "link_to": "Reg Obligation",
+   "link_type": "DocType",
+   "type": "Link",
+   "description": "Registre central des obligations",
+   "onboard": 1
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Échéances",
+   "link_count": 0,
+   "link_to": "Reg Deadline",
+   "link_type": "DocType",
+   "type": "Link",
+   "description": "Suivi des dates limites",
+   "onboard": 1
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Demandes de report",
+   "link_count": 0,
+   "link_to": "Reg Deadline Change",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Justificatifs",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Justificatifs",
+   "link_count": 0,
+   "link_to": "Reg Evidence",
+   "link_type": "DocType",
+   "type": "Link",
+   "description": "Pièces probantes",
+   "onboard": 1
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Contrôles de justificatifs",
+   "link_count": 0,
+   "link_to": "Reg Evidence Review",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Types de justificatifs",
+   "link_count": 0,
+   "link_to": "Reg Evidence Type",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Non-conformités et plans d action",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Non-conformités",
+   "link_count": 0,
+   "link_to": "Reg Non Conformity",
+   "link_type": "DocType",
+   "type": "Link",
+   "onboard": 1
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Plans d action",
+   "link_count": 0,
+   "link_to": "Reg Action Plan",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Actions correctives",
+   "link_count": 0,
+   "link_to": "Reg Corrective Action",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Preuves d action",
+   "link_count": 0,
+   "link_to": "Reg Action Proof",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Demandes de prolongation",
+   "link_count": 0,
+   "link_to": "Reg Extension Request",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Constats",
+   "link_count": 0,
+   "link_to": "Reg Finding",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Sources réglementaires",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sources",
+   "link_count": 0,
+   "link_to": "Reg Source",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Versions de source",
+   "link_count": 0,
+   "link_to": "Reg Source Version",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Analyses d impact",
+   "link_count": 0,
+   "link_to": "Reg Impact Analysis",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Comparaisons de versions",
+   "link_count": 0,
+   "link_to": "Reg Version Comparison",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Applicabilité",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Profils d applicabilité",
+   "link_count": 0,
+   "link_to": "Reg Profile",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Propositions d applicabilité",
+   "link_count": 0,
+   "link_to": "Reg Applicability Proposal",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Décisions d applicabilité",
+   "link_count": 0,
+   "link_to": "Reg Applicability Decision",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Critères",
+   "link_count": 0,
+   "link_to": "Reg Applicability Criterion",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Modèles d obligation",
+   "link_count": 0,
+   "link_to": "Reg Template Obligation",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Avis de mise à jour",
+   "link_count": 0,
+   "link_to": "Reg Template Update Notice",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Gestion documentaire",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Documents GED",
+   "link_count": 0,
+   "link_to": "Reg Document",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Versions de document",
+   "link_count": 0,
+   "link_to": "Reg Document Version",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Partages de document",
+   "link_count": 0,
+   "link_to": "Reg Document Share",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Rapports réglementaires",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Instances de rapport",
+   "link_count": 0,
+   "link_to": "Reg Report Instance",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Modèles de rapport",
+   "link_count": 0,
+   "link_to": "Reg Report Template",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Organisation et gouvernance",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Organisations",
+   "link_count": 0,
+   "link_to": "Reg Organization",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Unités organisationnelles",
+   "link_count": 0,
+   "link_to": "Reg Org Unit",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Membres",
+   "link_count": 0,
+   "link_to": "Reg Member",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Mandats",
+   "link_count": 0,
+   "link_to": "Reg Governance Mandate",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Licences et autorisations",
+   "link_count": 0,
+   "link_to": "Reg License",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Autorités",
+   "link_count": 0,
+   "link_to": "Reg Authority",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Notifications et audit",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Notifications",
+   "link_count": 0,
+   "link_to": "Reg Notification Log",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Règles de notification",
+   "link_count": 0,
+   "link_to": "Reg Notification Rule",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Modèles de notification",
+   "link_count": 0,
+   "link_to": "Reg Notification Template",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Journal d audit",
+   "link_count": 0,
+   "link_to": "Reg Audit Log",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Règles d escalade",
+   "link_count": 0,
+   "link_to": "Reg Escalation Rule",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Paramétrage",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Paramètres généraux",
+   "link_count": 0,
+   "link_to": "Reg Settings",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Demandes de changement",
+   "link_count": 0,
+   "link_to": "Reg Config Change Request",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Niveaux de criticité",
+   "link_count": 0,
+   "link_to": "Reg Criticality Level",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Calendriers",
+   "link_count": 0,
+   "link_to": "Reg Calendar",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Domaines réglementaires",
+   "link_count": 0,
+   "link_to": "Reg Domain",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Types de source",
+   "link_count": 0,
+   "link_to": "Reg Source Type",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Types d autorité",
+   "link_count": 0,
+   "link_to": "Reg Authority Type",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Types d obligation",
+   "link_count": 0,
+   "link_to": "Reg Obligation Type",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Causes de retard",
+   "link_count": 0,
+   "link_to": "Reg Delay Cause",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Catégories de cause",
+   "link_count": 0,
+   "link_to": "Reg Cause Category",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Indicateurs",
+   "link_count": 0,
+   "link_to": "Reg Indicator",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Rapports analytiques",
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Échéances par horizon",
+   "link_count": 0,
+   "link_to": "Échéances par horizon",
+   "link_type": "Report",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Taux de conformité",
+   "link_count": 0,
+   "link_to": "Taux de conformité",
+   "link_type": "Report",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Suivi des plans d action",
+   "link_count": 0,
+   "link_to": "Suivi des plans d action",
+   "link_type": "Report",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Qualité du référentiel",
+   "link_count": 0,
+   "link_to": "Qualité du référentiel",
+   "link_type": "Report",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Exposition aux risques",
+   "link_count": 0,
+   "link_to": "Exposition aux risques",
+   "link_type": "Report",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "À traiter aujourd hui",
+   "link_count": 0,
+   "link_to": "À traiter aujourd hui",
+   "link_type": "Report",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Prolongations et reports",
+   "link_count": 0,
+   "link_to": "Prolongations et reports",
+   "link_type": "Report",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Suivi des justificatifs",
+   "link_count": 0,
+   "link_to": "Suivi des justificatifs",
+   "link_type": "Report",
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Obligations réglementaires",
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "roles": [],
+ "sequence_id": 10,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "label": "Obligations",
+   "link_to": "Reg Obligation",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "label": "Échéances",
+   "link_to": "Reg Deadline",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "label": "Non-conformités",
+   "link_to": "Reg Non Conformity",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "label": "Plans d action",
+   "link_to": "Reg Action Plan",
+   "type": "DocType"
+  },
+  {
+   "color": "Yellow",
+   "label": "Justificatifs",
+   "link_to": "Reg Evidence",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "label": "À traiter",
+   "link_to": "À traiter aujourd hui",
+   "type": "Report"
+  }
+ ],
+ "title": "Obligations réglementaires"
+}

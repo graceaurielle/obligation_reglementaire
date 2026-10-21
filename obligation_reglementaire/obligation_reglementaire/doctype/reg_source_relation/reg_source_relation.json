@@ -1,0 +1,64 @@
+{
+ "actions": [],
+ "creation": "2026-10-13 09:00:00.000000",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type_relation",
+  "source_liee",
+  "titre_source_liee",
+  "date_effet",
+  "commentaire"
+ ],
+ "fields": [
+  {
+   "fieldname": "type_relation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Type de relation",
+   "options": "Reg Relation Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_liee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Texte lié",
+   "options": "Reg Source",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "source_liee.titre_court",
+   "fetch_if_empty": 0,
+   "fieldname": "titre_source_liee",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Titre",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_effet",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date d'effet"
+  },
+  {
+   "fieldname": "commentaire",
+   "fieldtype": "Small Text",
+   "label": "Commentaire"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Source Relation",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_order": "DESC",
+ "states": []
+}

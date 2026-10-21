@@ -1,0 +1,603 @@
+{
+ "actions": [],
+ "autoname": "JUS-.YYYY.-.######",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Justificatif attendu / déposé pour une échéance (Ch7).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_1",
+  "organisation",
+  "obligation",
+  "echeance",
+  "type_justificatif",
+  "libelle",
+  "description",
+  "cb_1",
+  "statut",
+  "nature",
+  "obligatoire",
+  "version_courante",
+  "numero_version_courante",
+  "confidentialite",
+  "generee_automatiquement",
+  "sb_1",
+  "responsable",
+  "deposant",
+  "cb_2",
+  "controleur",
+  "validateur",
+  "sb_2",
+  "periode_du",
+  "periode_au",
+  "date_production",
+  "date_emission",
+  "cb_3",
+  "date_debut_validite",
+  "date_fin_validite",
+  "reference_externe",
+  "signe",
+  "tab_2",
+  "date_demande",
+  "date_depot",
+  "depose_apres_echeance",
+  "date_prise_en_charge",
+  "date_limite_controle",
+  "cb_4",
+  "date_validation",
+  "date_limite_resoumission",
+  "date_archivage",
+  "date_remplacement",
+  "remplace",
+  "sb_3",
+  "dernier_controle",
+  "motif_rejet",
+  "reserve",
+  "tab_3",
+  "source_canal",
+  "url_externe",
+  "date_recuperation",
+  "recupere_par",
+  "cb_5",
+  "transmis_autorite",
+  "date_transmission",
+  "canal_transmission",
+  "reference_autorite",
+  "sb_4",
+  "preuve_transmission",
+  "accuse_reception",
+  "cb_6",
+  "date_reception",
+  "statut_reception",
+  "tab_4",
+  "metadonnees",
+  "commentaire",
+  "motif_annulation"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_1",
+   "fieldtype": "Tab Break",
+   "label": "Justificatif"
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "obligation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Obligation",
+   "options": "Reg Obligation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "echeance",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Échéance",
+   "options": "Reg Deadline"
+  },
+  {
+   "fieldname": "type_justificatif",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type de justificatif",
+   "options": "Reg Evidence Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "libelle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Libellé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Attendu",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Attendu\nDemandé\nÀ fournir\nDéposé\nEn cours de contrôle\nÀ compléter\nRejeté\nSoumis à nouveau\nValidé\nValidé avec réserve\nExpiré\nRemplacé\nArchivé\nAnnulé"
+  },
+  {
+   "fieldname": "nature",
+   "fieldtype": "Select",
+   "label": "Nature",
+   "options": "Principal\nComplémentaire"
+  },
+  {
+   "default": "1",
+   "fieldname": "obligatoire",
+   "fieldtype": "Check",
+   "label": "Obligatoire"
+  },
+  {
+   "fieldname": "version_courante",
+   "fieldtype": "Link",
+   "label": "Version courante",
+   "options": "Reg Evidence Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "numero_version_courante",
+   "fieldtype": "Int",
+   "label": "N° de version courante",
+   "read_only": 1
+  },
+  {
+   "default": "Interne",
+   "fieldname": "confidentialite",
+   "fieldtype": "Select",
+   "label": "Confidentialité",
+   "options": "\nPublic interne\nInterne\nConfidentiel\nStrictement confidentiel\nSensible"
+  },
+  {
+   "fieldname": "generee_automatiquement",
+   "fieldtype": "Check",
+   "label": "Créé automatiquement",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Responsabilités"
+  },
+  {
+   "fieldname": "responsable",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Responsable du dépôt",
+   "options": "User"
+  },
+  {
+   "fieldname": "deposant",
+   "fieldtype": "Link",
+   "label": "Déposant",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "controleur",
+   "fieldtype": "Link",
+   "label": "Contrôleur",
+   "options": "User"
+  },
+  {
+   "fieldname": "validateur",
+   "fieldtype": "Link",
+   "label": "Validateur",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Période couverte et validité"
+  },
+  {
+   "fieldname": "periode_du",
+   "fieldtype": "Date",
+   "label": "Période couverte du"
+  },
+  {
+   "fieldname": "periode_au",
+   "fieldtype": "Date",
+   "label": "Période couverte au"
+  },
+  {
+   "fieldname": "date_production",
+   "fieldtype": "Date",
+   "label": "Date de production"
+  },
+  {
+   "fieldname": "date_emission",
+   "fieldtype": "Date",
+   "label": "Date d'émission"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_debut_validite",
+   "fieldtype": "Date",
+   "label": "Début de validité"
+  },
+  {
+   "fieldname": "date_fin_validite",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Fin de validité"
+  },
+  {
+   "fieldname": "reference_externe",
+   "fieldtype": "Data",
+   "label": "Référence externe"
+  },
+  {
+   "fieldname": "signe",
+   "fieldtype": "Check",
+   "label": "Document signé"
+  },
+  {
+   "fieldname": "tab_2",
+   "fieldtype": "Tab Break",
+   "label": "Dates de traitement"
+  },
+  {
+   "fieldname": "date_demande",
+   "fieldtype": "Datetime",
+   "label": "Date de demande",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_depot",
+   "fieldtype": "Datetime",
+   "label": "Date de dépôt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "depose_apres_echeance",
+   "fieldtype": "Check",
+   "label": "Déposé après l'échéance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_prise_en_charge",
+   "fieldtype": "Datetime",
+   "label": "Prise en charge du contrôle",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_limite_controle",
+   "fieldtype": "Date",
+   "label": "Date limite de contrôle"
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_validation",
+   "fieldtype": "Datetime",
+   "label": "Date de validation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_limite_resoumission",
+   "fieldtype": "Date",
+   "label": "Date limite de resoumission",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_archivage",
+   "fieldtype": "Datetime",
+   "label": "Date d'archivage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_remplacement",
+   "fieldtype": "Datetime",
+   "label": "Date de remplacement",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remplace",
+   "fieldtype": "Link",
+   "label": "Remplace le justificatif",
+   "options": "Reg Evidence",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_3",
+   "fieldtype": "Section Break",
+   "label": "Dernier contrôle"
+  },
+  {
+   "fieldname": "dernier_controle",
+   "fieldtype": "Link",
+   "label": "Dernier contrôle",
+   "options": "Reg Evidence Review",
+   "read_only": 1
+  },
+  {
+   "fieldname": "motif_rejet",
+   "fieldtype": "Small Text",
+   "label": "Dernier motif de rejet / complément",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reserve",
+   "fieldtype": "Small Text",
+   "label": "Réserve en cours",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tab_3",
+   "fieldtype": "Tab Break",
+   "label": "Origine & transmission"
+  },
+  {
+   "fieldname": "source_canal",
+   "fieldtype": "Select",
+   "label": "Source",
+   "options": "Dépôt interne\nPortail réglementaire\nE-mail\nCourrier\nSystème externe"
+  },
+  {
+   "fieldname": "url_externe",
+   "fieldtype": "Data",
+   "label": "URL externe"
+  },
+  {
+   "fieldname": "date_recuperation",
+   "fieldtype": "Datetime",
+   "label": "Date de récupération"
+  },
+  {
+   "fieldname": "recupere_par",
+   "fieldtype": "Link",
+   "label": "Récupéré par",
+   "options": "User"
+  },
+  {
+   "fieldname": "cb_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transmis_autorite",
+   "fieldtype": "Check",
+   "label": "Transmis à une autorité"
+  },
+  {
+   "depends_on": "transmis_autorite",
+   "fieldname": "date_transmission",
+   "fieldtype": "Datetime",
+   "label": "Date-heure de transmission"
+  },
+  {
+   "depends_on": "transmis_autorite",
+   "fieldname": "canal_transmission",
+   "fieldtype": "Select",
+   "label": "Canal de transmission",
+   "options": "\nPortail\nE-mail\nCourrier recommandé\nDépôt physique\nPlateforme de l'autorité\nAutre"
+  },
+  {
+   "depends_on": "transmis_autorite",
+   "fieldname": "reference_autorite",
+   "fieldtype": "Data",
+   "label": "Référence de l'autorité"
+  },
+  {
+   "fieldname": "sb_4",
+   "fieldtype": "Section Break",
+   "label": "Preuves de transmission"
+  },
+  {
+   "depends_on": "transmis_autorite",
+   "fieldname": "preuve_transmission",
+   "fieldtype": "Attach",
+   "label": "Preuve de transmission"
+  },
+  {
+   "depends_on": "transmis_autorite",
+   "fieldname": "accuse_reception",
+   "fieldtype": "Attach",
+   "label": "Accusé de réception"
+  },
+  {
+   "fieldname": "cb_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "transmis_autorite",
+   "fieldname": "date_reception",
+   "fieldtype": "Datetime",
+   "label": "Date de réception par l'autorité"
+  },
+  {
+   "depends_on": "transmis_autorite",
+   "fieldname": "statut_reception",
+   "fieldtype": "Select",
+   "label": "Statut de réception",
+   "options": "\nEn attente\nReçu\nRejeté par l'autorité\nAccepté"
+  },
+  {
+   "fieldname": "tab_4",
+   "fieldtype": "Tab Break",
+   "label": "Métadonnées"
+  },
+  {
+   "fieldname": "metadonnees",
+   "fieldtype": "Table",
+   "label": "Métadonnées",
+   "options": "Reg Evidence Metadata"
+  },
+  {
+   "fieldname": "commentaire",
+   "fieldtype": "Small Text",
+   "label": "Commentaire"
+  },
+  {
+   "depends_on": "eval:doc.statut=='Annulé'",
+   "fieldname": "motif_annulation",
+   "fieldtype": "Small Text",
+   "label": "Motif d'annulation"
+  }
+ ],
+ "links": [
+  {
+   "group": "Versions & contrôles",
+   "link_doctype": "Reg Evidence Version",
+   "link_fieldname": "justificatif"
+  },
+  {
+   "group": "Versions & contrôles",
+   "link_doctype": "Reg Evidence Review",
+   "link_fieldname": "justificatif"
+  },
+  {
+   "group": "Réutilisation",
+   "link_doctype": "Reg Evidence Usage",
+   "link_fieldname": "justificatif"
+  }
+ ],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Evidence",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "libelle,obligation,echeance",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "libelle",
+ "track_changes": 1
+}

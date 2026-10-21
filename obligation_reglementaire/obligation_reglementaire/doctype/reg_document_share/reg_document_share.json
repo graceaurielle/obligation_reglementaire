@@ -1,0 +1,204 @@
+{
+ "actions": [],
+ "autoname": "SHR-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Partage sécurisé, limité dans le temps et révocable (Ch12.23).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "document",
+  "destinataire",
+  "date_expiration",
+  "cb_1",
+  "statut",
+  "nb_acces",
+  "dernier_acces",
+  "jeton",
+  "lien",
+  "motif"
+ ],
+ "fields": [
+  {
+   "fieldname": "document",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Document",
+   "options": "Reg Document",
+   "reqd": 1
+  },
+  {
+   "fieldname": "destinataire",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Destinataire (e-mail)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_expiration",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Expire le",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Actif",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Actif\nRévoqué\nExpiré",
+   "read_only": 1
+  },
+  {
+   "fieldname": "nb_acces",
+   "fieldtype": "Int",
+   "label": "Nombre d'accès",
+   "read_only": 1
+  },
+  {
+   "fieldname": "dernier_acces",
+   "fieldtype": "Datetime",
+   "label": "Dernier accès",
+   "read_only": 1
+  },
+  {
+   "fieldname": "jeton",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Jeton",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lien",
+   "fieldtype": "Small Text",
+   "label": "Lien de partage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "motif",
+   "fieldtype": "Small Text",
+   "label": "Motif du partage",
+   "reqd": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Document Share",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "destinataire",
+ "track_changes": 1
+}

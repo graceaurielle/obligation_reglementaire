@@ -1,0 +1,236 @@
+{
+ "actions": [],
+ "autoname": "field:utilisateur",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Profil d'un utilisateur dans le module : organisation, unité, manager, préférences.",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "utilisateur",
+  "nom_complet",
+  "organisation",
+  "unite",
+  "cb_1",
+  "fonction",
+  "manager",
+  "suppleant",
+  "telephone",
+  "statut",
+  "date_desactivation",
+  "sb_1",
+  "notif_email_informatives",
+  "resume_quotidien",
+  "cb_2",
+  "notif_groupees",
+  "desactiver_categories"
+ ],
+ "fields": [
+  {
+   "fieldname": "utilisateur",
+   "fieldtype": "Link",
+   "label": "Utilisateur",
+   "options": "User",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fetch_from": "utilisateur.full_name",
+   "fetch_if_empty": 0,
+   "fieldname": "nom_complet",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nom complet",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "unite",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Unité",
+   "options": "Reg Org Unit"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fonction",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Fonction"
+  },
+  {
+   "fieldname": "manager",
+   "fieldtype": "Link",
+   "label": "Manager",
+   "options": "User"
+  },
+  {
+   "fieldname": "suppleant",
+   "fieldtype": "Link",
+   "label": "Suppléant",
+   "options": "User"
+  },
+  {
+   "fieldname": "telephone",
+   "fieldtype": "Data",
+   "label": "Téléphone"
+  },
+  {
+   "default": "Actif",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Actif\nDésactivé"
+  },
+  {
+   "depends_on": "eval:doc.statut=='Désactivé'",
+   "fieldname": "date_desactivation",
+   "fieldtype": "Date",
+   "label": "Date de désactivation"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Préférences de notification (Ch11.21)"
+  },
+  {
+   "default": "1",
+   "fieldname": "notif_email_informatives",
+   "fieldtype": "Check",
+   "label": "Recevoir les notifications informatives par e-mail"
+  },
+  {
+   "default": "1",
+   "fieldname": "resume_quotidien",
+   "fieldtype": "Check",
+   "label": "Recevoir un résumé quotidien"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "notif_groupees",
+   "fieldtype": "Check",
+   "label": "Grouper les notifications non critiques"
+  },
+  {
+   "description": "Ex. : Échéances, Justificatifs (séparées par des virgules). Les alertes obligatoires restent envoyées.",
+   "fieldname": "desactiver_categories",
+   "fieldtype": "Small Text",
+   "label": "Catégories non critiques désactivées"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Member",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "nom_complet,organisation",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "nom_complet",
+ "track_changes": 1
+}

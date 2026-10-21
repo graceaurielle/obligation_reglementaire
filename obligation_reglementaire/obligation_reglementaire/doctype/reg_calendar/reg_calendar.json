@@ -1,0 +1,242 @@
+{
+ "actions": [],
+ "autoname": "field:nom",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Calendrier métier : jours ouvrés, fériés, fuseau, heure limite (Ch6, Ch13.18).",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "nom",
+  "type_calendrier",
+  "organisation",
+  "pays",
+  "cb_1",
+  "fuseau_horaire",
+  "heure_limite",
+  "actif",
+  "sb_1",
+  "lundi",
+  "mardi",
+  "mercredi",
+  "jeudi",
+  "cb_2",
+  "vendredi",
+  "samedi",
+  "dimanche",
+  "sb_2",
+  "jours_feries"
+ ],
+ "fields": [
+  {
+   "fieldname": "nom",
+   "fieldtype": "Data",
+   "label": "Nom",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "Standard",
+   "fieldname": "type_calendrier",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "\nStandard\nOrganisation\nRéglementaire\nPays\nEntité"
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization"
+  },
+  {
+   "fieldname": "pays",
+   "fieldtype": "Link",
+   "label": "Pays",
+   "options": "Country"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Africa/Abidjan",
+   "fieldname": "fuseau_horaire",
+   "fieldtype": "Data",
+   "label": "Fuseau horaire"
+  },
+  {
+   "default": "23:59:59",
+   "fieldname": "heure_limite",
+   "fieldtype": "Time",
+   "label": "Heure limite"
+  },
+  {
+   "default": "1",
+   "fieldname": "actif",
+   "fieldtype": "Check",
+   "label": "Actif"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Jours ouvrés"
+  },
+  {
+   "default": "1",
+   "fieldname": "lundi",
+   "fieldtype": "Check",
+   "label": "Lundi"
+  },
+  {
+   "default": "1",
+   "fieldname": "mardi",
+   "fieldtype": "Check",
+   "label": "Mardi"
+  },
+  {
+   "default": "1",
+   "fieldname": "mercredi",
+   "fieldtype": "Check",
+   "label": "Mercredi"
+  },
+  {
+   "default": "1",
+   "fieldname": "jeudi",
+   "fieldtype": "Check",
+   "label": "Jeudi"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "vendredi",
+   "fieldtype": "Check",
+   "label": "Vendredi"
+  },
+  {
+   "default": "0",
+   "fieldname": "samedi",
+   "fieldtype": "Check",
+   "label": "Samedi"
+  },
+  {
+   "default": "0",
+   "fieldname": "dimanche",
+   "fieldtype": "Check",
+   "label": "Dimanche"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Jours fériés et périodes exceptionnelles"
+  },
+  {
+   "fieldname": "jours_feries",
+   "fieldtype": "Table",
+   "label": "Jours non ouvrés",
+   "options": "Reg Calendar Holiday"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Calendar",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "nom",
+ "track_changes": 1
+}

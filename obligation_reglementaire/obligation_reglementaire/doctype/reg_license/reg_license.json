@@ -1,0 +1,236 @@
+{
+ "actions": [],
+ "autoname": "LIC-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Registre des agréments, licences et autorisations.",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "numero",
+  "type_licence",
+  "organisation",
+  "titulaire",
+  "autorite",
+  "etablissement",
+  "cb_1",
+  "statut",
+  "date_delivrance",
+  "date_expiration",
+  "responsable",
+  "document",
+  "sb_1",
+  "activites_autorisees",
+  "restrictions"
+ ],
+ "fields": [
+  {
+   "bold": 1,
+   "fieldname": "numero",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Numéro",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type_licence",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type",
+   "options": "Agrément\nLicence\nAutorisation\nHabilitation\nCertificat\nEnregistrement",
+   "reqd": 1
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "titulaire",
+   "fieldtype": "Data",
+   "label": "Titulaire"
+  },
+  {
+   "fieldname": "autorite",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Autorité de délivrance",
+   "options": "Reg Authority"
+  },
+  {
+   "fieldname": "etablissement",
+   "fieldtype": "Link",
+   "label": "Établissement",
+   "options": "Reg Establishment"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Active",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Active\nEn renouvellement\nSuspendue\nExpirée\nRetirée"
+  },
+  {
+   "fieldname": "date_delivrance",
+   "fieldtype": "Date",
+   "label": "Date de délivrance"
+  },
+  {
+   "fieldname": "date_expiration",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date d'expiration"
+  },
+  {
+   "fieldname": "responsable",
+   "fieldtype": "Link",
+   "label": "Responsable",
+   "options": "User"
+  },
+  {
+   "fieldname": "document",
+   "fieldtype": "Attach",
+   "label": "Document"
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Périmètre"
+  },
+  {
+   "fieldname": "activites_autorisees",
+   "fieldtype": "Small Text",
+   "label": "Activités / branches autorisées"
+  },
+  {
+   "fieldname": "restrictions",
+   "fieldtype": "Small Text",
+   "label": "Restrictions et conditions"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg License",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur",
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "numero,organisation",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "numero",
+ "track_changes": 1
+}

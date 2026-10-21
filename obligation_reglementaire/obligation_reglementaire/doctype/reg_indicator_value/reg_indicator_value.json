@@ -1,0 +1,165 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Valeur historisée d'un indicateur — une donnée inconnue n'est jamais remplacée par zéro (Ch9.29).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "indicateur",
+  "organisation",
+  "date_reference",
+  "cb_1",
+  "valeur",
+  "calculable",
+  "motif_non_calculable",
+  "niveau",
+  "sb_1",
+  "numerateur",
+  "denominateur",
+  "cb_2",
+  "calcule_le",
+  "details"
+ ],
+ "fields": [
+  {
+   "fieldname": "indicateur",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Indicateur",
+   "options": "Reg Indicator",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_reference",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Date de référence",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valeur",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Valeur",
+   "read_only": 1
+  },
+  {
+   "fieldname": "calculable",
+   "fieldtype": "Check",
+   "label": "Calculable",
+   "read_only": 1
+  },
+  {
+   "fieldname": "motif_non_calculable",
+   "fieldtype": "Data",
+   "label": "Motif (non calculable)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "niveau",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Niveau",
+   "options": "Normal\nVigilance\nAlerte\nNon calculable",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Détail"
+  },
+  {
+   "fieldname": "numerateur",
+   "fieldtype": "Float",
+   "label": "Numérateur",
+   "read_only": 1
+  },
+  {
+   "fieldname": "denominateur",
+   "fieldtype": "Float",
+   "label": "Dénominateur",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "calcule_le",
+   "fieldtype": "Datetime",
+   "label": "Calculé le",
+   "read_only": 1
+  },
+  {
+   "fieldname": "details",
+   "fieldtype": "Code",
+   "label": "Détails",
+   "options": "JSON",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Indicator Value",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "date_reference",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,305 @@
+{
+ "actions": [],
+ "autoname": "CTC-.YYYY.-.#####",
+ "creation": "2026-10-13 09:00:00.000000",
+ "description": "Contrôle / mesure / évaluation de conformité (Ch5 registres de mesure, Ch9).",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "organisation",
+  "obligation",
+  "echeance",
+  "intitule",
+  "type_controle",
+  "cb_1",
+  "statut",
+  "date_prevue",
+  "date_controle",
+  "controleur",
+  "valide_par",
+  "sb_1",
+  "indicateur",
+  "definition",
+  "perimetre",
+  "cb_2",
+  "seuil",
+  "valeur_mesuree",
+  "echantillon",
+  "sb_2",
+  "resultat",
+  "anomalies",
+  "conclusion",
+  "cb_3",
+  "justificatif",
+  "creer_non_conformite",
+  "non_conformite"
+ ],
+ "fields": [
+  {
+   "fieldname": "organisation",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Organisation",
+   "options": "Reg Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "obligation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Obligation",
+   "options": "Reg Obligation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "echeance",
+   "fieldtype": "Link",
+   "label": "Échéance",
+   "options": "Reg Deadline"
+  },
+  {
+   "fieldname": "intitule",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Intitulé",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type_controle",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type",
+   "options": "Évaluation de conformité\nContrôle permanent\nContrôle périodique\nMesure d'indicateur\nTest de contrôle\nAuto-évaluation"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Planifié",
+   "fieldname": "statut",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Statut",
+   "options": "Planifié\nEn cours\nRéalisé\nValidé\nAnnulé"
+  },
+  {
+   "fieldname": "date_prevue",
+   "fieldtype": "Date",
+   "label": "Date prévue"
+  },
+  {
+   "fieldname": "date_controle",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date du contrôle"
+  },
+  {
+   "fieldname": "controleur",
+   "fieldtype": "Link",
+   "label": "Contrôleur",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "valide_par",
+   "fieldtype": "Link",
+   "label": "Validé par",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_1",
+   "fieldtype": "Section Break",
+   "label": "Mesure"
+  },
+  {
+   "fieldname": "indicateur",
+   "fieldtype": "Data",
+   "label": "Indicateur mesuré"
+  },
+  {
+   "fieldname": "definition",
+   "fieldtype": "Small Text",
+   "label": "Définition / méthode"
+  },
+  {
+   "fieldname": "perimetre",
+   "fieldtype": "Small Text",
+   "label": "Périmètre"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "seuil",
+   "fieldtype": "Data",
+   "label": "Seuil réglementaire"
+  },
+  {
+   "fieldname": "valeur_mesuree",
+   "fieldtype": "Data",
+   "label": "Valeur mesurée"
+  },
+  {
+   "fieldname": "echantillon",
+   "fieldtype": "Small Text",
+   "label": "Échantillon"
+  },
+  {
+   "fieldname": "sb_2",
+   "fieldtype": "Section Break",
+   "label": "Résultat"
+  },
+  {
+   "fieldname": "resultat",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Résultat",
+   "options": "\nConforme\nConforme avec observation\nNon conforme\nIncomplet\nJustificatif insuffisant"
+  },
+  {
+   "fieldname": "anomalies",
+   "fieldtype": "Small Text",
+   "label": "Anomalies constatées"
+  },
+  {
+   "fieldname": "conclusion",
+   "fieldtype": "Small Text",
+   "label": "Conclusion"
+  },
+  {
+   "fieldname": "cb_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "justificatif",
+   "fieldtype": "Attach",
+   "label": "Justificatif"
+  },
+  {
+   "fieldname": "creer_non_conformite",
+   "fieldtype": "Check",
+   "label": "Créer une non-conformité"
+  },
+  {
+   "fieldname": "non_conformite",
+   "fieldtype": "Link",
+   "label": "Non-conformité",
+   "options": "Reg Non Conformity",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Obligation Reglementaire",
+ "name": "Reg Compliance Check",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Administrateur",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Conformité",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Analyste Réglementaire"
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Validateur",
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Responsable Obligation"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contributeur"
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Contrôleur",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Auditeur"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Direction Générale"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "OR Gestionnaire Reporting"
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "intitule",
+ "track_changes": 1
+}

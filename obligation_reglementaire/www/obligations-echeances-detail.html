@@ -1,0 +1,246 @@
+{% extends "templates/web.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block page_content %}
+{% include "due_diligence/www/v_base_style.html" %}
+{% include "due_diligence/www/v_table_style.html" %}
+<style>
+.or-content { padding: 24px 28px 40px; max-width: 1200px; }
+.or-back { font-size: 13px; color: var(--vdb-muted); font-weight: 600; margin-bottom: 14px; display: inline-flex; gap: 6px; }
+.or-back:hover { color: var(--vdb-navy); }
+.or-head { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 22px 24px; margin-bottom: 22px; }
+.or-head-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.or-head-ref { font-size: 13px; color: var(--vdb-muted); font-weight: 600; }
+.or-head-title { font-size: 22px; font-weight: 700; color: var(--vdb-navy); letter-spacing: -.02em; margin-top: 2px; }
+.or-head-sub { font-size: 13px; color: var(--vdb-muted); margin-top: 6px; }
+.or-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.or-badge-red { background: #fee2e2; color: #b91c1c; }
+.or-badge-orange { background: #ffedd5; color: #c2410c; }
+.or-badge-green { background: #e7f6ec; color: #15803d; }
+.or-badge-blue { background: #dbeafe; color: #1e40af; }
+.or-badge-gray { background: #f1f5f9; color: #475569; }
+.or-badge-purple { background: #ede9fe; color: #6d28d9; }
+.or-badge-yellow { background: #fef9c3; color: #854d0e; }
+.or-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 22px; align-items: start; }
+@media (max-width: 900px) { .or-grid { grid-template-columns: 1fr; } }
+.or-card { background: var(--vdb-card); border: 1px solid var(--vdb-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; }
+.or-card-title { font-size: 15px; font-weight: 700; color: var(--vdb-navy); margin-bottom: 14px; }
+.or-info-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #eef1f8; font-size: 13px; }
+.or-info-row:last-child { border-bottom: none; }
+.or-info-k { color: var(--vdb-muted); } .or-info-v { font-weight: 600; text-align: right; }
+.or-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.or-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--vdb-muted); padding: 8px 10px; border-bottom: 1px solid var(--vdb-border); }
+.or-table td { padding: 10px; border-bottom: 1px solid #eef1f8; }
+.or-table tr:last-child td { border-bottom: none; }
+.or-table a { color: var(--vdb-accent); font-weight: 600; text-decoration: none; }
+.or-table a:hover { text-decoration: underline; }
+.or-empty { padding: 16px; text-align: center; color: var(--vdb-muted); font-size: 13px; }
+.or-actions { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vdb-border); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.or-actions-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--vdb-muted); margin-right: 4px; }
+.or-act { border: 1px solid var(--vdb-navy); background: var(--vdb-navy); color: #fff; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.or-act:hover { opacity: .9; }
+.or-act.danger { background: #fff; border-color: #fecaca; color: #b91c1c; }
+.or-act.danger:hover { background: #fee2e2; opacity: 1; }
+.or-act[disabled] { opacity: .5; cursor: not-allowed; }
+.or-act-err { width: 100%; font-size: 13px; color: #b91c1c; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 9px 12px; margin-top: 10px; }
+.or-motif-bloc { width: 100%; margin-top: 10px; }
+.or-motif-bloc textarea { width: 100%; min-height: 70px; border: 1px solid #d8dee9; border-radius: 8px; padding: 9px 12px; font: inherit; font-size: 13px; resize: vertical; }
+</style>
+
+{% set _BADGE = {
+  "En retard": "red", "Non conforme": "red", "Rejeté": "red", "Annulée": "red",
+  "À traiter": "orange", "En cours": "orange", "Soumise pour validation": "orange", "En attente": "orange",
+  "Réalisée": "green", "Réalisée en retard": "green", "Clôturée": "green", "Validé": "green",
+  "À venir": "blue", "Attendu": "blue", "Déposé": "blue",
+  "Suspendue": "purple", "Reportée": "purple",
+} %}
+{% macro badge(val) %}<span class="or-badge or-badge-{{ _BADGE.get(val, 'gray') }}">{{ val }}</span>{% endmacro %}
+
+<div class="vdb-layout">
+  {% include "due_diligence/www/v_sidebar.html" %}
+  <div class="vdb-main">
+    <header class="vdb-header">
+      <button class="vdb-hamburger" id="or-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <h2>Échéance</h2>
+      <div class="vdb-header-right">
+        <div class="vdb-user-chip"><div class="vdb-user-avatar">{{ user_initials }}</div><span>{{ user_full_name }}</span></div>
+      </div>
+    </header>
+
+    <div class="or-content">
+      <a href="/obligations-echeances" class="or-back">← Retour aux échéances</a>
+
+      <div class="or-head">
+        <div class="or-head-top">
+          <div>
+            <div class="or-head-ref">{{ dl.name }}</div>
+            <div class="or-head-title">{{ dl.libelle or dl.name }}</div>
+            <div class="or-head-sub">
+              {% if obligation %}{{ obligation.titre }} · {% endif %}
+              Échéance le {{ frappe.utils.formatdate(dl.date_limite, "dd/MM/yyyy") if dl.date_limite else "—" }}
+            </div>
+          </div>
+          {{ badge(dl.statut) }}
+        </div>
+
+        <div class="or-actions" id="or-actions" {% if not buttons %}style="display:none;"{% endif %}>
+          <span class="or-actions-label">Actions</span>
+          <div id="or-actions-btns" style="display:flex;flex-wrap:wrap;gap:10px;">
+            {% for b in buttons %}
+            <button type="button" class="or-act{% if b.danger %} danger{% endif %}"
+                    data-action="{{ b.action }}" data-needs-motif="{{ 1 if b.get('needs_motif') else 0 }}">{{ b.label }}</button>
+            {% endfor %}
+          </div>
+          <div class="or-motif-bloc" id="or-motif-bloc" hidden>
+            <textarea id="or-motif" placeholder="Motif…"></textarea>
+          </div>
+          <div class="or-act-err" id="or-act-err" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="or-grid">
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">Justificatifs rattachés</div>
+            {% if evidences %}
+            <table class="or-table">
+              <tr><th>Justificatif</th><th>Type</th><th>Statut</th></tr>
+              {% for e in evidences %}
+              <tr>
+                <td>{% if e.detail_url %}<a href="{{ e.detail_url }}">{{ e.libelle or e.name }}</a>{% else %}{{ e.libelle or e.name }}{% endif %}</td>
+                <td>{{ e.type_justificatif or "—" }}</td>
+                <td>{{ badge(e.statut) }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+            {% else %}
+            <div class="or-empty">Aucun justificatif rattaché.</div>
+            {% endif %}
+          </div>
+
+          {% if changements_en_attente %}
+          <div class="or-card">
+            <div class="or-card-title">Demandes de report en attente</div>
+            <table class="or-table">
+              <tr><th>Nouvelle date</th><th>Motif</th><th>Demandeur</th></tr>
+              {% for c in changements_en_attente %}
+              <tr>
+                <td>{{ frappe.utils.formatdate(c.nouvelle_date, "dd/MM/yyyy") }}</td>
+                <td>{{ c.motif or "—" }}</td>
+                <td>{{ c.demandeur or "—" }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          {% endif %}
+        </div>
+
+        <div>
+          <div class="or-card">
+            <div class="or-card-title">Détail</div>
+            <div class="or-info-row"><span class="or-info-k">Obligation</span><span class="or-info-v">{{ obligation.titre if obligation else "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Période</span><span class="or-info-v">{{ dl.periode or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Criticité</span><span class="or-info-v">{{ dl.criticite or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">Responsable</span><span class="or-info-v">{{ dl.responsable or "—" }}</span></div>
+            <div class="or-info-row"><span class="or-info-k">État documentaire</span><span class="or-info-v">{{ badge(dl.etat_documentaire) if dl.etat_documentaire else "—" }}</span></div>
+            {% if nc_detail_url %}
+            <div class="or-info-row"><span class="or-info-k">Non-conformité</span><span class="or-info-v"><a href="{{ nc_detail_url }}">{{ dl.non_conformite }}</a></span></div>
+            {% endif %}
+            {% if plan_detail_url %}
+            <div class="or-info-row"><span class="or-info-k">Plan d'action</span><span class="or-info-v"><a href="{{ plan_detail_url }}">{{ dl.plan_action }}</a></span></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="vdb-sidebar-overlay" id="or-sidebar-overlay"></div>
+
+<script>
+(function () {
+  var burger = document.getElementById('or-hamburger'),
+      sidebar = document.getElementById('vdb-sidebar'),
+      overlay = document.getElementById('or-sidebar-overlay');
+  function toggle() { if (!sidebar) return; sidebar.classList.toggle('open'); if (overlay) overlay.classList.toggle('open'); }
+  if (burger) burger.addEventListener('click', toggle);
+  if (overlay) overlay.addEventListener('click', toggle);
+})();
+
+(function () {
+  var zoneBtns = document.getElementById('or-actions-btns'),
+      err = document.getElementById('or-act-err'),
+      blocMotif = document.getElementById('or-motif-bloc'),
+      champMotif = document.getElementById('or-motif'),
+      name = {{ dl.name | tojson }};
+  if (!zoneBtns) return;
+
+  function messageErreur(j, defaut) {
+    try {
+      var msgs = JSON.parse(j._server_messages || '[]');
+      if (msgs.length) { var m = JSON.parse(msgs[0]); return m.message || defaut; }
+    } catch (e) {}
+    return (j && j.exc_type === 'PermissionError') ? "Vous n'êtes pas autorisé à effectuer cette action." : defaut;
+  }
+
+  function verrouiller(etat) {
+    Array.prototype.forEach.call(zoneBtns.querySelectorAll('button'), function (b) { b.disabled = etat; });
+  }
+
+  var pendingBtn = null;
+
+  zoneBtns.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('button[data-action]');
+    if (!btn || btn.disabled) return;
+    err.style.display = 'none';
+
+    var motif = null;
+    if (btn.dataset.needsMotif === '1') {
+      if (blocMotif.hidden || pendingBtn !== btn) {
+        blocMotif.hidden = false;
+        pendingBtn = btn;
+        champMotif.focus();
+        return;
+      }
+      motif = champMotif.value.trim();
+      if (!motif) {
+        champMotif.focus();
+        err.textContent = "Précisez un motif.";
+        err.style.display = 'block';
+        return;
+      }
+    }
+
+    verrouiller(true);
+    var libelle = btn.textContent;
+    btn.textContent = 'En cours…';
+
+    fetch('/api/method/obligation_reglementaire.api.deadline_action', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': frappe.csrf_token || 'fetch' },
+      body: JSON.stringify({ name: name, action: btn.dataset.action, motif: motif })
+    }).then(function (r) {
+      return r.json().then(function (j) { return { ok: r.ok, j: j }; });
+    }).then(function (res) {
+      if (!res.ok || res.j.message === undefined) {
+        btn.textContent = libelle;
+        verrouiller(false);
+        err.textContent = messageErreur(res.j, "L'action n'a pas pu être appliquée.");
+        err.style.display = 'block';
+        return;
+      }
+      window.location.reload();
+    }).catch(function () {
+      btn.textContent = libelle;
+      verrouiller(false);
+      err.textContent = "Le serveur n'a pas répondu. Réessayez.";
+      err.style.display = 'block';
+    });
+  });
+})();
+</script>
+{% endblock %}
