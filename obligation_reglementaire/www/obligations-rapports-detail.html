@@ -53,6 +53,8 @@
 .or-form-row { display: flex; gap: 10px; }
 .or-form-row > * { flex: 1; }
 .or-form-status { font-size: 12px; color: var(--vdb-muted); margin-top: 6px; }
+.or-flash { animation: or-flash-anim 1.6s ease; }
+@keyframes or-flash-anim { 0% { box-shadow: 0 0 0 3px rgba(21,128,61,.5); } 100% { box-shadow: 0 0 0 0 rgba(21,128,61,0); } }
 </style>
 
 {% set _BADGE = { "Brouillon": "gray", "En préparation": "blue", "Échec de génération": "red",
@@ -109,6 +111,8 @@
         <div class="or-actions" style="border-top:none;padding-top:0;margin-top:10px;">
           <button type="button" class="or-act ghost" id="or-btn-nouvelle-version">Créer une nouvelle version</button>
           <button type="button" class="or-act ghost" id="or-btn-exporter">Exporter (PDF/Excel)</button>
+          <div class="or-act-ok" id="or-exp-ok" style="display:none;"></div>
+          <div class="or-act-err" id="or-exp-err" style="display:none;"></div>
         </div>
       </div>
 
@@ -216,12 +220,13 @@
             <div class="or-info-row"><span class="or-info-k">Criticité</span><span class="or-info-v">{{ doc.criticite or "—" }}</span></div>
           </div>
 
-          <div class="or-card">
+          <div class="or-card" id="or-card-generation">
             <div class="or-card-title">Génération</div>
             <div class="or-info-row"><span class="or-info-k">Générée le</span><span class="or-info-v">{{ frappe.utils.format_datetime(doc.date_generation, "dd/MM/yyyy HH:mm") if doc.date_generation else "—" }}</span></div>
             <div class="or-info-row"><span class="or-info-k">Par</span><span class="or-info-v">{{ doc.genere_par or "—" }}</span></div>
             {% if doc.fichier_pdf %}<div class="or-info-row"><span class="or-info-k">PDF</span><span class="or-info-v"><a href="{{ doc.fichier_pdf }}" target="_blank">Télécharger</a></span></div>{% endif %}
             {% if doc.fichier_excel %}<div class="or-info-row"><span class="or-info-k">Excel</span><span class="or-info-v"><a href="{{ doc.fichier_excel }}" target="_blank">Télécharger</a></span></div>{% endif %}
+            {% if not doc.fichier_pdf and not doc.fichier_excel %}<div class="or-info-row"><span class="or-info-k">Export</span><span class="or-info-v">Aucun fichier généré pour l'instant</span></div>{% endif %}
           </div>
 
           <div class="or-card">
@@ -365,18 +370,41 @@ var REPORT_NAME = {{ doc.name | tojson }};
     }).catch(function () { btn.disabled = false; window.alert("Le serveur n'a pas répondu. Réessayez."); });
   });
 
-  var btnExp = document.getElementById('or-btn-exporter');
+  var btnExp = document.getElementById('or-btn-exporter'),
+      expOk = document.getElementById('or-exp-ok'),
+      expErr = document.getElementById('or-exp-err');
   if (btnExp) btnExp.addEventListener('click', function () {
     btnExp.disabled = true;
+    if (expErr) expErr.style.display = 'none';
+    if (expOk) { expOk.style.display = 'block'; expOk.textContent = 'Génération en cours…'; }
     appelerApi('obligation_reglementaire.api.report_action', { name: REPORT_NAME, action: 'exporter' }).then(function (res) {
       btnExp.disabled = false;
       if (!res.ok || res.j.message === undefined) {
-        window.alert(messageErreur(res.j, "L'export a échoué."));
+        if (expOk) expOk.style.display = 'none';
+        if (expErr) { expErr.style.display = 'block'; expErr.textContent = messageErreur(res.j, "L'export a échoué."); }
         return;
       }
+      try { sessionStorage.setItem('or_export_ok', '1'); } catch (e) {}
       window.location.reload();
-    }).catch(function () { btnExp.disabled = false; window.alert("Le serveur n'a pas répondu. Réessayez."); });
+    }).catch(function () {
+      btnExp.disabled = false;
+      if (expOk) expOk.style.display = 'none';
+      if (expErr) { expErr.style.display = 'block'; expErr.textContent = "Le serveur n'a pas répondu. Réessayez."; }
+    });
   });
+
+  try {
+    if (sessionStorage.getItem('or_export_ok')) {
+      sessionStorage.removeItem('or_export_ok');
+      var carte = document.getElementById('or-card-generation');
+      if (carte) {
+        carte.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        carte.classList.add('or-flash');
+        setTimeout(function () { carte.classList.remove('or-flash'); }, 1700);
+      }
+      if (expOk) { expOk.style.display = 'block'; expOk.textContent = 'Export généré — voir la carte « Génération » ci-contre.'; }
+    }
+  } catch (e) {}
 })();
 
 (function () {

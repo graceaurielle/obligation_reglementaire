@@ -7,7 +7,7 @@ import json
 
 import frappe
 from frappe import _
-from frappe.utils import cint, escape_html, formatdate, getdate, now_datetime
+from frappe.utils import cint, escape_html, formatdate, get_url, getdate, now_datetime
 
 from obligation_reglementaire.engine import indicators
 from obligation_reglementaire.engine.common import assert_sod, log_audit, require_text
@@ -178,9 +178,16 @@ def generate(inst):
 	return inst
 
 
+def _organisation_logo_html(organisation):
+	logo = organisation and frappe.db.get_value("Reg Organization", organisation, "logo")
+	if not logo:
+		return ""
+	return f"<div class='reg-report-logo'><img src='{get_url(logo)}' style='max-height:70px;max-width:260px;'></div>"
+
+
 def render_html(inst, data=None):
 	data = data or json.loads(inst.donnees or "{}")
-	h = [f"<div class='reg-report'><h2>{escape_html(inst.intitule)}</h2>",
+	h = [f"<div class='reg-report'>{_organisation_logo_html(inst.organisation)}<h2>{escape_html(inst.intitule)}</h2>",
 		f"<p><b>{_('Organisation')} :</b> {escape_html(inst.organisation)} — <b>{_('Période')} :</b> "
 		f"{formatdate(inst.date_debut)} → {formatdate(inst.date_fin)} — <b>{_('Situation arrêtée au')} :</b> {formatdate(inst.date_arrete)}"
 		f" — <b>{_('Version')} :</b> {inst.version}</p>"]
