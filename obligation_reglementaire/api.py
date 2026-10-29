@@ -8,6 +8,8 @@ import json
 import frappe
 from frappe import _
 from frappe.utils import add_days, cint, getdate, now_datetime, today
+from frappe.utils.csvutils import read_csv_content
+from frappe.utils.xlsxutils import read_xlsx_file_from_attached_file
 
 from obligation_reglementaire.engine import action_plan, applicability, config, deadline, evidence, ged, indicators, reporting
 from obligation_reglementaire.engine import notification, source
@@ -102,6 +104,100 @@ def _preview_dates(obl, n):
 def create_obligation_from_template(template, organisation, applicabilite="Applicable", justification=None):
 	require_roles(*COMPLIANCE_ROLES, "OR Analyste Réglementaire")
 	return applicability.create_obligation_from_template(template, organisation, applicabilite, justification=justification)
+
+
+# ------------------------------------------------------------------ import en masse
+_IMPORT_REQUIRED = ("organisation", "titre", "criticite", "source", "domaine", "direction", "proprietaire", "date_debut")
+_IMPORT_OPTIONAL = (
+	"description", "nature_temporelle", "frequence", "intervalle", "intervalle_unite", "date_fixe",
+	"evenement_declencheur", "delai_valeur", "delai_unite", "date_fin", "sous_domaine", "autorite",
+	"type_obligation", "applicabilite", "responsable_operationnel", "referent_conformite",
+)
+_IMPORT_LINK_OPTIONS = {
+	"organisation": "Reg Organization", "criticite": "Reg Criticality Level", "source": "Reg Source",
+	"domaine": "Reg Domain", "sous_domaine": "Reg Domain", "autorite": "Reg Authority",
+	"direction": "Reg Org Unit", "proprietaire": "User", "responsable_operationnel": "User",
+	"referent_conformite": "User",
+}
+_IMPORT_DATE_FIELDS = ("date_debut", "date_fin", "date_fixe")
+_IMPORT_INT_FIELDS = ("intervalle", "delai_valeur")
+
+
+def _import_header_map():
+	meta = frappe.get_meta("Reg Obligation")
+	mapping = {}
+	for fieldname in _IMPORT_REQUIRED + _IMPORT_OPTIONAL:
+		mapping[fieldname.lower()] = fieldname
+		label = meta.get_label(fieldname)
+		if label:
+			mapping[label.strip().lower()] = fieldname
+	return mapping
+
+
+def _import_build_row(fieldnames, row, rownum):
+	values = {}
+	for fieldname, cell in zip(fieldnames, row):
+		if not fieldname:
+			continue
+		value = cell.strip() if isinstance(cell, str) else cell
+		if value in (None, ""):
+			continue
+		if fieldname in _IMPORT_LINK_OPTIONS:
+			options = _IMPORT_LINK_OPTIONS[fieldname]
+			if not frappe.db.exists(options, value):
+				frappe.throw(_("{0} « {1} » introuvable.").format(fieldname, value))
+		elif fieldname in _IMPORT_DATE_FIELDS:
+			value = getdate(value)
+		elif fieldname in _IMPORT_INT_FIELDS:
+			value = cint(value)
+		values[fieldname] = value
+	missing = [f for f in _IMPORT_REQUIRED if f not in values]
+	if missing:
+		frappe.throw(_("Champ(s) obligatoire(s) manquant(s) : {0}.").format(", ".join(missing)))
+	# "Périodique" (défaut du champ) exige en plus une fréquence compatible : à défaut d'indication
+	# explicite dans le fichier, on importe en "Ponctuelle" (seule date_debut est alors requise).
+	values.setdefault("nature_temporelle", "Ponctuelle")
+	return values
+
+
+@frappe.whitelist()
+def import_obligations(file_url):
+	"""Import en masse d'obligations depuis un fichier CSV/XLSX préalablement déposé (upload_file)."""
+	require_roles(*COMPLIANCE_ROLES, "OR Analyste Réglementaire")
+
+	file_doc = frappe.get_doc("File", {"file_url": file_url})
+	filename = (file_doc.file_name or file_url or "").lower()
+	if filename.endswith(".csv"):
+		rows = read_csv_content(file_doc.get_content())
+	elif filename.endswith(".xlsx") or filename.endswith(".xls"):
+		rows = read_xlsx_file_from_attached_file(file_url=file_url)
+	else:
+		frappe.throw(_("Format non supporté : utilisez un fichier .csv ou .xlsx."))
+
+	rows = [r for r in rows if any(cell not in (None, "") for cell in r)]
+	if not rows:
+		frappe.throw(_("Le fichier est vide."))
+
+	header_map = _import_header_map()
+	fieldnames = [header_map.get(str(h).strip().lower()) for h in rows[0]]
+	if not any(fieldnames):
+		frappe.throw(_("Aucune colonne reconnue dans l'en-tête du fichier."))
+
+	created, errors = [], []
+	for i, row in enumerate(rows[1:], start=2):
+		try:
+			values = _import_build_row(fieldnames, row, i)
+			doc = frappe.get_doc({"doctype": "Reg Obligation", **values})
+			doc.insert()
+			created.append(doc.name)
+		except Exception as e:
+			if frappe.message_log:
+				frappe.message_log.pop()
+			errors.append({"ligne": i, "erreur": str(e)})
+
+	log_audit("Import en masse d'obligations", doctype="Reg Obligation",
+		details={"creees": len(created), "echecs": len(errors)})
+	return {"crees": created, "erreurs": errors}
 
 
 # ================================================================== échéances

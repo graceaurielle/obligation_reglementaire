@@ -168,6 +168,70 @@ Chemin : `obligation_reglementaire/report/`
 
 ---
 
+## Cycle de vie et relais entre rôles
+
+Qui déclenche quoi, et à qui la main passe ensuite. `COMPLIANCE_ROLES` = OR Administrateur + OR
+Responsable Conformité (quasi-partout habilités, en plus du rôle "métier" indiqué).
+
+| Objet | Déclenché par | Relais vers | Fonction / action |
+|---|---|---|---|
+| **Obligation** | OR Analyste Réglementaire (création depuis modèle) | OR Validateur / Compliance (transition vers Validée/Archivée/Obsolète uniquement — les autres statuts sont libres) | `create_obligation_from_template`, `obligation_transition` |
+| **Échéance** | OR Responsable Obligation / Contributeur (démarrer, soumettre) | le valideur désigné, OR Validateur, OR Contrôleur ou Compliance (valider/rejeter/non-conforme) ; Compliance seul pour dérogation/rouvrir/annuler | `deadline_action` (demarrer/attente/soumettre/valider/rejeter/non_conforme/cloturer/rouvrir/annuler/suspendre/reprendre) |
+| **Report de date d'échéance** | tout porteur avec accès write (demande) | OR Validateur / Compliance (décision) | `request_deadline_change` → `decide_deadline_change` |
+| **Justificatif** | OR Contributeur / OR Responsable Obligation (dépôt) | OR Contrôleur / OR Validateur / Compliance (prise en charge du contrôle) | `deposit_evidence` → `start_evidence_review` → `submit_evidence_review` (déclenche `validate()`/`on_submit` : NC automatique possible en cas de rejet) |
+| **Non-conformité** | automatique (retard/rejet) ou OR Auditeur (`finding_to_nc` depuis un Reg Finding) | OR Responsable Obligation (analyser/traiter/mesure compensatoire) puis Compliance + OR Validateur (clôture) | `nc_action` (analyser/traiter/mesure_compensatoire/verifier/annuler), `close_nc` |
+| **Plan d'action** | OR Responsable Obligation (création depuis la NC, pilotage) | OR Validateur / Compliance (valider_cloture/refuser_cloture/rouvrir/annuler) | `create_plan_from_nc`, `plan_action` |
+| **Action corrective** | OR Responsable Obligation / Contributeur (démarrer, soumettre) | le contrôleur désigné, OR Contrôleur, OR Validateur ou Compliance (valider/retourner) | `corrective_action` |
+| **Preuve d'action** | l'exécutant de l'action (dépôt) | le contrôleur désigné (accepter/rejeter/compléter — séparation des tâches : le déposant ne peut pas se contrôler lui-même) | `review_action_proof` |
+| **Prolongation de délai** | tout porteur avec accès write (demande) | OR Validateur / Compliance (décision) | `request_extension` → `decide_extension` |
+| **Document (GED)** | OR Gestionnaire Documentaire (dépôt/nouvelle version) | OR Contrôleur / OR Validateur / OR Gestionnaire Documentaire (validation de version) ; publier ouvert à tout accès write ; geler/dégeler/supprimer réservés à Gestionnaire Documentaire + Compliance (geler aussi ouvert à l'Auditeur) | `add_document_version` → `validate_document_version`, `document_action` |
+| **Rapport réglementaire** | OR Gestionnaire Reporting (générer, soumettre) | OR Contrôleur / OR Auditeur (contrôler) puis OR Validateur / OR Direction Générale (validation finale) ; diffusion/transmission ensuite par Gestionnaire Reporting | `report_action` (generer/soumettre/controler/valider/rejeter/diffuser/transmettre/accuse/cloturer) |
+| **Demande de changement de paramétrage** | tout porteur habilité (proposer) | OR Responsable Conformité / OR Contrôleur (contrôler, SoD vs proposant) → OR Administrateur / OR Responsable Conformité (valider, SoD vs proposant+contrôleur) → OR Administrateur seul (activer) | `config_action` (`engine/config.py` : Proposée → Contrôlée → Validée → Activée) |
+| **Proposition d'applicabilité / avis de modèle** | automatique ou analyste | OR Analyste Réglementaire / Compliance (décision) | `decide_proposal`, `decide_template_notice` |
+
+**À retenir** : l'UI (boutons JS, nav du portail) n'est qu'un indice d'ergonomie — le seul rempart
+réel est `api.py::_doc()` (permission Frappe du doctype) + les `require_roles`/`has_any_role` dans
+chaque fonction + les dicos `*_TRANSITIONS` (`check_transition`, `engine/*.py`). Un bouton visible
+peut toujours échouer côté serveur si le DocPerm sous-jacent manque — c'était exactement le bug
+corrigé ci-dessous pour OR Gestionnaire Documentaire.
+
+---
+
+## Comptes de test (environnement `compliance`)
+
+Tous les comptes ci-dessous sont en `@test.local`, mot de passe commun **`Test@1234!`**. Ne
+jamais attribuer de rôle OR au compte réel de l'utilisateur (`@gmail.com`) — uniquement ces
+comptes de test.
+
+| Rôle | Compte |
+|---|---|
+| OR Administrateur | or.admin@test.local |
+| OR Responsable Conformité | or.conf@test.local |
+| OR Analyste Réglementaire | or.analyste@test.local |
+| OR Responsable Obligation | or.resp@test.local (porte aussi OR Contributeur) |
+| OR Contributeur | or.resp@test.local |
+| OR Contrôleur | or.ctrl@test.local |
+| OR Validateur | or.valid@test.local |
+| OR Auditeur | or.audit@test.local |
+| OR Direction Générale | or.dg@test.local |
+| OR Gestionnaire Reporting | or.report@test.local |
+| OR Gestionnaire Documentaire | or.doc@test.local |
+
+### Correctif oct. 2026 : permissions OR Gestionnaire Documentaire
+
+Audit complet des `DocPerm` des 11 rôles : seul OR Gestionnaire Documentaire avait **zéro**
+permission réelle (0 doctype), malgré son usage dans les gardes de rôle de `document_action`
+(geler/dégeler/supprimer) et `validate_document_version`. Corrigé par ajout de permissions dans :
+- `reg_document.json`, `reg_document_version.json`, `reg_document_share.json` : create/write/share/read
+- `reg_document_category.json`, `reg_document_type.json` : lecture seule (référentiels)
+- `portal_common.py` (`_NAV_PAR_ROLE`) : ajout de l'onglet `obligations-documents` pour ce rôle
+
+Vérifié en conditions réelles (HTTP, compte `or.doc@test.local`) : accès à `/obligations-documents`,
+ouverture Desk de `Reg Document`, listage réel via `frappe.client.get_list` (permission effective
+en base, pas seulement apparente).
+
+---
+
 ## Scénario de test E2E
 
 ```bash
@@ -225,10 +289,139 @@ là-bas : `contrats-echeances.html` + `contrats_echeances.py`).
 
 ## Améliorations possibles
 
-- [ ] Tableaux de bord graphiques (Number Card / Chart sur le workspace)
+- [x] Tableaux de bord graphiques — voir « Tableaux de bord graphiques » ci-dessous
 - [ ] Traductions FR complètes (fichier .csv)
-- [ ] Tests unitaires Python (`test_*.py` par doctype)
-- [ ] Print formats pour les rapports réglementaires
+- [x] Tests unitaires Python (`test_*.py` par doctype) — voir « Tests unitaires Python » ci-dessous
+- [x] Print formats pour les rapports réglementaires — voir « Print formats » ci-dessous
 - [ ] Intégration e-mail réelle pour les notifications
 - [ ] Permissions par organisation (User Permission sur Reg Organization)
+- [x] Import en masse d'obligations depuis Excel/CSV — voir « Import en masse » ci-dessous
+
+---
+
+## Tableaux de bord graphiques
+
+Implémentés directement dans le dashboard du portail web (`www/obligations.py` + `.html`), **pas**
+en `Dashboard Chart`/`Number Card` Frappe natifs (le workspace Desk n'a aucun chart : `"charts":
+[]` dans `obligation_reglementaire.json`) — choix cohérent avec le reste du portail (pages
+autonomes, sans dépendance JS externe).
+
+- **Bar chart horizontal** « Horizons d'échéances » (`get_context`, fonction inline) : compte les
+  `Reg Deadline` non closes par tranche (Échues, Aujourd'hui, 1–7 j, 8–15 j, 16–30 j, 31–60 j,
+  > 60 j), normalisé en `%` sur le maximum, coloré par urgence (rouge = échues, orange = ≤ 7 j,
+  vert = reste) — palette statut réservée (`_GOOD`/`_WARNING`/`_CRITICAL`), jamais recyclée en
+  décoration.
+- **Donut chart SVG** « Répartition des obligations par statut » (`_donut_segments()`) : calcule
+  les segments via la technique `stroke-dasharray`/`stroke-dashoffset` sur un cercle SVG
+  (`viewBox="0 0 160 160"`, rayon 70), couleurs catégorielles fixes par statut
+  (`_STATUT_COLOR`, ordre jamais recyclé en fonction des données affichées).
+- Les deux respectent le périmètre utilisateur (`user_org_filter`, `est_operationnel_seul` →
+  filtre sur `responsable` pour les rôles purement opérationnels).
+- Le reste du dashboard (score de complétude, score de risque, etc.) reste couvert par les 8
+  Script Reports existants, qui ont leurs propres graphiques Frappe natifs (`chart_type:
+  "bar"` dans leur JSON).
+
+---
+
+## Print formats
+
+Un print format Jinja personnalisé est livré pour **Reg Report Instance** : `"Rapport
+réglementaire OR"` (`doc_type: Reg Report Instance`, `print_format_type: Jinja`, `standard: No`).
+
+Il n'apparaît dans aucun fichier `print_format.json` : il est créé par code, de façon idempotente,
+dans `install.py::print_formats()` (appelée par `after_install`/`after_migrate`, même mécanisme
+que les rôles métier — voir note en tête de `install.py`), via `_ensure("Print Format", ...)`.
+C'est pour cette raison qu'une recherche `find . -iname "*print_format*"` ne trouve rien : il n'y
+a pas de fichier dédié, seulement un dict Python (`_REPORT_INSTANCE_PRINT_HTML`) injecté en base à
+l'installation/migration de l'app. Entête (métadonnées, tableau des dates clés), corps (statut,
+synthèse), et un tableau « circuit » (préparation/contrôle/validation avec intervenant + date)
+repris du cycle de vie réel du rapport.
+
+---
+
+## Import en masse (Excel/CSV)
+
+Endpoint whitelisté `obligation_reglementaire.api.import_obligations(file_url)`, réservé à
+`COMPLIANCE_ROLES` + OR Analyste Réglementaire.
+
+- **Formats acceptés** : `.csv` (lu via `read_csv_content`) et `.xlsx`/`.xls` (via
+  `read_xlsx_file_from_attached_file`).
+- **Colonnes reconnues** : par nom de champ *ou* par libellé Frappe, insensible à la casse
+  (`_import_header_map()` construit la correspondance depuis le meta de `Reg Obligation`).
+  Obligatoires : `organisation`, `titre`, `criticite`, `source`, `domaine`, `direction`,
+  `proprietaire`, `date_debut`. Optionnelles : `description`, `nature_temporelle`, `frequence`,
+  `intervalle`, `intervalle_unite`, `date_fixe`, `evenement_declencheur`, `delai_valeur`,
+  `delai_unite`, `date_fin`, `sous_domaine`, `autorite`, `type_obligation`, `applicabilite`,
+  `responsable_operationnel`, `referent_conformite`.
+- Les champs Link sont vérifiés (`frappe.db.exists`) avant insertion ; les dates et entiers sont
+  convertis au bon type.
+- **Erreur par ligne, pas par lot** : chaque ligne est insérée indépendamment dans un `try/except`
+  — une ligne en échec n'empêche pas les suivantes (`{"crees": [...], "erreurs": [{"ligne":
+  ..., "erreur": ...}]}` en retour). Un audit (`log_audit`) trace le nombre de créations/échecs.
+- Pas de bouton Desk dédié (« Importer » sur la liste `Reg Obligation`) — l'appel se fait via
+  l'API ou la méthode standard Frappe « Import » (Data Import) sur le doctype ; non demandé à ce
+  stade.
+
+---
+
+## Tests unitaires Python
+
+10 fichiers `test_*.py`, un par doctype métier principal, placés **à côté** du contrôleur/`.json`
+dans le dossier du doctype (pas dans un dossier `tests/` centralisé) :
+
+```
+doctype/reg_obligation/test_reg_obligation.py
+doctype/reg_deadline/test_reg_deadline.py
+doctype/reg_action_plan/test_reg_action_plan.py
+doctype/reg_corrective_action/test_reg_corrective_action.py
+doctype/reg_evidence/test_reg_evidence.py
+doctype/reg_evidence_review/test_reg_evidence_review.py
+doctype/reg_non_conformity/test_reg_non_conformity.py
+doctype/reg_document/test_reg_document.py
+doctype/reg_report_instance/test_reg_report_instance.py
+doctype/reg_config_change_request/test_reg_config_change_request.py
+```
+
+**Fixtures communes** : `obligation_reglementaire/tests/fixtures.py`, classe `CommonFixtures` à
+mélanger (`class TestXxx(IntegrationTestCase, CommonFixtures)`) + `setUpClass` appelant
+`cls.setup_common_fixtures()`. Fournit des `make_xxx()` par doctype (organisation, obligation,
+échéance, justificatif, plan, action, document, rapport, demande de config) et deux utilisateurs
+de test (`self.user_a`, `self.user_b`) pour exercer la séparation des tâches.
+
+**Garde de sécurité dans `make_user()`** : lève `frappe.throw` si l'e-mail ne finit pas par
+`@test.local` — aucun rôle OR ne peut être attribué par les fixtures à un compte réel
+(`@gmail.com`), y compris par erreur de copier-coller dans un futur test.
+
+**Lancer les tests** :
+```bash
+# Un seul module
+bench --site compliance run-tests --app obligation_reglementaire \
+  --module obligation_reglementaire.obligation_reglementaire.doctype.reg_document.test_reg_document
+
+# Toute la suite
+bench --site compliance run-tests --app obligation_reglementaire
+```
+Dernier run complet : **54 tests, 0 échec** (~27 s), aucune interférence entre suites.
+
+**Pièges rencontrés (à relire avant d'écrire un nouveau test)** :
+1. **`TimestampMismatchError`** (deux causes) : (a) réutiliser un doc après un `.save()` externe
+   sans `.reload()` ; (b) appeler deux fonctions métier à la suite sur le même objet sans recharger
+   entre les deux.
+2. **Incohérence de type de date** : `get_doc_before_save()` recharge les champs `Date` en objets
+   `date`, alors qu'un champ posé juste après l'insertion peut encore être une chaîne — un
+   `plan.reload()` avant le premier changement de statut évite une comparaison toujours fausse
+   (ex. `reg_action_plan.py` exigeant à tort une prolongation).
+3. **`flags.ignore_permissions` persistant** : `insert(ignore_permissions=True)` pose
+   `self.flags.ignore_permissions = True` **pour toute la vie de l'objet Python** — un `.reload()`
+   ne réinitialise pas les `flags`, seulement les champs. Pour tester un garde-fou qui inspecte ce
+   flag (ex. `_on_status_change` de `reg_corrective_action.py`), il faut repartir d'un objet
+   **fraîchement récupéré** via `frappe.get_doc(doctype, name)`, jamais réutiliser l'instance de
+   la fixture.
+4. **Validation déclenchée dès `insert()`, pas seulement `save()`** : une règle sans condition de
+   statut (ex. cohérence de période dans `reg_report_instance.py`) se déclenche dès la création —
+   il faut englober l'appel à la fixture elle-même dans `assertRaises`, pas seulement un `.save()`
+   ultérieur.
+5. **Dépôt de fichier réel requis** : `check_document_file`/`file_fingerprint` lisent le contenu
+   via `File.get_content()` — un `file_url` fictif ne suffit pas, il faut un vrai document `File`
+   (`frappe.get_doc({"doctype": "File", ...}).insert(ignore_permissions=True)`).
 - [ ] Import en masse d'obligations depuis Excel/CSV

@@ -1,3 +1,5 @@
+import math
+
 import frappe
 from frappe.utils import add_days, getdate, nowdate
 
@@ -11,6 +13,36 @@ no_cache = 1
 _CLOSED_DL = ("Réalisée", "Réalisée en retard", "Annulée", "Clôturée")
 _CLOSED_NC = ("Clôturée", "Annulée")
 _CLOSED_PA = ("Clôturé", "Annulé")
+
+# Palette statut (good/warning/critical) — réservée aux états, jamais réutilisée comme décoration.
+_GOOD, _WARNING, _CRITICAL = "#0ca30c", "#fab219", "#d03b3b"
+
+# Palette catégorielle fixe (ordre jamais recyclé en fonction des données affichées).
+_STATUT_COLOR = {
+	"Brouillon": "#2a78d6", "En qualification": "#eb6834", "Validée": "#1baf7a",
+	"Active": "#eda100", "Suspendue": "#e87ba4", "Clôturée": "#008300",
+	"Archivée": "#6250d6", "Obsolète": "#e34948",
+}
+
+
+def _donut_segments(counts, total, r=70):
+	"""Calcule les segments d'un donut via la technique stroke-dasharray sur un cercle SVG."""
+	circumference = 2 * math.pi * r
+	offset = 0.0
+	segments = []
+	for statut, count in counts:
+		if not count:
+			continue
+		pct = count / total
+		length = pct * circumference
+		segments.append({
+			"statut": statut, "count": count, "pct": round(pct * 100),
+			"color": _STATUT_COLOR.get(statut, "#898781"),
+			"dasharray": f"{length:.2f} {circumference - length:.2f}",
+			"dashoffset": round(-offset, 2),
+		})
+		offset += length
+	return segments
 
 
 def get_context(context):
@@ -64,7 +96,7 @@ def get_context(context):
 		{"label": "Notifications", "value": notifs_non_lues, "accent": "#be185d"},
 	]
 
-	# Horizons d'échéances
+	# Horizons d'échéances (bar chart : magnitude par tranche, coloré par niveau d'urgence)
 	horizons = []
 	for label, lo, hi in [("Échues", None, -1), ("Aujourd'hui", 0, 0), ("1–7 j", 1, 7),
 						   ("8–15 j", 8, 15), ("16–30 j", 16, 30), ("31–60 j", 31, 60), ("> 60 j", 61, None)]:
@@ -76,9 +108,19 @@ def get_context(context):
 		else:
 			flt["date_limite"] = ("<", str(aujourd))
 		cnt = frappe.db.count("Reg Deadline", flt)
-		color = "#dc2626" if label == "Échues" else "#d97706" if label in ("Aujourd'hui", "1–7 j") else "#2563eb"
+		color = _CRITICAL if label == "Échues" else _WARNING if label in ("Aujourd'hui", "1–7 j") else _GOOD
 		horizons.append({"label": label, "count": cnt, "color": color})
+	max_horizon = max((h["count"] for h in horizons), default=0) or 1
+	for h in horizons:
+		h["pct"] = round(h["count"] / max_horizon * 100)
 	context.horizons = horizons
+
+	# Répartition des obligations par statut (donut — identité catégorielle, couleurs fixes)
+	ordered = [(s, frappe.db.count("Reg Obligation", {**org, "statut": s})) for s in _STATUT_COLOR]
+	ordered = [(s, c) for s, c in ordered if c]
+	total_obligations = sum(c for _, c in ordered)
+	context.total_obligations = total_obligations
+	context.obligations_par_statut = _donut_segments(ordered, total_obligations) if total_obligations else []
 
 	# Échéances urgentes (retard + 7 prochains jours)
 	context.echeances_urgentes = frappe.get_all("Reg Deadline", filters={**org, **user_filter,

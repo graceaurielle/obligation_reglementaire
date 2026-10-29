@@ -39,12 +39,26 @@
 .or-badge-gray { background: #f1f5f9; color: #475569; }
 .or-badge-purple { background: #ede9fe; color: #6d28d9; }
 
-.or-horizon-bars { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
-.or-horizon-pill { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px;
-  background: var(--vdb-card); border: 1px solid var(--vdb-border); font-size: 12.5px; font-weight: 600; }
-.or-horizon-dot { width: 10px; height: 10px; border-radius: 50%; }
-.or-horizon-cnt { font-size: 18px; font-weight: 700; color: var(--vdb-navy); margin-left: 4px; }
 .or-more { display: inline-block; margin-top: 10px; font-size: 12.5px; font-weight: 600; color: var(--vdb-accent); }
+
+/* Bar chart horizontal — échéances par horizon */
+.or-bar-row { display: grid; grid-template-columns: 90px 1fr 36px; align-items: center; gap: 12px; margin-bottom: 10px; }
+.or-bar-row:last-child { margin-bottom: 0; }
+.or-bar-label { font-size: 12.5px; font-weight: 600; color: var(--vdb-text); }
+.or-bar-track { background: #eef1f8; border-radius: 6px; height: 16px; overflow: hidden; position: relative; }
+.or-bar-fill { height: 100%; border-radius: 6px; min-width: 3px; transition: width .3s; }
+.or-bar-count { font-size: 13px; font-weight: 700; color: var(--vdb-navy); text-align: right; }
+
+/* Donut chart — répartition des obligations par statut */
+.or-donut-wrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+.or-donut-total { font-size: 22px; font-weight: 700; fill: var(--vdb-navy); }
+.or-donut-sub { font-size: 10.5px; fill: var(--vdb-muted); }
+.or-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 180px; }
+.or-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--vdb-text); }
+.or-legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.or-legend-label { flex: 1; }
+.or-legend-count { font-weight: 700; color: var(--vdb-navy); }
+.or-legend-pct { color: var(--vdb-muted); font-size: 11.5px; width: 38px; text-align: right; }
 </style>
 
 <div class="vdb-layout">
@@ -73,20 +87,57 @@
         {% endfor %}
       </div>
 
-      <!-- Horizons -->
-      <div class="or-card">
-        <div class="or-card-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
-          Échéances par horizon
-        </div>
-        <div class="or-horizon-bars">
+      <!-- Graphiques -->
+      <div class="or-row">
+        <div class="or-card">
+          <div class="or-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+            Échéances par horizon
+          </div>
           {% for h in horizons %}
-          <div class="or-horizon-pill">
-            <div class="or-horizon-dot" style="background: {{ h.color }};"></div>
-            {{ h.label }}
-            <span class="or-horizon-cnt">{{ h.count }}</span>
+          <div class="or-bar-row">
+            <div class="or-bar-label">{{ h.label }}</div>
+            <div class="or-bar-track" title="{{ h.label }} : {{ h.count }}">
+              <div class="or-bar-fill" style="width: {{ h.pct }}%; background: {{ h.color }};"></div>
+            </div>
+            <div class="or-bar-count">{{ h.count }}</div>
           </div>
           {% endfor %}
+        </div>
+
+        <div class="or-card">
+          <div class="or-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 12a9 9 0 0 1-9 9"/></svg>
+            Obligations par statut
+          </div>
+          {% if obligations_par_statut %}
+          <div class="or-donut-wrap">
+            <svg width="160" height="160" viewBox="0 0 160 160">
+              <circle cx="80" cy="80" r="70" fill="none" stroke="#eef1f8" stroke-width="20"/>
+              {% for s in obligations_par_statut %}
+              <circle cx="80" cy="80" r="70" fill="none" stroke="{{ s.color }}" stroke-width="20"
+                stroke-dasharray="{{ s.dasharray }}" stroke-dashoffset="{{ s.dashoffset }}"
+                transform="rotate(-90 80 80)">
+                <title>{{ s.statut }} : {{ s.count }} ({{ s.pct }}%)</title>
+              </circle>
+              {% endfor %}
+              <text x="80" y="76" text-anchor="middle" class="or-donut-total">{{ total_obligations }}</text>
+              <text x="80" y="94" text-anchor="middle" class="or-donut-sub">obligations</text>
+            </svg>
+            <div class="or-legend">
+              {% for s in obligations_par_statut %}
+              <div class="or-legend-item">
+                <div class="or-legend-dot" style="background: {{ s.color }};"></div>
+                <span class="or-legend-label">{{ s.statut }}</span>
+                <span class="or-legend-count">{{ s.count }}</span>
+                <span class="or-legend-pct">{{ s.pct }}%</span>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% else %}
+          <div class="or-empty">Aucune obligation enregistrée</div>
+          {% endif %}
         </div>
       </div>
 

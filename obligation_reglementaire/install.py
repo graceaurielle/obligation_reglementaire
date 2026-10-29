@@ -31,7 +31,7 @@ def after_migrate():
 			create_roles()
 			setup_settings()
 			for fn in (criticality_levels, reference_lists, domains, document_setup, evidence_types, calendar,
-					notification_setup, escalation_rules, indicators, report_templates):
+					notification_setup, escalation_rules, indicators, report_templates, print_formats):
 				try:
 					fn()
 				except Exception:
@@ -516,3 +516,81 @@ def report_templates():
 			{"ordre": 1, "titre": "Qualité des données", "type_section": "Tableau", "source_donnees": "Qualité des données"},
 			{"ordre": 2, "titre": "Performance du processus", "type_section": "Indicateurs", "source_donnees": "Performance du processus"},
 		]})
+
+
+# ------------------------------------------------------------------ print formats
+_REPORT_INSTANCE_PRINT_HTML = """
+<div class="reg-print">
+  <style>
+    .reg-print { font-size: 12px; }
+    .reg-print .reg-meta { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+    .reg-print .reg-meta td { padding: 3px 6px; border: 1px solid #ddd; }
+    .reg-print .reg-meta td.reg-label { font-weight: bold; width: 160px; background: #f7f7f7; }
+    .reg-print .reg-statut { display: inline-block; padding: 2px 10px; border-radius: 10px;
+      font-weight: bold; background: #eef1f8; }
+    .reg-print .reg-circuit { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .reg-print .reg-circuit td, .reg-print .reg-circuit th { border: 1px solid #ddd; padding: 5px 8px; }
+    .reg-print .reg-circuit th { background: #f7f7f7; text-align: left; }
+    .reg-print .reg-reserves { margin-top: 10px; padding: 8px; background: #fff8e6; border: 1px solid #f0d998; }
+    .reg-print table.table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; }
+    .reg-print table.table th, .reg-print table.table td { border: 1px solid #ddd; padding: 4px 6px; font-size: 11px; }
+    .reg-print table.table th { background: #f0f0f0; }
+    .reg-print h2 { font-size: 18px; margin-bottom: 4px; }
+    .reg-print h3 { font-size: 14px; margin-top: 16px; border-bottom: 1px solid #ccc; padding-bottom: 2px; }
+  </style>
+
+  <table class="reg-meta">
+    <tr>
+      <td class="reg-label">Statut</td>
+      <td><span class="reg-statut">{{ doc.statut }}</span></td>
+      <td class="reg-label">Version</td>
+      <td>{{ doc.version }}{% if doc.officiel %} (officiel){% endif %}{% if doc.fige %} — données figées{% endif %}</td>
+    </tr>
+    <tr>
+      <td class="reg-label">Organisation</td>
+      <td>{{ doc.organisation }}</td>
+      <td class="reg-label">Modèle</td>
+      <td>{{ doc.modele }} (v{{ doc.version_modele }})</td>
+    </tr>
+    <tr>
+      <td class="reg-label">Période</td>
+      <td>{{ frappe.utils.formatdate(doc.date_debut) }} → {{ frappe.utils.formatdate(doc.date_fin) }}</td>
+      <td class="reg-label">Situation arrêtée au</td>
+      <td>{{ frappe.utils.formatdate(doc.date_arrete) }}</td>
+    </tr>
+    <tr>
+      <td class="reg-label">Généré le</td>
+      <td>{{ frappe.utils.format_datetime(doc.date_generation) if doc.date_generation else "—" }}</td>
+      <td class="reg-label">Généré par</td>
+      <td>{{ doc.genere_par or "—" }}</td>
+    </tr>
+  </table>
+
+  {{ doc.resultat_html or "<p><i>Aucune donnée générée pour cette version.</i></p>" }}
+
+  {% if doc.reserves %}
+  <div class="reg-reserves"><b>Réserves :</b> {{ doc.reserves }}</div>
+  {% endif %}
+
+  {% if doc.motif_rejet %}
+  <div class="reg-reserves"><b>Motif de rejet :</b> {{ doc.motif_rejet }}</div>
+  {% endif %}
+
+  <table class="reg-circuit">
+    <tr><th>Étape</th><th>Intervenant</th><th>Date</th></tr>
+    <tr><td>Préparation</td><td>{{ doc.preparateur or "—" }}</td><td>{{ frappe.utils.format_datetime(doc.date_generation) if doc.date_generation else "—" }}</td></tr>
+    <tr><td>Contrôle</td><td>{{ doc.controleur or "—" }}</td><td>{{ frappe.utils.format_datetime(doc.date_controle) if doc.date_controle else "—" }}</td></tr>
+    <tr><td>Validation</td><td>{{ doc.validateur or "—" }}</td><td>{{ frappe.utils.format_datetime(doc.date_validation) if doc.date_validation else "—" }}</td></tr>
+  </table>
+</div>
+"""
+
+
+def print_formats():
+	_ensure("Print Format", "Rapport réglementaire OR", {
+		"name": "Rapport réglementaire OR",
+		"doc_type": "Reg Report Instance", "module": "Obligation Reglementaire",
+		"standard": "No", "custom_format": 1, "print_format_type": "Jinja",
+		"disabled": 0, "align_labels_right": 0, "font_size": 12,
+		"html": _REPORT_INSTANCE_PRINT_HTML,
+	})
