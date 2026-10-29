@@ -117,12 +117,8 @@ _NAV_PAR_ROLE = {
 	"OR Direction Générale": {"obligations", "obligations-nc", "obligations-plans", "obligations-notifications"},
 	"OR Gestionnaire Reporting": {"obligations", "obligations-echeances", "obligations-nc", "obligations-plans",
 		"obligations-rapports"},
-	# NB : "OR Gestionnaire Documentaire" n'a aujourd'hui AUCUNE permission (lecture/écriture/création)
-	# sur le doctype "Reg Document", malgré son nom et malgré son usage dans les gardes de rôle de
-	# document_action() (geler/dégeler/supprimer) -- gap pré-existant côté app, hors périmètre de ce
-	# chantier portail. On n'ajoute donc pas "obligations-documents" ici pour ne pas exposer un onglet
-	# qui mènerait systématiquement à un refus serveur.
-	"OR Gestionnaire Documentaire": {"obligations", "obligations-justificatifs", "obligations-notifications"},
+	"OR Gestionnaire Documentaire": {"obligations", "obligations-documents", "obligations-justificatifs",
+		"obligations-notifications"},
 	# DD superviseurs
 	"DD Manager Compliance": _NAV_COMPLET,
 	"DD DG": {"obligations", "obligations-nc", "obligations-plans"},
